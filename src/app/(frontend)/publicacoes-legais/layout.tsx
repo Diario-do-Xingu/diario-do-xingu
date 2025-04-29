@@ -9,15 +9,15 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
-    <div className="container grid grid-cols-1 lg:grid-cols-12 gap-10">
+    <div className="container grid grid-cols-1 gap-10 lg:grid-cols-12">
       {children}
 
       <div className="col-span-1 flex flex-col gap-4 lg:col-span-4">
-        <Card className="bg-[#F8F8F8] p-3">
+        <Card className="bg-accent p-3">
           <WeatherWidget />
         </Card>
 
-        <Card className="bg-[#F8F8F8] p-3">
+        <Card className="bg-secondary p-3">
           <SoccerWidget />
         </Card>
 

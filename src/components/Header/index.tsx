@@ -48,14 +48,14 @@ export async function Header() {
 
   return (
     <header className="sticky top-0 z-50 mb-10 border-b-4 border-b-secondary bg-primary">
-      <div className="relative bg-white">
-        <div className="container flex max-w-full gap-4 overflow-auto">
+      <div className="relative w-full bg-white">
+        <div className="container flex gap-4 overflow-auto">
           {links.map((link, i) => (
             <a
               href={link.link}
               key={i}
               className={cn(
-                'whitespace-nowrap border-y-4 border-transparent border-b-transparent px-1 py-1 font-varela text-lg transition-colors hover:border-b-red-400',
+                'font-globo whitespace-nowrap border-y-4 border-transparent border-b-transparent px-1 py-1 text-lg font-bold transition-colors hover:border-b-red-400',
                 link.color ? link.color : colors[i % colors.length],
                 'hover:border-b-current',
               )}

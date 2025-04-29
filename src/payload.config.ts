@@ -7,6 +7,9 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
+import { en } from '@payloadcms/translations/languages/en'
+import { pt } from '@payloadcms/translations/languages/pt'
+
 import { env } from '@/env'
 import { migrations } from '@/migrations'
 
@@ -25,6 +28,12 @@ export default buildConfig({
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
+    },
+  },
+  i18n: {
+    supportedLanguages: {
+      en,
+      pt,
     },
   },
   collections: [NotarialActs, Media, Users],

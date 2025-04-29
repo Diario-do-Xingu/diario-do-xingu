@@ -53,6 +53,7 @@ export const NotarialActs: CollectionConfig = {
         date: {
           pickerAppearance: 'dayAndTime',
         },
+        description: 'Data que será mostrado em tela',
         position: 'sidebar',
       },
       hooks: {
@@ -62,6 +63,7 @@ export const NotarialActs: CollectionConfig = {
     {
       name: 'key',
       type: 'text',
+
       index: true,
       label: 'Chave',
       // required: true,
@@ -69,6 +71,7 @@ export const NotarialActs: CollectionConfig = {
       admin: {
         readOnly: true,
         position: 'sidebar',
+        description: 'Chave será criada automaticamente',
       },
     },
 

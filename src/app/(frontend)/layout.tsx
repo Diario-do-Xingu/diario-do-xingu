@@ -2,6 +2,7 @@ import React from 'react'
 import './globals.css'
 
 import { Open_Sans, Varela_Round } from 'next/font/google'
+import localFont from 'next/font/local'
 import { cn } from '@/utilities/ui'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
@@ -11,6 +12,35 @@ import { Media } from '@/payload-types'
 import { getPayload } from '@/lib/payload/getPayload'
 import { Metadata } from 'next'
 import { COLLECTION_SLUGS } from '@/constants'
+
+const globoFont = localFont({
+  src: [
+    {
+      path: '../../fonts/globo.woff2',
+      weight: '400',
+    },
+    {
+      path: '../../fonts/globo.woff2',
+      weight: '500',
+    },
+    {
+      path: '../../fonts/globo.woff2',
+      weight: '600',
+    },
+    {
+      path: '../../fonts/globo.woff2',
+      weight: '700',
+    },
+    {
+      path: '../../fonts/globo.woff2',
+      weight: '800',
+    },
+  ],
+  // src: '../../fonts/globo.woff2',
+  display: 'swap',
+  variable: '--font-globo',
+  // weight: '500',
+})
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -29,7 +59,10 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
-    <html lang="en" className={cn(openSans.variable, varelaRound.variable)}>
+    <html
+      lang="en"
+      className={cn(openSans.variable, varelaRound.variable, globoFont.variable, 'antialiased')}
+    >
       <body>
         <Header />
         <main>{children}</main>

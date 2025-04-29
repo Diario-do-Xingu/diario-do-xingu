@@ -139,7 +139,13 @@ export interface NotarialAct {
   id: number;
   heading: string;
   content: string;
+  /**
+   * Data que será mostrado em tela
+   */
   publishedAt?: string | null;
+  /**
+   * Chave será criada automaticamente
+   */
   key?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
