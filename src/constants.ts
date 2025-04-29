@@ -1,6 +1,6 @@
 export const WEBSITE_TITLE = 'Diário do Xingu' as const
 
-export const NOTARIAL_ACTS_ARCHIVE_LIMIT = 5 as const
+export const NOTARIAL_ACTS_ARCHIVE_LIMIT = 10 as const
 
 export const COLLECTION_SLUGS = {
   SiteInfo: 'site-info',

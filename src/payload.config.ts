@@ -13,6 +13,7 @@ import { migrations } from '@/migrations'
 
 import { env } from '@/env'
 import { NotarialActs } from './payload/collections/NotarialActs'
+import { SiteInfo } from './payload/globals/SiteInfo'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -25,6 +26,7 @@ export default buildConfig({
     },
   },
   collections: [NotarialActs, Media, Users],
+  globals: [SiteInfo],
   editor: lexicalEditor(),
   secret: env.PAYLOAD_SECRET || '',
   typescript: {

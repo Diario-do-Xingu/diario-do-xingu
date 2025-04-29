@@ -7,6 +7,7 @@ import { revalidateDelete, revalidateNotarialActs } from './hooks/revalidateNota
 import { slugField } from '@/payload/fields/slug'
 import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished'
 import { COLLECTION_SLUGS } from '@/constants'
+import { env } from '@/env'
 
 export const NotarialActs: CollectionConfig = {
   slug: COLLECTION_SLUGS.NotarialActs,
@@ -74,7 +75,7 @@ export const NotarialActs: CollectionConfig = {
     ...slugField('key', {
       slugOverrides: {
         admin: {
-          condition: () => false,
+          condition: () => env.NEXT_PUBLIC_IS_DEV,
         },
       },
     }),

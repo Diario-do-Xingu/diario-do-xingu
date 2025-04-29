@@ -1,9 +1,14 @@
 import type { CollectionConfig } from 'payload'
+import { anyone } from '../access/anyone'
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  labels: {
+    plural: 'Arquivos',
+    singular: 'Arquivo',
+  },
   access: {
-    read: () => true,
+    read: anyone,
   },
   fields: [
     {
@@ -12,5 +17,7 @@ export const Media: CollectionConfig = {
       required: true,
     },
   ],
-  upload: true,
+  upload: {
+    staticDir: 'public/media',
+  },
 }

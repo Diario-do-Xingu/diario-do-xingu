@@ -1,3 +1,16 @@
+import { capitalizeWords } from './formatString'
+
+export function writingDate(timestamp: number) {
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: 'long',
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  }
+
+  return capitalizeWords(new Intl.DateTimeFormat('pt-BR', options).format(timestamp))
+}
+
 export const formatDateTime = (timestamp: string): string => {
   const now = new Date()
   let date = now

@@ -5,10 +5,11 @@ import { Badge } from '@/components/ui/badge'
 
 import { NotarialAct } from '@/payload-types'
 
-import { formatDateTime } from '@/utilities/formatDateTime'
 import Link from 'next/link'
 import { getClientSideURL } from '@/utilities/getURL'
 import { COLLECTION_URL_PATHS } from '@/constants'
+import { env } from '@/env'
+import { formatDateTime } from '@/utilities/formatDate'
 
 export type NotarialActData = Pick<
   NotarialAct,
@@ -24,9 +25,16 @@ export function NotarialActsCard(props: NotarialActsCardProps) {
 
   const { content, heading, filename, key, publishedAt } = doc
 
+  const linkFeatureEnabled = env.NEXT_PUBLIC_FEATURE_NOTARIAL_ACT_LINK
+
+  const href = linkFeatureEnabled
+    ? `${getClientSideURL()}/${COLLECTION_URL_PATHS.NotarialActs}/${doc.key}`
+    : '#'
+
+  const downloadLink = `${getClientSideURL()}/notarial-acts/${filename}`
   return (
     <Card className="bg-[#F8F8F8] transition-all hover:scale-[100.2%] hover:bg-card hover:shadow-xl">
-      <Link href={`${getClientSideURL()}/${COLLECTION_URL_PATHS.NotarialActs}/${doc.key}`}>
+      <Link href={href}>
         <CardHeader className="pb-2">
           <h4>{heading}</h4>
         </CardHeader>
@@ -52,7 +60,7 @@ export function NotarialActsCard(props: NotarialActsCardProps) {
       </Link>
 
       <CardFooter className="flex flex-col items-stretch gap-2">
-        <a href={`http://localhost:3000/api/notarial-acts/file/${filename}`} target="_blank">
+        <a href={downloadLink} target="_blank">
           <Badge className="flex gap-2 bg-zinc-300 py-1 text-blue-600 underline hover:bg-zinc-100">
             <Download />
             {filename}

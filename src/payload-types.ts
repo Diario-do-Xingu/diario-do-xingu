@@ -88,8 +88,12 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'site-info': SiteInfo;
+  };
+  globalsSelect: {
+    'site-info': SiteInfoSelect<false> | SiteInfoSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -460,6 +464,60 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-info".
+ */
+export interface SiteInfo {
+  id: number;
+  logo: number | Media;
+  contacts?: {
+    phone?: {
+      value?: string | null;
+      isWhatsApp?: boolean | null;
+    };
+    email?: string | null;
+  };
+  socials?:
+    | {
+        label: string;
+        type: 'instagram' | 'whatsapp' | 'facebook';
+        link: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-info_select".
+ */
+export interface SiteInfoSelect<T extends boolean = true> {
+  logo?: T;
+  contacts?:
+    | T
+    | {
+        phone?:
+          | T
+          | {
+              value?: T;
+              isWhatsApp?: T;
+            };
+        email?: T;
+      };
+  socials?:
+    | T
+    | {
+        label?: T;
+        type?: T;
+        link?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

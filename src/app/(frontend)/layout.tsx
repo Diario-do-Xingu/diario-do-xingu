@@ -4,6 +4,8 @@ import './globals.css'
 import { Open_Sans, Varela_Round } from 'next/font/google'
 import { cn } from '@/utilities/ui'
 import { WEBSITE_TITLE } from '@/constants'
+import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
 
 export const metadata = {
   description: `${WEBSITE_TITLE}`,
@@ -29,7 +31,9 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" className={cn(openSans.variable, varelaRound.variable)}>
       <body>
+        <Header />
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   )
