@@ -12,14 +12,14 @@ export async function Footer() {
   const siteInfo = (await getCachedGlobal(COLLECTION_SLUGS.SiteInfo, 1)()) as SiteInfo
 
   return (
-    <footer className="font-varela mt-8 border-t-4 border-t-tertiary bg-primary py-2 text-primary-foreground">
+    <footer className="mt-8 border-t-4 border-t-tertiary bg-primary py-3 pb-4 font-varela text-primary-foreground">
       <div className="container">
-        <div className="mb-4 grid grid-cols-1 items-center lg:grid-cols-3">
-          <Link href="/" className="">
+        <div className="mb-4 grid grid-cols-1 items-center gap-6 lg:grid-cols-3">
+          <Link href="/" className="justify-self-center lg:justify-self-start">
             <ImageMedia resource={siteInfo.logo} imgClassName="w-[200px]" />
           </Link>
 
-          <div className="flex flex-col justify-self-center tracking-wide">
+          <div className="flex flex-col items-center justify-self-center tracking-wide lg:items-start lg:justify-self-center">
             {siteInfo.contacts?.email && (
               <span className="flex items-center">
                 <FontAwesomeIcon icon={faEnvelope} className="mr-2 size-5" />
@@ -34,7 +34,7 @@ export async function Footer() {
             )}
           </div>
 
-          <div className="flex gap-2 justify-self-end">
+          <div className="flex gap-2 justify-self-center lg:justify-self-end">
             {siteInfo.socials?.map((social, i) => (
               <a
                 key={i}
