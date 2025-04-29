@@ -1,9 +1,11 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import { Metadata } from 'next'
-import { NOTARIAL_ACTS_ARCHIVE_LIMIT, COLLECTION_SLUGS, WEBSITE_TITLE } from '@/constants'
+import { NOTARIAL_ACTS_ARCHIVE_LIMIT, COLLECTION_SLUGS } from '@/constants'
 import { notFound } from 'next/navigation'
 import { PageComponent } from './PageComponent'
+import { generateNotarialActsPageMeta } from '@/utilities/generateNotarialActsPageMeta'
+
+export const metadata = generateNotarialActsPageMeta()
 
 export type Args = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
@@ -25,10 +27,4 @@ export default async function Page({ searchParams }: Args) {
   })
 
   return <PageComponent notarialActs={notarialActs} />
-}
-
-export function generateMetadata(): Metadata {
-  return {
-    title: `Publicações Legais - ${WEBSITE_TITLE}`,
-  }
 }

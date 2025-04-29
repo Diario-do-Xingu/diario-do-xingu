@@ -3,7 +3,6 @@ import './globals.css'
 
 import { Open_Sans, Varela_Round } from 'next/font/google'
 import { cn } from '@/utilities/ui'
-import { WEBSITE_TITLE } from '@/constants'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { getServerSideURL } from '@/utilities/getURL'
@@ -22,7 +21,6 @@ export const metadata = {
   openGraph: mergeOpenGraph(),
   twitter: {
     card: 'summary_large_image',
-    creator: 'Viktor Avelino',
     title: siteMetadata.siteTitle,
     description: siteMetadata.siteDescription,
     image: cardShareImage,
