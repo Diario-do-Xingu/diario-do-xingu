@@ -36,7 +36,7 @@ export function NotarialActsCard(props: NotarialActsCardProps) {
     <Card className="bg-[#F8F8F8] transition-all hover:scale-[100.2%] hover:bg-card hover:shadow-xl">
       <Link href={href}>
         <CardHeader className="pb-2">
-          <h4>{heading}</h4>
+          <h4 className="font-bold">{heading}</h4>
         </CardHeader>
         <CardContent className="space-y-3 pb-5">
           <div className="flex items-center gap-5">
@@ -45,14 +45,14 @@ export function NotarialActsCard(props: NotarialActsCardProps) {
             <ExternalLink className="size-8 shrink-0" />
           </div>
 
-          <div className="flex items-center justify-start gap-2">
-            <Badge variant="secondary" className="flex gap-1 text-[10px]">
-              <Calendar className="size-3" />
+          <div className="flex flex-col items-start gap-2 md:flex-row">
+            <Badge variant="secondary" className="flex gap-2 text-sm">
+              <Calendar className="size-4" />
               {formatDateTime(publishedAt!)}
             </Badge>
 
-            <Badge className="flex gap-1 text-[10px]">
-              <KeyRound className="size-3" />
+            <Badge className="flex gap-2 text-sm">
+              <KeyRound className="size-4" />
               {`Chave: ${key}`}
             </Badge>
           </div>
@@ -61,7 +61,7 @@ export function NotarialActsCard(props: NotarialActsCardProps) {
 
       <CardFooter className="flex flex-col items-stretch gap-2">
         <a href={downloadLink} target="_blank">
-          <Badge className="flex gap-2 bg-zinc-300 py-1 text-blue-600 underline hover:bg-zinc-100">
+          <Badge className="flex gap-2 bg-zinc-300 py-1 text-sm text-blue-600 underline hover:bg-zinc-100">
             <Download />
             {filename}
           </Badge>

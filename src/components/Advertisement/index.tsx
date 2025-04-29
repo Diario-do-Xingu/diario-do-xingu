@@ -18,5 +18,5 @@ export async function Advertisement() {
   const imageComponent = <ImageMedia resource={image as Media} imgClassName="w-full" />
   const component = link ? <Link href={link}>{imageComponent}</Link> : <div>{imageComponent}</div>
 
-  return <Card className="sticky top-40 bg-[#F8F8F8] p-3">{component}</Card>
+  return <Card className="lg:sticky top-40 bg-[#F8F8F8] p-3">{component}</Card>
 }
