@@ -1,5 +1,5 @@
 {
-  "name": "diario-do-xingu-2",
+  "name": "diario-do-xingu",
   "version": "1.0.0",
   "description": "A blank template to get started with Payload 3.0",
   "license": "MIT",
@@ -15,6 +15,7 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
   },
   "dependencies": {
+    "@payloadcms/db-postgres": "3.33.0",
     "@payloadcms/next": "3.33.0",
     "@payloadcms/payload-cloud": "3.33.0",
     "@payloadcms/richtext-lexical": "3.33.0",
@@ -24,8 +25,7 @@
     "payload": "3.33.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "sharp": "0.32.6",
-    "@payloadcms/db-postgres": "3.33.0"
+    "sharp": "0.32.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -43,7 +43,9 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "sharp"
+      "sharp",
+      "esbuild",
+      "unrs-resolver"
     ]
   }
 }
