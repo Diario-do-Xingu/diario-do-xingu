@@ -91,10 +91,12 @@ export interface Config {
   globals: {
     'site-info': SiteInfo;
     advertisement: Advertisement;
+    'site-metadata': SiteMetadatum;
   };
   globalsSelect: {
     'site-info': SiteInfoSelect<false> | SiteInfoSelect<true>;
     advertisement: AdvertisementSelect<false> | AdvertisementSelect<true>;
+    'site-metadata': SiteMetadataSelect<false> | SiteMetadataSelect<true>;
   };
   locale: null;
   user: User & {
@@ -507,6 +509,23 @@ export interface Advertisement {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-metadata".
+ */
+export interface SiteMetadatum {
+  id: number;
+  /**
+   * Image que aparece no card quando compartilha link
+   */
+  cardShareImage: number | Media;
+  cardShareImageAlt?: string | null;
+  siteName: string;
+  siteTitle: string;
+  siteDescription: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-info_select".
  */
 export interface SiteInfoSelect<T extends boolean = true> {
@@ -545,6 +564,20 @@ export interface AdvertisementSelect<T extends boolean = true> {
         image?: T;
         link?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-metadata_select".
+ */
+export interface SiteMetadataSelect<T extends boolean = true> {
+  cardShareImage?: T;
+  cardShareImageAlt?: T;
+  siteName?: T;
+  siteTitle?: T;
+  siteDescription?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

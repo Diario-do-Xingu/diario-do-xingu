@@ -15,6 +15,7 @@ import { Media } from '@/payload/collections/Media'
 import { NotarialActs } from '@/payload/collections/NotarialActs'
 import { SiteInfo } from '@/payload/globals/SiteInfo'
 import { Advertisement } from '@/payload/globals/Advertisement'
+import { SiteMetadata } from '@/payload/globals/Metadata'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -27,7 +28,7 @@ export default buildConfig({
     },
   },
   collections: [NotarialActs, Media, Users],
-  globals: [SiteInfo, Advertisement],
+  globals: [SiteInfo, Advertisement, SiteMetadata],
   editor: lexicalEditor(),
   secret: env.PAYLOAD_SECRET || '',
   typescript: {

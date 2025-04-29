@@ -6,6 +6,7 @@ export const COLLECTION_SLUGS = {
   SiteInfo: 'site-info',
   Advertisement: 'advertisement',
   NotarialActs: 'notarial-acts',
+  SiteMetadata: 'site-metadata',
 } as const
 
 export const ADVERTISEMENT_SLUG = 'advertisement' as const
