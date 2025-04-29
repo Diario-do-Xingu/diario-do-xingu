@@ -35,6 +35,7 @@ const links = [
   {
     label: 'tabela brasileirão',
     link: '#',
+    color: 'text-red-500',
   },
   {
     label: 'contato',
@@ -55,7 +56,7 @@ export async function Header() {
               key={i}
               className={cn(
                 'whitespace-nowrap border-y-4 border-transparent border-b-transparent px-1 py-1 font-varela text-lg transition-colors hover:border-b-red-400',
-                colors[i % colors.length],
+                link.color ? link.color : colors[i % colors.length],
                 'hover:border-b-current',
               )}
             >
