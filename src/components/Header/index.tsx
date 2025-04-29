@@ -24,7 +24,7 @@ const links = [
   },
   {
     label: 'publicações legais',
-    link: `#${COLLECTION_URL_PATHS.NotarialActs}`,
+    link: `/${COLLECTION_URL_PATHS.NotarialActs}`,
   },
   {
     label: 'edições digitais',
