@@ -1,7 +1,7 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { Metadata } from 'next'
-import { NOTARIAL_ACTS_ARCHIVE_LIMIT, SLUGS, WEBSITE_TITLE } from '@/constants'
+import { NOTARIAL_ACTS_ARCHIVE_LIMIT, COLLECTION_SLUGS, WEBSITE_TITLE } from '@/constants'
 import { notFound } from 'next/navigation'
 import { PageComponent } from '../../PageComponent'
 
@@ -20,7 +20,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   if (!Number.isInteger(sanitizedPageNumber)) notFound()
 
   const notarialActs = await payload.find({
-    collection: SLUGS.NotarialActs,
+    collection: COLLECTION_SLUGS.NotarialActs,
     depth: 1,
     limit: NOTARIAL_ACTS_ARCHIVE_LIMIT,
     page: sanitizedPageNumber,
