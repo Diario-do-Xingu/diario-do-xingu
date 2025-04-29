@@ -4,6 +4,7 @@ import { Metadata } from 'next'
 import { NOTARIAL_ACTS_ARCHIVE_LIMIT, COLLECTION_SLUGS, WEBSITE_TITLE } from '@/constants'
 import { notFound } from 'next/navigation'
 import { PageComponent } from '../../PageComponent'
+import { generateNotarialActMeta } from '@/utilities/generateNotarialActMeta'
 
 type Args = {
   params: Promise<{
@@ -31,10 +32,6 @@ export default async function Page({ params: paramsPromise }: Args) {
   return <PageComponent notarialActs={notarialActs} />
 }
 
-export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { pageNumber } = await paramsPromise
-
-  return {
-    title: `Publicações Legais Página ${pageNumber} - ${WEBSITE_TITLE}`,
-  }
+export async function generateMetadata(): Promise<Metadata> {
+  return await generateNotarialActMeta()
 }

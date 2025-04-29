@@ -7,25 +7,10 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import { getCachedGlobal } from '@/utilities/getGlobals'
-import { SiteMetadatum } from '@/payload-types'
-import { getShareImageUrl } from '@/utilities/getShareImage'
-
-const siteMetadata = (await getCachedGlobal('site-metadata')()) as SiteMetadatum
-const cardShareImage = await getShareImageUrl()
-
-export const metadata = {
-  metadataBase: new URL(getServerSideURL()),
-  description: siteMetadata.siteDescription,
-  title: siteMetadata.siteTitle,
-  openGraph: mergeOpenGraph(),
-  twitter: {
-    card: 'summary_large_image',
-    title: siteMetadata.siteTitle,
-    description: siteMetadata.siteDescription,
-    image: cardShareImage,
-  },
-}
+import { Media } from '@/payload-types'
+import { getPayload } from '@/lib/payload/getPayload'
+import { Metadata } from 'next'
+import { COLLECTION_SLUGS } from '@/constants'
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -52,4 +37,43 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       </body>
     </html>
   )
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const payload = await getPayload()
+
+  const siteMetadata = await payload.findGlobal({
+    slug: COLLECTION_SLUGS.SiteMetadata,
+  })
+
+  const cardShareImage = siteMetadata.cardShareImage
+  let shareImage = cardShareImage as Media
+
+  if (typeof cardShareImage === 'number') {
+    shareImage = await (
+      await getPayload()
+    ).findByID({
+      collection: 'media',
+      id: cardShareImage,
+    })
+  }
+
+  return {
+    metadataBase: new URL(getServerSideURL()),
+    description: siteMetadata.siteDescription,
+    title: siteMetadata.siteTitle,
+    openGraph: await mergeOpenGraph(),
+    twitter: {
+      card: 'summary_large_image',
+      title: siteMetadata.siteTitle,
+      description: siteMetadata.siteDescription,
+      images: [
+        {
+          url: `${getServerSideURL()}/media/${shareImage.filename}`,
+          secureUrl: `${getServerSideURL()}/media/${shareImage.filename}`,
+          alt: siteMetadata.cardShareImageAlt ?? siteMetadata.siteTitle,
+        },
+      ],
+    },
+  }
 }

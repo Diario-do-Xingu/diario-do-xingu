@@ -1,30 +1,45 @@
 import type { Metadata } from 'next'
 import { getServerSideURL } from './getURL'
 import { COLLECTION_SLUGS, WEBSITE_TITLE } from '@/constants'
-import { getCachedGlobal } from './getGlobals'
-import { SiteMetadatum } from '@/payload-types'
+import { Media } from '@/payload-types'
+import { getPayload } from '@/lib/payload/getPayload'
 
-import { getShareImageUrl } from './getShareImage'
+export const mergeOpenGraph = async (
+  og?: Metadata['openGraph'],
+): Promise<Metadata['openGraph']> => {
+  const payload = await getPayload()
 
-const metadata = (await getCachedGlobal(COLLECTION_SLUGS.SiteMetadata)()) as SiteMetadatum
-const cardShareImage = await getShareImageUrl()
+  const siteMetadata = await payload.findGlobal({
+    slug: COLLECTION_SLUGS.SiteMetadata,
+  })
 
-const defaultOpenGraph: Metadata['openGraph'] = {
-  type: 'website',
-  description: metadata.siteDescription,
-  siteName: metadata.siteName,
-  title: metadata.siteTitle,
-  locale: 'pt_BR',
-  url: getServerSideURL(),
-}
+  const cardShareImage = siteMetadata.cardShareImage
+  let shareImage = cardShareImage as Media
 
-export const mergeOpenGraph = (og?: Metadata['openGraph']): Metadata['openGraph'] => {
+  if (typeof cardShareImage === 'number') {
+    shareImage = await (
+      await getPayload()
+    ).findByID({
+      collection: 'media',
+      id: cardShareImage,
+    })
+  }
+
+  const defaultOpenGraph: Metadata['openGraph'] = {
+    type: 'website',
+    description: siteMetadata.siteDescription,
+    siteName: siteMetadata.siteName,
+    title: siteMetadata.siteTitle,
+    locale: 'pt_BR',
+    url: getServerSideURL(),
+  }
+
   const images = []
 
-  if (cardShareImage.filename) {
+  if (shareImage.filename) {
     images.push({
-      url: `${getServerSideURL()}/media/${cardShareImage.filename}`,
-      secureUrl: `${getServerSideURL()}/media/${cardShareImage.filename}`,
+      url: `${getServerSideURL()}/media/${shareImage.filename}`,
+      secureUrl: `${getServerSideURL()}/media/${shareImage.filename}`,
       alt: `${WEBSITE_TITLE} - Portal de Notícias`,
     })
   }

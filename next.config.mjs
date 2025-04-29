@@ -8,9 +8,11 @@ await jiti.import('./src/env')
 
 const NEXT_PUBLIC_SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
 
+const isDev = process.env.NEXT_PUBLIC_IS_DEV ? process.env.NEXT_PUBLIC_IS_DEV === 'true' : false
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
+  output: isDev ? undefined : 'standalone',
   images: {
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL].map((item) => {

@@ -5,6 +5,7 @@ import { anyone } from '@/payload/access/anyone'
 
 export const Advertisement: GlobalConfig = {
   slug: COLLECTION_SLUGS.Advertisement,
+  label: 'Publicidade',
   access: {
     read: anyone,
   },
