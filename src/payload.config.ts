@@ -12,6 +12,7 @@ import { Media } from '@/payload/collections/Media'
 import { migrations } from '@/migrations'
 
 import { env } from '@/env'
+import { NotarialActs } from './payload/collections/NotarialActs'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -23,7 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [NotarialActs, Media, Users],
   editor: lexicalEditor(),
   secret: env.PAYLOAD_SECRET || '',
   typescript: {
