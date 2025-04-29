@@ -90,9 +90,11 @@ export interface Config {
   };
   globals: {
     'site-info': SiteInfo;
+    advertisement: Advertisement;
   };
   globalsSelect: {
     'site-info': SiteInfoSelect<false> | SiteInfoSelect<true>;
+    advertisement: AdvertisementSelect<false> | AdvertisementSelect<true>;
   };
   locale: null;
   user: User & {
@@ -492,6 +494,19 @@ export interface SiteInfo {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "advertisement".
+ */
+export interface Advertisement {
+  id: number;
+  sideBarAdvertisement?: {
+    image?: (number | null) | Media;
+    link?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-info_select".
  */
 export interface SiteInfoSelect<T extends boolean = true> {
@@ -514,6 +529,21 @@ export interface SiteInfoSelect<T extends boolean = true> {
         type?: T;
         link?: T;
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "advertisement_select".
+ */
+export interface AdvertisementSelect<T extends boolean = true> {
+  sideBarAdvertisement?:
+    | T
+    | {
+        image?: T;
+        link?: T;
       };
   updatedAt?: T;
   createdAt?: T;

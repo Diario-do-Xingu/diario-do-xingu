@@ -7,13 +7,14 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
-import { Users } from '@/payload/collections/Users'
-import { Media } from '@/payload/collections/Media'
+import { env } from '@/env'
 import { migrations } from '@/migrations'
 
-import { env } from '@/env'
-import { NotarialActs } from './payload/collections/NotarialActs'
-import { SiteInfo } from './payload/globals/SiteInfo'
+import { Users } from '@/payload/collections/Users'
+import { Media } from '@/payload/collections/Media'
+import { NotarialActs } from '@/payload/collections/NotarialActs'
+import { SiteInfo } from '@/payload/globals/SiteInfo'
+import { Advertisement } from '@/payload/globals/Advertisement'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -26,7 +27,7 @@ export default buildConfig({
     },
   },
   collections: [NotarialActs, Media, Users],
-  globals: [SiteInfo],
+  globals: [SiteInfo, Advertisement],
   editor: lexicalEditor(),
   secret: env.PAYLOAD_SECRET || '',
   typescript: {
