@@ -14,7 +14,7 @@ export function PageComponent({ notarialActs }: PageComponentProps) {
   return (
     <div className="col-span-1 lg:col-span-8">
       <div className="flex items-center justify-between">
-        <h2 className="">Últimas Publicações</h2>
+        <h2>Últimas Publicações</h2>
 
         <div className="flex flex-col items-end gap-1 text-nowrap md:flex-row md:gap-3">
           <Badge variant="accent">{`Exibindo ${notarialActs.docs.length} registros`}</Badge>

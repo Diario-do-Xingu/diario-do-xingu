@@ -1,4 +1,4 @@
-import { NOTARIAL_ACTS_ARCHIVE_LIMIT, COLLECTION_SLUGS } from '@/constants'
+import { ARCHIVE_LIMIT, COLLECTION_SLUGS } from '@/constants'
 import { notFound } from 'next/navigation'
 import { PageComponent } from './PageComponent'
 import { Metadata } from 'next'
@@ -17,8 +17,7 @@ export default async function Page({ searchParams }: Args) {
 
   const notarialActs = await payload.find({
     collection: COLLECTION_SLUGS.NotarialActs,
-    depth: 1,
-    limit: NOTARIAL_ACTS_ARCHIVE_LIMIT,
+    limit: ARCHIVE_LIMIT.NotarialActs,
     page: page,
     overrideAccess: false,
     sort: '-publishedAt',

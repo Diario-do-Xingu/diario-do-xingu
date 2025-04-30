@@ -9,8 +9,8 @@ import { getClientSideURL } from '@/utilities/getURL'
 export const ImageMedia: React.FC<MediaProps> = (props) => {
   if (typeof props.resource === 'number' || typeof props.resource === 'string') return null
 
-  const { fill, imgClassName, resource } = props
-  const { alt, height, filename, width, updatedAt } = resource
+  const { fill, imgClassName, resource, alt } = props
+  const { height, filename, width, updatedAt } = resource
 
   const cacheTag = updatedAt
   const src = `${getClientSideURL()}/media/${filename}?${cacheTag}`
@@ -18,7 +18,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   return (
     <picture>
       <NextImage
-        alt={alt}
+        alt={alt ?? 'Image'}
         className={cn(imgClassName)}
         fill={fill}
         height={!fill ? height! : undefined}

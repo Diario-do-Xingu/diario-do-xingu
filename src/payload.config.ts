@@ -1,7 +1,7 @@
 // storage-adapter-import-placeholder
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -19,6 +19,10 @@ import { NotarialActs } from '@/payload/collections/NotarialActs'
 import { SiteInfo } from '@/payload/globals/SiteInfo'
 import { Advertisement } from '@/payload/globals/Advertisement'
 import { SiteMetadata } from '@/payload/globals/Metadata'
+import { News } from '@/payload/collections/News'
+import { Authors } from '@/payload/collections/Authors'
+import { NewsCategories } from '@/payload/collections/News/categories'
+import { defaultLexical } from '@/payload/fields/defaultLexical'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -36,9 +40,9 @@ export default buildConfig({
       pt,
     },
   },
-  collections: [NotarialActs, Media, Users],
+  collections: [News, NotarialActs, Authors, NewsCategories, Media, Users],
   globals: [SiteInfo, Advertisement, SiteMetadata],
-  editor: lexicalEditor(),
+  editor: defaultLexical,
   secret: env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

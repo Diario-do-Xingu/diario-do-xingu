@@ -5,6 +5,7 @@ export interface Props {
   // htmlElement?: ElementType | null
   // pictureClassName?: string
   imgClassName?: string
+  alt?: string
   // onClick?: () => void
   // onLoad?: () => void
   // loading?: 'lazy' | 'eager' // for NextImage only

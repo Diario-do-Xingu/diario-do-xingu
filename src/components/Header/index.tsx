@@ -3,7 +3,7 @@ import { getCachedGlobal } from '@/utilities/getGlobals'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import Link from 'next/link'
-import { writingDate, formatDateTime } from '@/utilities/formatDate'
+import { writingDate } from '@/utilities/formatDate'
 import { cn } from '@/utilities/ui'
 import { getSocialIcon } from '@/utilities/getSocialIcon'
 import { SiteInfo } from '@/payload-types'
@@ -11,7 +11,6 @@ import { COLLECTION_URL_PATHS, COLLECTION_SLUGS } from '@/constants'
 
 const date = new Date(Date.now())
 const formattedDate = writingDate(date.getTime())
-const shortDate = formatDateTime(date.toISOString())
 
 const colors = ['text-primary', 'text-secondary', 'text-tertiary', 'text-accent']
 
@@ -22,7 +21,7 @@ const links = [
   },
   {
     label: 'editorias',
-    link: '#',
+    link: `/${COLLECTION_URL_PATHS.News}`,
   },
   {
     label: 'publicações legais',
@@ -68,11 +67,10 @@ export async function Header() {
         <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-white to-transparent"></div>
       </div>
 
-      <div className="container grid grid-cols-3 items-center py-4 text-primary-foreground lg:py-2">
+      <div className="container grid grid-cols-2 items-center py-4 text-primary-foreground lg:grid-cols-3 lg:py-2">
         <span className="hidden justify-self-start text-sm lg:block">{formattedDate}</span>
-        <span className="text-md justify-self-start lg:hidden">{shortDate}</span>
 
-        <Link href="/" className="justify-self-center">
+        <Link href="/" className="justify-self-start lg:justify-self-center">
           <ImageMedia resource={siteInfo.logo} imgClassName="w-[400px] md:w-[250px]" />
         </Link>
 
@@ -82,9 +80,9 @@ export async function Header() {
               key={i}
               href={social.link}
               target="_blank"
-              className="size-min rounded-full bg-white/20 p-1.5 transition-all hover:scale-[110%] md:p-2"
+              className="size-min rounded-full bg-white/20 p-2 transition-all hover:scale-[110%]"
             >
-              <FontAwesomeIcon icon={getSocialIcon(social.type)} className="size-5 md:size-7" />
+              <FontAwesomeIcon icon={getSocialIcon(social.type)} className="size-7" />
             </a>
           ))}
         </div>

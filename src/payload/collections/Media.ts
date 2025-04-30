@@ -10,13 +10,7 @@ export const Media: CollectionConfig = {
   access: {
     read: anyone,
   },
-  fields: [
-    {
-      name: 'alt',
-      type: 'text',
-      required: true,
-    },
-  ],
+  fields: [],
   upload: {
     staticDir: 'public/media',
   },
