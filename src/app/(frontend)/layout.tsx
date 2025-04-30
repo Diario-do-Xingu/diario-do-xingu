@@ -62,7 +62,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <>
       <html
-        lang="en"
+        lang="pt"
         className={cn(openSans.variable, varelaRound.variable, globoFont.variable, 'antialiased')}
         suppressHydrationWarning
       >

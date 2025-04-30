@@ -35,6 +35,18 @@ const nextConfig = {
     return config
   },
   transpilePackages: ['@t3-oss/env-nextjs', '@t3-oss/env-core'],
+  async rewrites() {
+    return [
+      {
+        source: `/script.js`,
+        destination: `${process.env.UMAMI_URI}/script.js`,
+      },
+      {
+        source: `/api/send`,
+        destination: `${process.env.UMAMI_URI}/api/send`,
+      },
+    ]
+  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })

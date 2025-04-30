@@ -33,6 +33,9 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    timezones: {
+      defaultTimezone: 'America/Sao_Paulo',
+    },
   },
   i18n: {
     supportedLanguages: {
@@ -44,6 +47,7 @@ export default buildConfig({
   globals: [SiteInfo, Advertisement, SiteMetadata],
   editor: defaultLexical,
   secret: env.PAYLOAD_SECRET || '',
+  serverURL: env.NEXT_PUBLIC_SERVER_URL,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
@@ -58,4 +62,23 @@ export default buildConfig({
     payloadCloudPlugin(),
     // storage-adapter-placeholder
   ],
+  jobs: {
+    access: {
+      run: ({ req }): boolean => {
+        if (req.user) return true
+        const authHeader = req.headers.get('authorization')
+        return authHeader === `Bearer ${process.env.CRON_SECRET}`
+      },
+    },
+    tasks: [],
+    // autoRun: [
+    //   {
+    //     cron: '* * * * *',
+    //     queue: 'default',
+    //   },
+    // ],
+    // shouldAutoRun: () => {
+    //   return true
+    // },
+  },
 })

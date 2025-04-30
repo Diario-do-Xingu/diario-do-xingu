@@ -65,7 +65,7 @@ export function Umami({ src, trackOutboundLinks, ...props }: UmamiProps) {
 
   return (
     <>
-      <Script async defer src={src} {...dataAttributes} />
+      <Script async defer src="/script.js" {...dataAttributes} />
 
       {/* track outbound links */}
       {trackOutboundLinks && (

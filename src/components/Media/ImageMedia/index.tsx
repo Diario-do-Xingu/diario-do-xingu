@@ -10,10 +10,9 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   if (typeof props.resource === 'number' || typeof props.resource === 'string') return null
 
   const { fill, imgClassName, resource, alt } = props
-  const { height, filename, width, updatedAt } = resource
+  const { height, filename, width } = resource
 
-  const cacheTag = updatedAt
-  const src = `${getClientSideURL()}/media/${filename}?${cacheTag}`
+  const src = `${getClientSideURL()}/media/${filename}`
 
   return (
     <picture>
