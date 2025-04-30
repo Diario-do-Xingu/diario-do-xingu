@@ -12,6 +12,8 @@ import { Media } from '@/payload-types'
 import { getPayload } from '@/lib/payload/getPayload'
 import { Metadata } from 'next'
 import { COLLECTION_SLUGS } from '@/constants'
+import { Umami } from '@/lib/umami'
+import { env } from '@/env'
 
 const globoFont = localFont({
   src: [
@@ -36,10 +38,9 @@ const globoFont = localFont({
       weight: '800',
     },
   ],
-  // src: '../../fonts/globo.woff2',
+
   display: 'swap',
   variable: '--font-globo',
-  // weight: '500',
 })
 
 const openSans = Open_Sans({
@@ -59,16 +60,29 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
-    <html
-      lang="en"
-      className={cn(openSans.variable, varelaRound.variable, globoFont.variable, 'antialiased')}
-    >
-      <body>
-        <Header />
-        <main>{children}</main>
-        <Footer />
-      </body>
-    </html>
+    <>
+      <html
+        lang="en"
+        className={cn(openSans.variable, varelaRound.variable, globoFont.variable, 'antialiased')}
+        suppressHydrationWarning
+      >
+        {!!env.UMAMI_WEBSITE_ID && !!env.UMAMI_URI && (
+          <Umami
+            umamiWebsiteId={env.UMAMI_WEBSITE_ID}
+            src={env.UMAMI_URI}
+            umamiAutoTrack={true}
+            umamiExcludeSearch
+            trackOutboundLinks
+          />
+        )}
+
+        <body>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </body>
+      </html>
+    </>
   )
 }
 

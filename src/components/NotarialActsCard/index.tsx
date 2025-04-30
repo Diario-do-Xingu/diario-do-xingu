@@ -60,7 +60,12 @@ export function NotarialActsCard(props: NotarialActsCardProps) {
       </Link>
 
       <CardFooter className="flex flex-col items-stretch gap-2">
-        <a href={downloadLink} target="_blank">
+        <a
+          href={downloadLink}
+          target="_blank"
+          data-umami-event="download-ato-notarial"
+          data-umami-event-item={key}
+        >
           <Badge className="flex gap-2 bg-zinc-300 py-1 text-sm text-blue-600 underline hover:bg-zinc-100">
             <Download />
             {filename}

@@ -18,7 +18,7 @@ const colors = ['text-primary', 'text-secondary', 'text-tertiary', 'text-accent'
 const links = [
   {
     label: 'home',
-    link: '#',
+    link: '/',
   },
   {
     label: 'editorias',
@@ -55,7 +55,7 @@ export async function Header() {
               href={link.link}
               key={i}
               className={cn(
-                'font-globo whitespace-nowrap border-y-4 border-transparent border-b-transparent px-1 py-1 text-lg font-bold transition-colors hover:border-b-red-400',
+                'whitespace-nowrap border-y-4 border-transparent border-b-transparent px-1 py-1 font-globo text-lg font-bold transition-colors hover:border-b-red-400',
                 link.color ? link.color : colors[i % colors.length],
                 'hover:border-b-current',
               )}

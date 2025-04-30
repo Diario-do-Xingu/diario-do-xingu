@@ -15,7 +15,7 @@ export async function Advertisement() {
 
   const { image, link } = sideBarAdvertisement
 
-  const imageComponent = <ImageMedia resource={image as Media} imgClassName="w-full" />
+  const imageComponent = <ImageMedia resource={image as Media} imgClassName="w-full rounded-lg" />
   const component = link ? <Link href={link}>{imageComponent}</Link> : <div>{imageComponent}</div>
 
   return <Card className="top-44 bg-[#F8F8F8] p-3 lg:sticky">{component}</Card>
