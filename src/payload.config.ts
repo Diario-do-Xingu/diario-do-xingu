@@ -61,6 +61,9 @@ export default buildConfig({
     // Mongoose-specific arguments go here.
     // URL is required.
     url: env.DATABASE_URI || '',
+    connectOptions: {
+      dbName: 'diario-do-xingu',
+    },
   }),
   sharp,
   plugins: [

@@ -18,23 +18,23 @@ import { env } from '@/env'
 const globoFont = localFont({
   src: [
     {
-      path: '../../fonts/globo.woff2',
+      path: '../../assets/fonts/globo.woff2',
       weight: '400',
     },
     {
-      path: '../../fonts/globo.woff2',
+      path: '../../assets/fonts/globo.woff2',
       weight: '500',
     },
     {
-      path: '../../fonts/globo.woff2',
+      path: '../../assets/fonts/globo.woff2',
       weight: '600',
     },
     {
-      path: '../../fonts/globo.woff2',
+      path: '../../assets/fonts/globo.woff2',
       weight: '700',
     },
     {
-      path: '../../fonts/globo.woff2',
+      path: '../../assets/fonts/globo.woff2',
       weight: '800',
     },
   ],
@@ -76,50 +76,50 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         )}
 
         <body>
-          <Header />
+          {/* <Header /> */}
           <main>{children}</main>
-          <Footer />
+          {/* <Footer /> */}
         </body>
       </html>
     </>
   )
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const payload = await getPayload()
+// export async function generateMetadata(): Promise<Metadata> {
+//   const payload = await getPayload()
 
-  const siteMetadata = await payload.findGlobal({
-    slug: COLLECTION_SLUGS.SiteMetadata,
-  })
+//   const siteMetadata = await payload.findGlobal({
+//     slug: COLLECTION_SLUGS.SiteMetadata,
+//   })
 
-  const cardShareImage = siteMetadata.cardShareImage
-  let shareImage = cardShareImage as Media
+//   const cardShareImage = siteMetadata.cardShareImage
+//   let shareImage = cardShareImage as Media
 
-  if (typeof cardShareImage === 'number') {
-    shareImage = await (
-      await getPayload()
-    ).findByID({
-      collection: 'media',
-      id: cardShareImage,
-    })
-  }
+//   if (typeof cardShareImage === 'number') {
+//     shareImage = await (
+//       await getPayload()
+//     ).findByID({
+//       collection: 'media',
+//       id: cardShareImage,
+//     })
+//   }
 
-  return {
-    metadataBase: new URL(getServerSideURL()),
-    description: siteMetadata.siteDescription,
-    title: siteMetadata.siteTitle,
-    openGraph: await mergeOpenGraph(),
-    twitter: {
-      card: 'summary_large_image',
-      title: siteMetadata.siteTitle,
-      description: siteMetadata.siteDescription,
-      images: [
-        {
-          url: `${getServerSideURL()}/media/${shareImage.filename}`,
-          secureUrl: `${getServerSideURL()}/media/${shareImage.filename}`,
-          alt: siteMetadata.cardShareImageAlt ?? siteMetadata.siteTitle,
-        },
-      ],
-    },
-  }
-}
+//   return {
+//     metadataBase: new URL(getServerSideURL()),
+//     description: siteMetadata.siteDescription,
+//     title: siteMetadata.siteTitle,
+//     openGraph: await mergeOpenGraph(),
+//     twitter: {
+//       card: 'summary_large_image',
+//       title: siteMetadata.siteTitle,
+//       description: siteMetadata.siteDescription,
+//       images: [
+//         {
+//           url: `${getServerSideURL()}/media/${shareImage.filename}`,
+//           secureUrl: `${getServerSideURL()}/media/${shareImage.filename}`,
+//           alt: siteMetadata.cardShareImageAlt ?? siteMetadata.siteTitle,
+//         },
+//       ],
+//     },
+//   }
+// }

@@ -1,5 +1,5 @@
 import { ImageMedia } from '@/components/Media/ImageMedia'
-import { getCachedGlobal } from '@/utilities/getGlobals'
+import { getCachedGlobal, getGlobal } from '@/utilities/getGlobals'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import Link from 'next/link'
@@ -43,7 +43,7 @@ const links = [
 ]
 
 export async function Header() {
-  const siteInfo = (await getCachedGlobal(COLLECTION_SLUGS.SiteInfo, 1)()) as SiteInfo
+  const siteInfo = (await getGlobal(COLLECTION_SLUGS.SiteInfo)) as SiteInfo
 
   return (
     <header className="sticky top-0 z-50 mb-10 border-b-4 border-b-secondary bg-primary">
