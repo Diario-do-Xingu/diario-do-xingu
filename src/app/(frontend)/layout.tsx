@@ -99,20 +99,23 @@ export async function generateMetadata(): Promise<Metadata> {
     })
   }
 
+  const title = siteMetadata.siteTitle || 'Diário do Xingu - Portal de Notícias'
+  const description = siteMetadata.siteDescription || 'Jornal Diário do Xingu'
+
   return {
     metadataBase: new URL(getServerSideURL()),
-    description: siteMetadata.siteDescription,
-    title: siteMetadata.siteTitle,
+    description,
+    title,
     openGraph: mergeOpenGraph({
-      description: siteMetadata.siteDescription || undefined,
+      description,
       siteName: siteMetadata.siteName || undefined,
-      title: siteMetadata.siteTitle || undefined,
+      title,
       images,
     }),
     twitter: {
       card: 'summary_large_image',
-      title: siteMetadata.siteTitle || undefined,
-      description: siteMetadata.siteDescription || undefined,
+      title,
+      description,
       images,
     },
   }

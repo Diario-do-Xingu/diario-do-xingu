@@ -1,7 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { v4 as uuidV4 } from 'uuid'
 import { changeFilename } from './hooks/changeFilename'
-import { populatePublishedAt } from './hooks/populatePublishedAt'
 import { revalidateDelete, revalidateNotarialActs } from './hooks/revalidateNotarialActs'
 
 import { slugField } from '@/payload/fields/slug'
@@ -57,7 +56,14 @@ export const NotarialActs: CollectionConfig = {
         position: 'sidebar',
       },
       hooks: {
-        beforeChange: [populatePublishedAt],
+        beforeChange: [
+          ({ siblingData, value }) => {
+            if (siblingData._status === 'published' && !value) {
+              return new Date()
+            }
+            return value
+          },
+        ],
       },
     },
     {

@@ -1,8 +1,8 @@
-import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
+import type { BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
 
 import { revalidatePath } from 'next/cache'
 import { News } from '@/payload-types'
-import { COLLECTION_URL_PATHS } from '@/constants'
+import { ARCHIVE_LIMIT, COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 
 export const revalidateNews: CollectionAfterChangeHook<News> = ({
   doc,
@@ -16,6 +16,7 @@ export const revalidateNews: CollectionAfterChangeHook<News> = ({
       payload.logger.info(`Revalidating news at path: ${path}`)
 
       revalidatePath(path)
+      revalidatePaths(payload)
       // revalidateTag('news-sitemap')
     }
 
@@ -26,6 +27,7 @@ export const revalidateNews: CollectionAfterChangeHook<News> = ({
       payload.logger.info(`Revalidating old news at path: ${oldPath}`)
 
       revalidatePath(oldPath)
+      revalidatePaths(payload)
       // revalidateTag('news-sitemap')
     }
   }
@@ -38,10 +40,28 @@ export const revalidateDelete: CollectionAfterDeleteHook<News> = ({
 }) => {
   if (!context.disableRevalidate) {
     const path = `/${COLLECTION_URL_PATHS.News}/${doc?.slug}`
+
     payload.logger.info(`Revalidating deleted news at path: ${path}`)
+
     revalidatePath(path)
+    revalidatePaths(payload)
     // revalidateTag('news-sitemap')
   }
 
   return doc
+}
+
+async function revalidatePaths(payload: BasePayload) {
+  const { totalDocs } = await payload.count({
+    collection: COLLECTION_SLUGS.News,
+    overrideAccess: false,
+  })
+
+  const totalPages = Math.ceil(totalDocs / ARCHIVE_LIMIT.News)
+
+  for (let i = 1; i <= totalPages; i++) {
+    const path = `/${COLLECTION_URL_PATHS.News}/page/${i}`
+    payload.logger.info(`Revalidating path: ${path}`)
+    revalidatePath(path)
+  }
 }

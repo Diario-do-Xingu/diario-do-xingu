@@ -11,13 +11,8 @@ import { COLLECTION_URL_PATHS } from '@/constants'
 import { env } from '@/env'
 import { formatDateTime } from '@/utilities/formatDate'
 
-export type NotarialActData = Pick<
-  NotarialAct,
-  'heading' | 'content' | 'filename' | 'key' | 'publishedAt'
->
-
 type NotarialActsCardProps = {
-  doc: NotarialActData
+  doc: NotarialAct
 }
 
 export function NotarialActsCard(props: NotarialActsCardProps) {
@@ -59,19 +54,21 @@ export function NotarialActsCard(props: NotarialActsCardProps) {
         </CardContent>
       </Link>
 
-      <CardFooter className="flex flex-col items-stretch gap-2">
-        <a
-          href={downloadLink}
-          target="_blank"
-          data-umami-event="download-ato-notarial"
-          data-umami-event-item={key}
-        >
-          <Badge className="flex gap-2 bg-zinc-300 py-1 text-sm text-blue-600 underline hover:bg-zinc-100">
-            <Download />
-            {filename}
-          </Badge>
-        </a>
-      </CardFooter>
+      {filename && (
+        <CardFooter className="flex flex-col items-stretch gap-2">
+          <a
+            href={downloadLink}
+            target="_blank"
+            data-umami-event="download-ato-notarial"
+            data-umami-event-item={key}
+          >
+            <Badge className="flex gap-2 bg-zinc-300 py-1 text-sm text-blue-600 underline hover:bg-zinc-100">
+              <Download />
+              {filename}
+            </Badge>
+          </a>
+        </CardFooter>
+      )}
     </Card>
   )
 }

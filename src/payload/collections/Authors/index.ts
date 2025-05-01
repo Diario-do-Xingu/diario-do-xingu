@@ -1,8 +1,12 @@
 import { COLLECTION_SLUGS } from '@/constants'
+import { anyone } from '@/payload/access/anyone'
 import type { CollectionConfig } from 'payload'
 
 export const Authors: CollectionConfig = {
   slug: COLLECTION_SLUGS.Authors,
+  access: {
+    read: anyone,
+  },
   labels: {
     plural: 'Autores',
     singular: 'Autor',
