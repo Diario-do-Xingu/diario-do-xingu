@@ -130,7 +130,11 @@ export const News: CollectionConfig = {
 
       relationTo: COLLECTION_SLUGS.NewsCategories,
     },
-    ...slugField('heading'),
+    ...slugField('heading', {
+      slugOverrides: {
+        unique: true,
+      },
+    }),
   ],
   hooks: {
     afterChange: [revalidateNews],

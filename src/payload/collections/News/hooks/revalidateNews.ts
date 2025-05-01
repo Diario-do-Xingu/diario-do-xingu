@@ -59,8 +59,9 @@ async function revalidatePaths(payload: BasePayload) {
 
   const totalPages = Math.ceil(totalDocs / ARCHIVE_LIMIT.News)
 
-  revalidatePath(`/${COLLECTION_URL_PATHS.News}`)
-  payload.logger.info(`Revalidating path: ${COLLECTION_URL_PATHS.News}`)
+  const rootPath = `/${COLLECTION_URL_PATHS.News}`
+  revalidatePath(rootPath)
+  payload.logger.info(`Revalidating path: ${rootPath}`)
 
   for (let i = 1; i <= totalPages; i++) {
     const path = `/${COLLECTION_URL_PATHS.News}/page/${i}`

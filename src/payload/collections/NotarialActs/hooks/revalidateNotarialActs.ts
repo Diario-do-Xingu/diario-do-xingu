@@ -58,8 +58,9 @@ async function revalidatePaths(payload: BasePayload) {
 
   const totalPages = Math.ceil(totalDocs / ARCHIVE_LIMIT.NotarialActs)
 
-  revalidatePath(`/${COLLECTION_URL_PATHS.NotarialActs}`)
-  payload.logger.info(`Revalidating path: ${COLLECTION_URL_PATHS.NotarialActs}`)
+  const rootPath = `/${COLLECTION_URL_PATHS.NotarialActs}`
+  revalidatePath(rootPath)
+  payload.logger.info(`Revalidating path: ${rootPath}`)
 
   for (let i = 1; i <= totalPages; i++) {
     const path = `/${COLLECTION_URL_PATHS.NotarialActs}/page/${i}`
