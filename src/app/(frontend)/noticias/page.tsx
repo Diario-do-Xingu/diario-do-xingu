@@ -4,6 +4,8 @@ import { ARCHIVE_LIMIT, COLLECTION_SLUGS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
 import { PageComponent } from './PageComponent'
 
+export const revalidate = 600
+
 export default async function NewsList() {
   const payload = await getPayload()
 
@@ -12,14 +14,6 @@ export default async function NewsList() {
     limit: ARCHIVE_LIMIT.News,
     overrideAccess: false,
     sort: '-publishedAt',
-    select: {
-      heading: true,
-      subheading: true,
-      publishedAt: true,
-      category: true,
-      heroImage: true,
-      slug: true,
-    },
   })
 
   return <PageComponent news={news} />

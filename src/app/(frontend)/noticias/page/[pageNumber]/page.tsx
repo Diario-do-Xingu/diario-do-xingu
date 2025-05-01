@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation'
 
 import { PageComponent } from '../../PageComponent'
 
+export const revalidate = 600
+
 type Args = {
   params: Promise<{
     pageNumber: string
@@ -25,15 +27,25 @@ export default async function Page({ params: paramsPromise }: Args) {
     overrideAccess: false,
     page: sanitizedPageNumber,
     sort: '-publishedAt',
-    select: {
-      heading: true,
-      subheading: true,
-      publishedAt: true,
-      category: true,
-      heroImage: true,
-      slug: true,
-    },
   })
 
   return <PageComponent news={news} />
+}
+
+export async function generateStaticParams() {
+  const payload = await getPayload({ config: configPromise })
+  const { totalDocs } = await payload.count({
+    collection: COLLECTION_SLUGS.News,
+    overrideAccess: false,
+  })
+
+  const totalPages = Math.ceil(totalDocs / 10)
+
+  const pages: { pageNumber: string }[] = []
+
+  for (let i = 1; i <= totalPages; i++) {
+    pages.push({ pageNumber: String(i) })
+  }
+
+  return pages
 }

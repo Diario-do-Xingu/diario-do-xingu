@@ -6,14 +6,14 @@ import { Card } from '../ui/card'
 import { COLLECTION_SLUGS } from '@/constants'
 
 export async function Advertisement() {
-  const { sideBarAdvertisement } = (await getCachedGlobal(
+  const advertisement = (await getCachedGlobal(
     COLLECTION_SLUGS.Advertisement,
-    1,
+    2,
   )()) as AdvertisementType
 
-  if (!sideBarAdvertisement || !sideBarAdvertisement.image) return null
+  if (!advertisement.sideBarAdvertisement || !advertisement.sideBarAdvertisement.image) return null
 
-  const { image, link } = sideBarAdvertisement
+  const { image, link } = advertisement.sideBarAdvertisement
 
   const imageComponent = <ImageMedia resource={image as Media} imgClassName="w-full rounded-lg" />
   const component = link ? <Link href={link}>{imageComponent}</Link> : <div>{imageComponent}</div>

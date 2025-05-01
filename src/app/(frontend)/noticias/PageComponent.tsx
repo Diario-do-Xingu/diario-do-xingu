@@ -11,9 +11,7 @@ import { PaginatedDocs } from 'payload'
 import { Fragment } from 'react'
 
 type PageComponentProps = {
-  news: PaginatedDocs<
-    Pick<News, 'heading' | 'subheading' | 'publishedAt' | 'category' | 'heroImage' | 'slug'>
-  >
+  news: PaginatedDocs<News>
 }
 
 export function PageComponent({ news }: PageComponentProps) {

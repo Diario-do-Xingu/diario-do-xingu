@@ -1,5 +1,4 @@
-import { ImageMedia } from '@/components/Media/ImageMedia'
-import { getCachedGlobal, getGlobal } from '@/utilities/getGlobals'
+import { getCachedGlobal } from '@/utilities/getGlobals'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import Link from 'next/link'
@@ -55,7 +54,7 @@ export async function Header() {
       <div className="relative w-full bg-white">
         <div className="container flex gap-4 overflow-auto">
           {links.map((link, i) => (
-            <a
+            <Link
               href={link.link}
               key={i}
               className={cn(
@@ -65,7 +64,7 @@ export async function Header() {
               )}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
 
