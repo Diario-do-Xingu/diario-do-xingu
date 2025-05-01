@@ -2,6 +2,8 @@ import { ARCHIVE_LIMIT, COLLECTION_SLUGS } from '@/constants'
 import { PageComponent } from './PageComponent'
 import { getPayload } from '@/lib/payload/getPayload'
 
+export const revalidate = 600
+
 export default async function Page() {
   const payload = await getPayload()
 
