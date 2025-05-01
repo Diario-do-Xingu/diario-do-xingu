@@ -1,7 +1,49 @@
+import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
+import { Media, SiteMetadatum } from '@/payload-types'
+import { getCachedGlobal } from '@/utilities/getGlobals'
+import { getServerSideURL } from '@/utilities/getURL'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { Metadata } from 'next'
 import React from 'react'
 
 export default async function PageLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return <div className="container grid grid-cols-1 gap-10 lg:grid-cols-12">{children}</div>
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const siteMetadata = (await getCachedGlobal(COLLECTION_SLUGS.SiteMetadata, 2)()) as SiteMetadatum
+
+  const shareImage = siteMetadata.cardShareImage as Media | undefined
+  const images: { url: string; secureUrl: string; alt?: string }[] = []
+
+  if (shareImage) {
+    images.push({
+      url: shareImage.url || `${getServerSideURL()}/media/${shareImage.filename}`,
+      secureUrl: shareImage.url || `${getServerSideURL()}/media/${shareImage.filename}`,
+      alt: shareImage.alt || undefined,
+    })
+  }
+
+  const title = 'Notícias'
+  const description = [title, siteMetadata.siteDescription].filter(Boolean).join(' - ')
+
+  return {
+    description,
+    title,
+    openGraph: mergeOpenGraph({
+      description,
+      siteName: siteMetadata.siteName || undefined,
+      title,
+      images,
+      url: `${getServerSideURL()}/${COLLECTION_URL_PATHS.News}`,
+    }),
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images,
+    },
+  }
 }

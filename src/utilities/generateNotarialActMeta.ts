@@ -29,7 +29,7 @@ export async function generateNotarialActMeta(): Promise<Metadata> {
     metadataBase: new URL(getServerSideURL()),
     title: title,
     description: description,
-    openGraph: await mergeOpenGraph({
+    openGraph: mergeOpenGraph({
       description: description,
       title: `${siteMetadata.siteName} - Publicações Legais`,
       url: `${getServerSideURL()}/${COLLECTION_URL_PATHS.NotarialActs}`,

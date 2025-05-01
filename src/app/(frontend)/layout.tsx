@@ -86,7 +86,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const siteMetadata = (await getCachedGlobal(COLLECTION_SLUGS.SiteMetadata, 1)()) as SiteMetadatum
+  const siteMetadata = (await getCachedGlobal(COLLECTION_SLUGS.SiteMetadata, 2)()) as SiteMetadatum
 
   const shareImage = siteMetadata.cardShareImage as Media | undefined
   const images: { url: string; secureUrl: string; alt?: string }[] = []
