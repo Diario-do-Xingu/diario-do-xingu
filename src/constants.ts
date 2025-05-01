@@ -1,8 +1,5 @@
 export const WEBSITE_TITLE = 'Diário do Xingu' as const
 
-// TODO: Move to ARCHIVE_LIMIT
-export const NOTARIAL_ACTS_ARCHIVE_LIMIT = 10 as const
-
 export const ARCHIVE_LIMIT = {
   News: 10,
   NotarialActs: 10,

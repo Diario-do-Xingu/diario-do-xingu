@@ -1,6 +1,6 @@
 // storage-adapter-import-placeholder
-import { postgresAdapter } from '@payloadcms/db-postgres'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
 
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -51,11 +51,16 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  db: postgresAdapter({
-    pool: {
-      connectionString: env.DATABASE_URI || '',
-    },
-    prodMigrations: migrations,
+  // db: postgresAdapter({
+  //   pool: {
+  //     connectionString: env.DATABASE_URI || '',
+  //   },
+  //   prodMigrations: migrations,
+  // }),
+  db: mongooseAdapter({
+    // Mongoose-specific arguments go here.
+    // URL is required.
+    url: env.DATABASE_URI || '',
   }),
   sharp,
   plugins: [

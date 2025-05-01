@@ -69,7 +69,6 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         {!!env.UMAMI_WEBSITE_ID && !!env.UMAMI_URI && (
           <Umami
             umamiWebsiteId={env.UMAMI_WEBSITE_ID}
-            src={env.UMAMI_URI}
             umamiAutoTrack={true}
             umamiExcludeSearch
             trackOutboundLinks

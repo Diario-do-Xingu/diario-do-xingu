@@ -19,7 +19,7 @@ export interface UmamiProps {
   /** A comma-separated list of domains to limit tracking to. */
   umamiDomains?: string
   /** Source URL for the Umami script. Defaults to the official CDN. */
-  src: string
+  src?: string
   /** Additional data attributes for the script tag. */
   [key: `data${string}`]: any
 }
@@ -41,7 +41,7 @@ type UmamiPropKeys = keyof typeof propToDataAttributeMap
  * @param props - The props for the Umami component.
  * @returns A Script element with the Umami analytics script and dynamic data attributes.
  */
-export function Umami({ src, trackOutboundLinks, ...props }: UmamiProps) {
+export function Umami({ trackOutboundLinks, ...props }: UmamiProps) {
   const dataAttributes: Record<string, any> = {}
 
   // Map known Umami props to data attributes

@@ -63,11 +63,7 @@ export const NotarialActs: CollectionConfig = {
     {
       name: 'key',
       type: 'text',
-
-      index: true,
       label: 'Chave',
-      // required: true,
-      unique: true,
       admin: {
         readOnly: true,
         position: 'sidebar',

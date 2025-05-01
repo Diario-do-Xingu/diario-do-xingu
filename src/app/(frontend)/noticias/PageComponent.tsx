@@ -17,9 +17,11 @@ type PageComponentProps = {
 }
 
 export function PageComponent({ news }: PageComponentProps) {
-  const [first, second, third, ...restDocs] = news.docs
+  const { docs } = news
 
-  const filteredFirstThree = [first, second, third].filter(Boolean)
+  const firstListNumber = 6
+  const filteredFirstThree = docs.slice(0, firstListNumber).filter(Boolean)
+  const restDocs = docs.slice(firstListNumber).filter(Boolean)
 
   return (
     <>
@@ -75,33 +77,5 @@ export function PageComponent({ news }: PageComponentProps) {
         <Advertisement />
       </div>
     </>
-
-    // <div className="col-span-1 lg:col-span-8">
-    //   <div className="flex items-center justify-between">
-    //     <h2>Últimas Publicações</h2>
-
-    //     <div className="flex flex-col items-end gap-1 text-nowrap md:flex-row md:gap-3">
-    //       <Badge variant="accent">{`Exibindo ${notarialActs.docs.length} registros`}</Badge>
-    //       <Badge>{`Total ${notarialActs.totalDocs} registros`}</Badge>
-    //     </div>
-    //   </div>
-
-    //   <div className="mb-5 mt-2 h-[1px] bg-foreground"></div>
-
-    //   <div className="flex flex-col gap-3">
-    //     {notarialActs.docs.map((doc) => (
-    //       <NotarialActsCard key={doc.id} doc={doc} />
-    //     ))}
-    //   </div>
-
-    //   {notarialActs.totalPages > 1 && notarialActs.page && (
-    //     <Pagination
-    //       path={COLLECTION_URL_PATHS.NotarialActs}
-    //       page={notarialActs.page}
-    //       totalPages={notarialActs.totalPages}
-    //       className="my-10"
-    //     />
-    //   )}
-    // </div>
   )
 }

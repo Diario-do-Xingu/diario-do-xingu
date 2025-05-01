@@ -92,7 +92,7 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: number;
+    defaultIDType: string;
   };
   globals: {
     'site-info': SiteInfo;
@@ -142,14 +142,14 @@ export interface UserAuthOperations {
  * via the `definition` "news".
  */
 export interface News {
-  id: number;
+  id: string;
   heading: string;
   subheading: string;
   heroImage: {
     /**
      * Image do card da notícia
      */
-    image: number | Media;
+    image: string | Media;
     description?: string | null;
   };
   content: {
@@ -168,8 +168,8 @@ export interface News {
     [k: string]: unknown;
   };
   publishedAt?: string | null;
-  authors?: (number | Author)[] | null;
-  category: number | NewsCategory;
+  authors?: (string | Author)[] | null;
+  category: string | NewsCategory;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -181,7 +181,7 @@ export interface News {
  * via the `definition` "media".
  */
 export interface Media {
-  id: number;
+  id: string;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -199,7 +199,7 @@ export interface Media {
  * via the `definition` "authors".
  */
 export interface Author {
-  id: number;
+  id: string;
   name: string;
   /**
    * Não obrigatório. ex: Diário do Xingu
@@ -213,7 +213,7 @@ export interface Author {
  * via the `definition` "news-categories".
  */
 export interface NewsCategory {
-  id: number;
+  id: string;
   /**
    * Não é possível criar uma categoria que já existe
    */
@@ -228,7 +228,7 @@ export interface NewsCategory {
  * via the `definition` "notarial-acts".
  */
 export interface NotarialAct {
-  id: number;
+  id: string;
   heading: string;
   content: string;
   /**
@@ -259,7 +259,7 @@ export interface NotarialAct {
  * via the `definition` "users".
  */
 export interface User {
-  id: number;
+  id: string;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -276,7 +276,7 @@ export interface User {
  * via the `definition` "payload-jobs".
  */
 export interface PayloadJob {
-  id: number;
+  id: string;
   /**
    * Input data provided to the job
    */
@@ -368,40 +368,40 @@ export interface PayloadJob {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number;
+  id: string;
   document?:
     | ({
         relationTo: 'news';
-        value: number | News;
+        value: string | News;
       } | null)
     | ({
         relationTo: 'notarial-acts';
-        value: number | NotarialAct;
+        value: string | NotarialAct;
       } | null)
     | ({
         relationTo: 'authors';
-        value: number | Author;
+        value: string | Author;
       } | null)
     | ({
         relationTo: 'news-categories';
-        value: number | NewsCategory;
+        value: string | NewsCategory;
       } | null)
     | ({
         relationTo: 'media';
-        value: number | Media;
+        value: string | Media;
       } | null)
     | ({
         relationTo: 'users';
-        value: number | User;
+        value: string | User;
       } | null)
     | ({
         relationTo: 'payload-jobs';
-        value: number | PayloadJob;
+        value: string | PayloadJob;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -411,10 +411,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number;
+  id: string;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   key?: string | null;
   value?:
@@ -434,7 +434,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number;
+  id: string;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -608,8 +608,8 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  * via the `definition` "site-info".
  */
 export interface SiteInfo {
-  id: number;
-  logo: number | Media;
+  id: string;
+  logo: string | Media;
   contacts?: {
     phone?: {
       value?: string | null;
@@ -633,9 +633,9 @@ export interface SiteInfo {
  * via the `definition` "advertisement".
  */
 export interface Advertisement {
-  id: number;
+  id: string;
   sideBarAdvertisement?: {
-    image?: (number | null) | Media;
+    image?: (string | null) | Media;
     link?: string | null;
   };
   updatedAt?: string | null;
@@ -646,11 +646,11 @@ export interface Advertisement {
  * via the `definition` "site-metadata".
  */
 export interface SiteMetadatum {
-  id: number;
+  id: string;
   /**
    * Image que aparece no card quando compartilha link
    */
-  cardShareImage: number | Media;
+  cardShareImage: string | Media;
   cardShareImageAlt?: string | null;
   siteName: string;
   siteTitle: string;
@@ -727,14 +727,14 @@ export interface TaskSchedulePublish {
     doc?:
       | ({
           relationTo: 'news';
-          value: number | News;
+          value: string | News;
         } | null)
       | ({
           relationTo: 'notarial-acts';
-          value: number | NotarialAct;
+          value: string | NotarialAct;
         } | null);
     global?: string | null;
-    user?: (number | null) | User;
+    user?: (string | null) | User;
   };
   output?: unknown;
 }
@@ -743,7 +743,7 @@ export interface TaskSchedulePublish {
  * via the `definition` "MediaBlock".
  */
 export interface MediaBlock {
-  media: number | Media;
+  media: string | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';

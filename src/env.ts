@@ -6,27 +6,22 @@ export const env = createEnv({
     DATABASE_URI: z.string().url(),
     PAYLOAD_SECRET: z.string().min(1),
     CRON_SECRET: z.string().min(1),
-    PREVIEW_SECRET: z.string().min(1),
     UMAMI_WEBSITE_ID: z.string().min(1).optional(),
     UMAMI_URI: z.string().url().optional(),
+    SHARP_IGNORE_GLOBAL_LIBVIPS: z.string().min(1).optional(),
   },
   client: {
     NEXT_PUBLIC_SERVER_URL: z.string().url(),
     NEXT_PUBLIC_IS_DEV: z
       .string()
-
-      // only allow "true" or "false".
       .refine((s) => s === 'true' || s === 'false')
-      // transform to boolean
       .transform((s) => s === 'true')
       .default('false'),
 
     // TODO: Remove
     NEXT_PUBLIC_FEATURE_NOTARIAL_ACT_LINK: z
       .string()
-      // only allow "true" or "false".
       .refine((s) => s === 'true' || s === 'false')
-      // transform to boolean
       .transform((s) => s === 'true')
       .default('false'),
   },
