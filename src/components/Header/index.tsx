@@ -43,7 +43,7 @@ const links = [
 ]
 
 export async function Header() {
-  const siteInfo = (await getGlobal(COLLECTION_SLUGS.SiteInfo)) as SiteInfo
+  const siteInfo = (await getGlobal(COLLECTION_SLUGS.SiteInfo, 1)) as SiteInfo
 
   return (
     <header className="sticky top-0 z-50 mb-10 border-b-4 border-b-secondary bg-primary">
