@@ -24,11 +24,10 @@ export const NotarialActs: CollectionConfig = {
   },
   upload: {
     staticDir: 'public/notarial-acts',
-    adminThumbnail: 'thumbnail',
     bulkUpload: false,
-    displayPreview: true,
+    displayPreview: false,
     pasteURL: false,
-    filenameCompoundIndex: ['key'],
+    filesRequiredOnCreate: false,
   },
   fields: [
     {

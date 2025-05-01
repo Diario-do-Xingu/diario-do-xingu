@@ -16,7 +16,7 @@ export const revalidateAdvertisement: GlobalAfterChangeHook = ({
     revalidateTag(`global_${tag}`)
 
     for (const path of paths) {
-      console.log(path)
+      payload.logger.info(`Revalidating ${path}`)
       revalidatePath(path)
     }
   }

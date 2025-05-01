@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { News } from '@/payload-types'
 import { ARCHIVE_LIMIT, COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 
-export const revalidateNews: CollectionAfterChangeHook<News> = ({
+export const revalidateNews: CollectionAfterChangeHook<News> = async ({
   doc,
   previousDoc,
   req: { payload, context },
@@ -16,7 +16,7 @@ export const revalidateNews: CollectionAfterChangeHook<News> = ({
       payload.logger.info(`Revalidating news at path: ${path}`)
 
       revalidatePath(path)
-      revalidatePaths(payload)
+      await revalidatePaths(payload)
       // revalidateTag('news-sitemap')
     }
 
@@ -27,14 +27,14 @@ export const revalidateNews: CollectionAfterChangeHook<News> = ({
       payload.logger.info(`Revalidating old news at path: ${oldPath}`)
 
       revalidatePath(oldPath)
-      revalidatePaths(payload)
+      await revalidatePaths(payload)
       // revalidateTag('news-sitemap')
     }
   }
   return doc
 }
 
-export const revalidateDelete: CollectionAfterDeleteHook<News> = ({
+export const revalidateDelete: CollectionAfterDeleteHook<News> = async ({
   doc,
   req: { context, payload },
 }) => {
@@ -44,7 +44,7 @@ export const revalidateDelete: CollectionAfterDeleteHook<News> = ({
     payload.logger.info(`Revalidating deleted news at path: ${path}`)
 
     revalidatePath(path)
-    revalidatePaths(payload)
+    await revalidatePaths(payload)
     // revalidateTag('news-sitemap')
   }
 

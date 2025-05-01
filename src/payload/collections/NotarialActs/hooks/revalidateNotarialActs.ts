@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { NotarialAct } from '@/payload-types'
 import { ARCHIVE_LIMIT, COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 
-export const revalidateNotarialActs: CollectionAfterChangeHook<NotarialAct> = ({
+export const revalidateNotarialActs: CollectionAfterChangeHook<NotarialAct> = async ({
   doc,
   req: { payload, context },
   previousDoc,
@@ -16,7 +16,7 @@ export const revalidateNotarialActs: CollectionAfterChangeHook<NotarialAct> = ({
       payload.logger.info(`Revalidating notarial act at path: ${path}`)
 
       revalidatePath(path)
-      revalidatePaths(payload)
+      await revalidatePaths(payload)
       // revalidateTag(`${COLLECTION_URL_PATHS.NotarialActs}-sitemap`)
     }
 
@@ -26,7 +26,7 @@ export const revalidateNotarialActs: CollectionAfterChangeHook<NotarialAct> = ({
       payload.logger.info(`Revalidating old notarial act at path: ${oldPath}`)
 
       revalidatePath(oldPath)
-      revalidatePaths(payload)
+      await revalidatePaths(payload)
 
       // revalidateTag(`${COLLECTION_URL_PATHS.NotarialActs}-sitemap`)
     }
@@ -34,7 +34,7 @@ export const revalidateNotarialActs: CollectionAfterChangeHook<NotarialAct> = ({
   return doc
 }
 
-export const revalidateDelete: CollectionAfterDeleteHook<NotarialAct> = ({
+export const revalidateDelete: CollectionAfterDeleteHook<NotarialAct> = async ({
   doc,
   req: { context, payload },
 }) => {
@@ -44,7 +44,7 @@ export const revalidateDelete: CollectionAfterDeleteHook<NotarialAct> = ({
     payload.logger.info(`Revalidating deleted notarial act at path: ${path}`)
 
     revalidatePath(path)
-    revalidatePaths(payload)
+    await revalidatePaths(payload)
     // revalidateTag(`${COLLECTION_URL_PATHS.NotarialActs}-sitemap`)
   }
   return doc

@@ -4,8 +4,6 @@ import { ARCHIVE_LIMIT, COLLECTION_SLUGS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
 import { PageComponent } from './PageComponent'
 
-export const revalidate = 600
-
 export default async function NewsList() {
   const payload = await getPayload()
 
