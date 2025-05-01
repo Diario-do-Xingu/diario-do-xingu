@@ -6,14 +6,15 @@ import Link from 'next/link'
 import { writingDate } from '@/utilities/formatDate'
 import { cn } from '@/utilities/ui'
 import { getSocialIcon } from '@/utilities/getSocialIcon'
-import { SiteInfo } from '@/payload-types'
+import { Media, SiteInfo } from '@/payload-types'
 import { COLLECTION_URL_PATHS, COLLECTION_SLUGS } from '@/constants'
+import Image from 'next/image'
+import defaultLogo from '@/assets/images/default-logo.png'
 
 const date = new Date(Date.now())
 const formattedDate = writingDate(date.getTime())
 
 const colors = ['text-primary', 'text-secondary', 'text-tertiary', 'text-accent']
-
 const links = [
   {
     label: 'home',
@@ -43,7 +44,11 @@ const links = [
 ]
 
 export async function Header() {
-  const siteInfo = (await getGlobal(COLLECTION_SLUGS.SiteInfo, 1)) as SiteInfo
+  const siteInfo = (await getCachedGlobal(COLLECTION_SLUGS.SiteInfo, 1)()) as SiteInfo
+
+  const hasLogo = 'logo' in siteInfo
+  const logo = siteInfo.logo as Media | undefined
+  const logoAlt = hasLogo ? logo?.alt || 'Logo Diário do Xingu' : ''
 
   return (
     <header className="sticky top-0 z-50 mb-10 border-b-4 border-b-secondary bg-primary">
@@ -71,7 +76,14 @@ export async function Header() {
         <span className="hidden justify-self-start text-sm lg:block">{formattedDate}</span>
 
         <Link href="/" className="justify-self-start lg:justify-self-center">
-          <ImageMedia resource={siteInfo.logo} imgClassName="w-[400px] md:w-[250px]" />
+          <Image
+            alt={logoAlt}
+            className={'w-[200px]'}
+            height={logo?.height || 200}
+            quality={100}
+            src={logo?.url || defaultLogo}
+            width={logo?.width || 200}
+          />
         </Link>
 
         <div className="flex gap-2 justify-self-end">

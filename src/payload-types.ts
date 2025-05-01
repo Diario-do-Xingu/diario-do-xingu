@@ -182,6 +182,7 @@ export interface News {
  */
 export interface Media {
   id: string;
+  alt?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -523,6 +524,7 @@ export interface NewsCategoriesSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -674,11 +676,10 @@ export interface SiteMetadatum {
   /**
    * Image que aparece no card quando compartilha link
    */
-  cardShareImage: string | Media;
-  cardShareImageAlt?: string | null;
-  siteName: string;
-  siteTitle: string;
-  siteDescription: string;
+  cardShareImage?: (string | null) | Media;
+  siteName?: string | null;
+  siteTitle?: string | null;
+  siteDescription?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -732,7 +733,6 @@ export interface AdvertisementSelect<T extends boolean = true> {
  */
 export interface SiteMetadataSelect<T extends boolean = true> {
   cardShareImage?: T;
-  cardShareImageAlt?: T;
   siteName?: T;
   siteTitle?: T;
   siteDescription?: T;

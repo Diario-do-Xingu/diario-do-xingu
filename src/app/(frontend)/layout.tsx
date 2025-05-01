@@ -8,12 +8,12 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import { Media } from '@/payload-types'
-import { getPayload } from '@/lib/payload/getPayload'
+import { Media, SiteMetadatum } from '@/payload-types'
 import { Metadata } from 'next'
 import { COLLECTION_SLUGS } from '@/constants'
 import { Umami } from '@/lib/umami'
 import { env } from '@/env'
+import { getCachedGlobal } from '@/utilities/getGlobals'
 
 const globoFont = localFont({
   src: [
@@ -78,48 +78,42 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <body>
           <Header />
           <main>{children}</main>
-          {/* <Footer /> */}
+          <Footer />
         </body>
       </html>
     </>
   )
 }
 
-// export async function generateMetadata(): Promise<Metadata> {
-//   const payload = await getPayload()
+export async function generateMetadata(): Promise<Metadata> {
+  const siteMetadata = (await getCachedGlobal(COLLECTION_SLUGS.SiteMetadata, 1)()) as SiteMetadatum
 
-//   const siteMetadata = await payload.findGlobal({
-//     slug: COLLECTION_SLUGS.SiteMetadata,
-//   })
+  const shareImage = siteMetadata.cardShareImage as Media | undefined
+  const images: { url: string; secureUrl: string; alt?: string }[] = []
 
-//   const cardShareImage = siteMetadata.cardShareImage
-//   let shareImage = cardShareImage as Media
+  if (shareImage) {
+    images.push({
+      url: shareImage.url || `${getServerSideURL()}/media/${shareImage.filename}`,
+      secureUrl: shareImage.url || `${getServerSideURL()}/media/${shareImage.filename}`,
+      alt: shareImage.alt || undefined,
+    })
+  }
 
-//   if (typeof cardShareImage === 'number') {
-//     shareImage = await (
-//       await getPayload()
-//     ).findByID({
-//       collection: 'media',
-//       id: cardShareImage,
-//     })
-//   }
-
-//   return {
-//     metadataBase: new URL(getServerSideURL()),
-//     description: siteMetadata.siteDescription,
-//     title: siteMetadata.siteTitle,
-//     openGraph: await mergeOpenGraph(),
-//     twitter: {
-//       card: 'summary_large_image',
-//       title: siteMetadata.siteTitle,
-//       description: siteMetadata.siteDescription,
-//       images: [
-//         {
-//           url: `${getServerSideURL()}/media/${shareImage.filename}`,
-//           secureUrl: `${getServerSideURL()}/media/${shareImage.filename}`,
-//           alt: siteMetadata.cardShareImageAlt ?? siteMetadata.siteTitle,
-//         },
-//       ],
-//     },
-//   }
-// }
+  return {
+    metadataBase: new URL(getServerSideURL()),
+    description: siteMetadata.siteDescription,
+    title: siteMetadata.siteTitle,
+    openGraph: mergeOpenGraph({
+      description: siteMetadata.siteDescription || undefined,
+      siteName: siteMetadata.siteName || undefined,
+      title: siteMetadata.siteTitle || undefined,
+      images,
+    }),
+    twitter: {
+      card: 'summary_large_image',
+      title: siteMetadata.siteTitle || undefined,
+      description: siteMetadata.siteDescription || undefined,
+      images,
+    },
+  }
+}

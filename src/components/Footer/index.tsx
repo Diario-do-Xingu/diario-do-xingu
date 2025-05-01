@@ -1,22 +1,36 @@
-import { getCachedGlobal } from '@/utilities/getGlobals'
+import { getCachedGlobal, getGlobal } from '@/utilities/getGlobals'
 import { ImageMedia } from '../Media/ImageMedia'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { getSocialIcon } from '@/utilities/getSocialIcon'
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
-import { SiteInfo } from '@/payload-types'
+import { Media, SiteInfo } from '@/payload-types'
 import { COLLECTION_SLUGS } from '@/constants'
+import Image from 'next/image'
+
+import defaultLogo from '@/assets/images/default-logo.png'
 
 export async function Footer() {
   const siteInfo = (await getCachedGlobal(COLLECTION_SLUGS.SiteInfo, 1)()) as SiteInfo
+
+  const hasLogo = 'logo' in siteInfo
+  const logo = siteInfo.logo as Media | undefined
+  const logoAlt = hasLogo ? logo?.alt || 'Logo Diário do Xingu' : ''
 
   return (
     <footer className="mt-8 border-t-4 border-t-tertiary bg-primary py-3 pb-4 font-varela text-primary-foreground">
       <div className="container">
         <div className="mb-4 grid grid-cols-1 items-center gap-6 lg:grid-cols-3">
           <Link href="/" className="justify-self-center lg:justify-self-start">
-            <ImageMedia resource={siteInfo.logo} imgClassName="w-[200px]" />
+            <Image
+              alt={logoAlt}
+              className={'w-[200px]'}
+              height={logo?.height || 200}
+              quality={100}
+              src={logo?.url || defaultLogo}
+              width={logo?.width || 200}
+            />
           </Link>
 
           <div className="flex flex-col items-center justify-self-center tracking-wide lg:items-start lg:justify-self-center">

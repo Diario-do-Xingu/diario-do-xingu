@@ -5,8 +5,9 @@ import { COLLECTION_SLUGS } from '@/constants'
 
 export const revalidateSiteInfo: GlobalAfterChangeHook = ({ doc, req: { payload, context } }) => {
   if (!context.disableRevalidate) {
-    payload.logger.info(`Revalidating ${COLLECTION_SLUGS.SiteInfo}`)
-    revalidateTag(`global_${COLLECTION_SLUGS.SiteInfo}`)
+    const tag = `global_${COLLECTION_SLUGS.SiteInfo}`
+    payload.logger.info(`Revalidating ${tag}`)
+    revalidateTag(tag)
   }
 
   return doc
