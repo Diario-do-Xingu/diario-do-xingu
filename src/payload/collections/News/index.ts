@@ -1,6 +1,5 @@
 import { COLLECTION_SLUGS } from '@/constants'
 import { CollectionConfig } from 'payload'
-import { populatePublishedAt } from '../NotarialActs/hooks/populatePublishedAt'
 import { slugField } from '@/payload/fields/slug'
 import {
   BlocksFeature,
@@ -12,6 +11,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 import { MediaBlock } from '@/payload/blocks/MediaBlock'
 import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished'
+import { revalidateDelete, revalidateNews } from './hooks/revalidateNews'
 
 export const News: CollectionConfig = {
   slug: COLLECTION_SLUGS.News,
@@ -22,7 +22,6 @@ export const News: CollectionConfig = {
   access: {
     read: authenticatedOrPublished,
   },
-
   admin: {
     useAsTitle: 'heading',
     defaultColumns: ['_status', 'heading', 'subheading', 'publishedAt'],
@@ -38,7 +37,6 @@ export const News: CollectionConfig = {
       name: 'subheading',
       label: 'Sub Título',
       type: 'text',
-      required: true,
     },
     {
       type: 'tabs',
@@ -55,7 +53,7 @@ export const News: CollectionConfig = {
                   name: 'image',
                   type: 'upload',
                   relationTo: 'media',
-                  label: false,
+                  label: 'Arquivo',
                   required: true,
                   admin: {
                     description: 'Image do card da notícia',
@@ -71,7 +69,6 @@ export const News: CollectionConfig = {
             {
               name: 'content',
               type: 'richText',
-
               editor: lexicalEditor({
                 features: ({ rootFeatures }) => {
                   return [
@@ -102,7 +99,14 @@ export const News: CollectionConfig = {
         position: 'sidebar',
       },
       hooks: {
-        beforeChange: [populatePublishedAt],
+        beforeChange: [
+          ({ siblingData, value }) => {
+            if (siblingData._status === 'published' && !value) {
+              return new Date()
+            }
+            return value
+          },
+        ],
       },
     },
     {
@@ -128,6 +132,10 @@ export const News: CollectionConfig = {
     },
     ...slugField('heading'),
   ],
+  hooks: {
+    afterChange: [revalidateNews],
+    afterDelete: [revalidateDelete],
+  },
   versions: {
     drafts: {
       schedulePublish: true,

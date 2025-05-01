@@ -42,7 +42,9 @@ export function NewsCard(props: NewsCartProps) {
       <div className="flex flex-col gap-2.5 lg:col-span-7 lg:py-3">
         <div className="flex flex-col gap-1">
           <h3 className="font-globo text-xl font-bold leading-snug lg:text-2xl">{doc.heading}</h3>
-          <h6 className="text-sm font-semibold leading-snug text-zinc-600">{doc.subheading}</h6>
+          {doc.subheading && (
+            <h6 className="text-sm font-semibold leading-snug text-zinc-600">{doc.subheading}</h6>
+          )}
         </div>
 
         <Badge variant="accent" className={cn('mt-2 w-max')}>

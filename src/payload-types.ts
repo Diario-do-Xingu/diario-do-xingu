@@ -144,7 +144,7 @@ export interface UserAuthOperations {
 export interface News {
   id: string;
   heading: string;
-  subheading: string;
+  subheading?: string | null;
   heroImage: {
     /**
      * Image do card da notícia
