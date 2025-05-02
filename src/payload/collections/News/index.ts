@@ -1,4 +1,4 @@
-import { COLLECTION_SLUGS } from '@/constants'
+import { ARCHIVE_LIMIT, COLLECTION_SLUGS } from '@/constants'
 import { CollectionConfig } from 'payload'
 import { slugField } from '@/payload/fields/slug'
 import {
@@ -28,15 +28,6 @@ export const News: CollectionConfig = {
   },
   fields: [
     {
-      name: 'highligh',
-      type: 'text',
-      label: 'Destaque',
-      required: true,
-      admin: {
-        description: 'Tag de chamada da notícia',
-      },
-    },
-    {
       name: 'heading',
       type: 'text',
       label: 'Título',
@@ -46,6 +37,15 @@ export const News: CollectionConfig = {
       name: 'subheading',
       label: 'Sub Título',
       type: 'text',
+    },
+    {
+      name: 'highligh',
+      type: 'text',
+      label: 'Chamada',
+      required: true,
+      admin: {
+        description: 'Tag de chamada da notícia',
+      },
     },
     {
       type: 'tabs',
@@ -97,6 +97,37 @@ export const News: CollectionConfig = {
         },
       ],
     },
+
+    {
+      type: 'checkbox',
+      name: 'showInHighlights',
+      label: 'Mostrar artigo nos destaques',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+        description: `Mostra as últimas ${ARCHIVE_LIMIT.Highlights}`,
+      },
+    },
+    {
+      name: 'category',
+      label: 'Categoria',
+      type: 'relationship',
+      required: true,
+      admin: {
+        position: 'sidebar',
+      },
+      relationTo: COLLECTION_SLUGS.NewsCategories,
+    },
+    {
+      name: 'authors',
+      label: 'Autores',
+      type: 'relationship',
+      admin: {
+        position: 'sidebar',
+      },
+      hasMany: true,
+      relationTo: COLLECTION_SLUGS.Authors,
+    },
     {
       name: 'publishedAt',
       label: 'Publicado em',
@@ -119,29 +150,20 @@ export const News: CollectionConfig = {
       },
     },
     {
-      name: 'authors',
-      label: 'Autores',
-      type: 'relationship',
+      type: 'number',
+      name: 'readCount',
+      label: 'Contador de Visita',
+      defaultValue: 0,
       admin: {
+        readOnly: true,
         position: 'sidebar',
+        description: 'Conta automaticamente o numero de vezes visitado por mais de 5 segundos.',
       },
-      hasMany: true,
-      relationTo: COLLECTION_SLUGS.Authors,
-    },
-    {
-      name: 'category',
-      label: 'Categoria',
-      type: 'relationship',
-      required: true,
-      admin: {
-        position: 'sidebar',
-      },
-
-      relationTo: COLLECTION_SLUGS.NewsCategories,
     },
     ...slugField('heading', {
       slugOverrides: {
         unique: true,
+        index: true,
       },
     }),
   ],

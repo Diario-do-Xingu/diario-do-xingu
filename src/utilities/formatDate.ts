@@ -11,7 +11,7 @@ export function writingDate(timestamp: number) {
   return capitalizeWords(new Intl.DateTimeFormat('pt-BR', options).format(timestamp))
 }
 
-export const formatDateTime = (timestamp: string): string => {
+export const formatDate = (timestamp: string): string => {
   const now = new Date()
   let date = now
   if (timestamp) date = new Date(timestamp)
@@ -32,9 +32,8 @@ export const formatDateTime = (timestamp: string): string => {
   return `${DD}/${MM}/${YYYY}`
 }
 
-export function formatDateAndRelative(dateStr: string): string {
+export function formatDateWithTime(dateStr: string, dateTimeSeparator: string = ',') {
   const date = new Date(dateStr)
-  const now = new Date()
 
   const formatter = new Intl.DateTimeFormat('pt-BR', {
     day: '2-digit',
@@ -46,7 +45,14 @@ export function formatDateAndRelative(dateStr: string): string {
     hour12: false,
   })
 
-  const formattedDate = formatter.format(date).replace(':', 'h')
+  return formatter.format(date).replace(':', 'h').replace(',', dateTimeSeparator)
+}
+
+export function formatDateAndRelative(dateStr: string): string {
+  const date = new Date(dateStr)
+  const now = new Date()
+
+  const formattedDate = formatDateWithTime(dateStr)
 
   const diffMs = now.getTime() - date.getTime()
   const diffMin = Math.floor(diffMs / 60000)

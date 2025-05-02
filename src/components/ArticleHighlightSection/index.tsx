@@ -3,16 +3,21 @@ import { Card, CardContent, CardHeader } from '../ui/card'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getPayload } from '@/lib/payload/getPayload'
-import { COLLECTION_SLUGS } from '@/constants'
+import { ARCHIVE_LIMIT, COLLECTION_SLUGS } from '@/constants'
 import { Media } from '@/payload-types'
 
-export async function MostReadCard() {
+export async function ArticleHighlightSection() {
   const payload = await getPayload()
 
   const mostReadNews = await payload.find({
     collection: COLLECTION_SLUGS.News,
-    limit: 4,
+    limit: ARCHIVE_LIMIT.Highlights,
     sort: '-publishedAt',
+    where: {
+      showInHighlights: {
+        equals: true,
+      },
+    },
   })
 
   const { docs, totalDocs } = mostReadNews
@@ -20,7 +25,7 @@ export async function MostReadCard() {
   return (
     <Card className="shadow-none">
       <CardHeader className="border-b-2 py-4">
-        <h4 className="text-md font-globo font-bold text-primary">Mais Lidas</h4>
+        <h4 className="text-md font-globo font-bold text-primary">Destaques</h4>
       </CardHeader>
 
       <CardContent className="space-y-5 pt-4">

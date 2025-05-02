@@ -143,12 +143,12 @@ export interface UserAuthOperations {
  */
 export interface News {
   id: string;
+  heading: string;
+  subheading?: string | null;
   /**
    * Tag de chamada da notícia
    */
   highligh: string;
-  heading: string;
-  subheading?: string | null;
   heroImage: {
     /**
      * Image do card da notícia
@@ -171,9 +171,17 @@ export interface News {
     };
     [k: string]: unknown;
   };
-  publishedAt?: string | null;
-  authors?: (string | Author)[] | null;
+  /**
+   * Mostra as últimas 4
+   */
+  showInHighlights?: boolean | null;
   category: string | NewsCategory;
+  authors?: (string | Author)[] | null;
+  publishedAt?: string | null;
+  /**
+   * Conta automaticamente o numero de vezes visitado por mais de 5 segundos.
+   */
+  readCount?: number | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -211,20 +219,6 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "authors".
- */
-export interface Author {
-  id: string;
-  name: string;
-  /**
-   * Não obrigatório. ex: Diário do Xingu
-   */
-  placeOfWork?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "news-categories".
  */
 export interface NewsCategory {
@@ -235,6 +229,20 @@ export interface NewsCategory {
   name: string;
   slug?: string | null;
   slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "authors".
+ */
+export interface Author {
+  id: string;
+  name: string;
+  /**
+   * Não obrigatório. ex: Diário do Xingu
+   */
+  placeOfWork?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -460,9 +468,9 @@ export interface PayloadMigration {
  * via the `definition` "news_select".
  */
 export interface NewsSelect<T extends boolean = true> {
-  highligh?: T;
   heading?: T;
   subheading?: T;
+  highligh?: T;
   heroImage?:
     | T
     | {
@@ -470,9 +478,11 @@ export interface NewsSelect<T extends boolean = true> {
         description?: T;
       };
   content?: T;
-  publishedAt?: T;
-  authors?: T;
+  showInHighlights?: T;
   category?: T;
+  authors?: T;
+  publishedAt?: T;
+  readCount?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;

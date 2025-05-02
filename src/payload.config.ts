@@ -11,7 +11,6 @@ import { en } from '@payloadcms/translations/languages/en'
 import { pt } from '@payloadcms/translations/languages/pt'
 
 import { env } from '@/env'
-import { migrations } from '@/migrations'
 
 import { Users } from '@/payload/collections/Users'
 import { Media } from '@/payload/collections/Media'

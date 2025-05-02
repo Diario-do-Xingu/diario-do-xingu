@@ -12,16 +12,16 @@ export type NewsData = Pick<
   'slug' | 'heading' | 'subheading' | 'heroImage' | 'category' | 'publishedAt' | 'highligh'
 >
 
-type NewsCartProps = {
+type ArticleListCardProps = {
   doc: NewsData
 }
 
 function getNewsLink(slug: string) {
-  return '#'
+  // return '#'
   return `${getServerSideURL()}/${COLLECTION_URL_PATHS.News}/${slug}`
 }
 
-export function NewsCard(props: NewsCartProps) {
+export function ArticleListCard(props: ArticleListCardProps) {
   const { doc } = props
 
   const category = doc.category as NewsCategory

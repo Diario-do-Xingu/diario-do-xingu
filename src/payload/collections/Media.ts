@@ -30,7 +30,7 @@ export const Media: CollectionConfig = {
     ],
     bulkUpload: false,
     adminThumbnail: ({ doc }) => {
-      // @ts-expect-error
+      // @ts-expect-error no worries
       return `${getServerSideURL()}/media/${doc.sizes?.thumbnail?.filename || doc.filename}`
     },
   },

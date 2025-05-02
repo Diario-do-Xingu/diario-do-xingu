@@ -1,12 +1,14 @@
 import { Advertisement } from '@/components/Advertisement'
 import { Grid, GridFull, GridLeft, GridRight } from '@/components/Grid'
-import { NewsList } from '@/components/NewsList'
+import { ArticleList } from '@/components/ArticleList'
 import { Pagination } from '@/components/Pagination'
 import { SoccerWidget } from '@/components/SoccerWidget'
 import { WeatherWidget } from '@/components/WeatherWidget'
 import { COLLECTION_URL_PATHS } from '@/constants'
 import { News } from '@/payload-types'
 import { PaginatedDocs } from 'payload'
+import { ArticleHighlightSection } from '@/components/ArticleHighlightSection'
+import { ArticleMostReadSection } from '@/components/ArticleMostReadSection'
 
 type PageComponentProps = {
   news: PaginatedDocs<News>
@@ -27,7 +29,7 @@ export function PageComponent({ news }: PageComponentProps) {
       </GridFull>
 
       <GridFull className="mb-20 flex flex-col gap-10">
-        <NewsList
+        <ArticleList
           news={{
             ...news,
             totalDocs: filteredFirstThree.length,
@@ -37,7 +39,7 @@ export function PageComponent({ news }: PageComponentProps) {
       </GridFull>
 
       <GridLeft className="space-y-20">
-        <NewsList
+        <ArticleList
           news={{
             ...news,
             totalDocs: restDocs.length,
@@ -56,11 +58,11 @@ export function PageComponent({ news }: PageComponentProps) {
       </GridLeft>
 
       <GridRight className="space-y-5">
+        <ArticleHighlightSection />
         <WeatherWidget />
-
-        <SoccerWidget />
-
+        <ArticleMostReadSection />
         <Advertisement />
+        <SoccerWidget />
       </GridRight>
     </Grid>
   )

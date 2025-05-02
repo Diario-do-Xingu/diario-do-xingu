@@ -9,7 +9,7 @@ import Link from 'next/link'
 import { getClientSideURL } from '@/utilities/getURL'
 import { COLLECTION_URL_PATHS } from '@/constants'
 import { env } from '@/env'
-import { formatDateTime } from '@/utilities/formatDate'
+import { formatDateWithTime } from '@/utilities/formatDate'
 
 type NotarialActsCardProps = {
   doc: NotarialAct
@@ -43,7 +43,8 @@ export function NotarialActsCard(props: NotarialActsCardProps) {
           <div className="flex flex-col items-start gap-2 md:flex-row">
             <Badge variant="secondary" className="flex gap-2 text-sm">
               <Calendar className="size-4" />
-              {formatDateTime(publishedAt!)}
+              {formatDateWithTime(publishedAt!, ' -')}
+              {/* {formatDate(publishedAt!)} */}
             </Badge>
 
             <Badge className="flex gap-2 text-sm">

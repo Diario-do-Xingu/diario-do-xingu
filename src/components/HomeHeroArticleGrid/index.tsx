@@ -1,9 +1,9 @@
 import { cn } from '@/utilities/ui'
-import { HomeNewsHeroCard } from '../HomeNewsHeroCard'
+import { HomeHeroArticleCard } from '../HomeHeroArticleCard'
 import { getPayload } from '@/lib/payload/getPayload'
 import { COLLECTION_SLUGS } from '@/constants'
 
-export async function HomeNewsGrid() {
+export async function HomeHeroArticleGrid() {
   const payload = await getPayload()
 
   const heroNews = await payload.find({
@@ -31,7 +31,7 @@ export async function HomeNewsGrid() {
       )}
     >
       {docs.map((doc, i) => (
-        <HomeNewsHeroCard
+        <HomeHeroArticleCard
           key={i}
           index={i}
           size={totalDocs < 3 ? 'lg' : i === 0 ? 'lg' : 'sm'}

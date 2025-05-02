@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { getServerSideURL } from '@/utilities/getURL'
 import { COLLECTION_URL_PATHS } from '@/constants'
 
-type HomeNewsHeroCardProps = {
+type HomeHeroArticleCardProps = {
   size: 'lg' | 'sm'
   doc: Pick<News, 'heading' | 'subheading' | 'heroImage' | 'highligh' | 'slug'>
   index: number
@@ -15,7 +15,7 @@ type HomeNewsHeroCardProps = {
 
 const colors = ['secondary', 'accent', 'tertiary'] as const
 
-export function HomeNewsHeroCard(props: HomeNewsHeroCardProps) {
+export function HomeHeroArticleCard(props: HomeHeroArticleCardProps) {
   const { size, doc, index } = props
 
   const image = doc.heroImage.image as Media
