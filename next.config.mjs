@@ -42,8 +42,8 @@ const nextConfig = {
         destination: `${process.env.UMAMI_URI}/script.js`,
       },
       {
-        source: `/api/send`,
-        destination: `${process.env.UMAMI_URI}/api/send`,
+        source: `/api/:path*`,
+        destination: `${process.env.UMAMI_URI}/api/:path*`,
       },
     ]
   },

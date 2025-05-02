@@ -1,0 +1,27 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { env } from './env'
+
+export function middleware(req: NextRequest) {
+  const url = req.nextUrl.clone()
+
+  // Forward headers for client IP
+  const forwardedHeaders = {
+    'X-Forwarded-For': req.headers.get('x-forwarded-for') || req.ip,
+    'X-Real-IP': req.headers.get('x-real-ip') || req.ip,
+  }
+
+  if (url.pathname.startsWith('/script.js') || url.pathname.startsWith('/api')) {
+    console.log(url.pathname)
+    console.log(forwardedHeaders)
+
+    const destination = url.pathname.startsWith('/script.js')
+      ? `${env.UMAMI_URI}/script.js`
+      : `${env.UMAMI_URI}${url.pathname}`
+
+    return NextResponse.rewrite(destination, {
+      headers: forwardedHeaders,
+    })
+  }
+
+  return NextResponse.next()
+}
