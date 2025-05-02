@@ -10,6 +10,8 @@ export function middleware(req: NextRequest) {
     'X-Real-IP': req.headers.get('x-real-ip') || req.ip,
   }
 
+  console.log(req.headers.entries())
+
   if (url.pathname.startsWith('/script.js') || url.pathname.startsWith('/api')) {
     console.log(url.pathname)
     console.log(forwardedHeaders)
