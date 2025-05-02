@@ -8,13 +8,14 @@ export function middleware(req: NextRequest) {
   const forwardedHeaders = {
     'X-Forwarded-For': req.headers.get('x-forwarded-for') || '',
     'X-Real-IP': req.headers.get('x-real-ip') || '',
+    'cf-connecting-ip': req.headers.get('cf-connecting-ip') || '',
   }
 
-  console.log(req.headers.entries())
+  console.log('all', [...req.headers.entries()])
 
   if (url.pathname.startsWith('/script.js') || url.pathname.startsWith('/api')) {
     console.log(url.pathname)
-    console.log(forwardedHeaders)
+    console.log('forwardedHeaders ', forwardedHeaders)
 
     const destination = url.pathname.startsWith('/script.js')
       ? `${env.UMAMI_URI}/script.js`
