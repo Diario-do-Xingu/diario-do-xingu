@@ -17,17 +17,16 @@ export async function HomeNewsGrid() {
       heroImage: true,
       category: true,
       highligh: true,
+      slug: true,
     },
   })
-
-  console.log(heroNews.docs[0].category)
 
   const { docs, totalDocs } = heroNews
 
   return (
     <div
       className={cn(
-        'container grid grid-cols-1 gap-4 xl:max-w-5xl',
+        'container grid grid-cols-1 gap-4 xl:max-w-7xl',
         'lg:grid-cols-2 lg:grid-rows-2',
       )}
     >
