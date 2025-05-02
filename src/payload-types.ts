@@ -143,6 +143,10 @@ export interface UserAuthOperations {
  */
 export interface News {
   id: string;
+  /**
+   * Tag de chamada da notícia
+   */
+  highligh: string;
   heading: string;
   subheading?: string | null;
   heroImage: {
@@ -456,6 +460,7 @@ export interface PayloadMigration {
  * via the `definition` "news_select".
  */
 export interface NewsSelect<T extends boolean = true> {
+  highligh?: T;
   heading?: T;
   subheading?: T;
   heroImage?:

@@ -15,8 +15,12 @@ export async function HomeNewsGrid() {
       heading: true,
       subheading: true,
       heroImage: true,
+      category: true,
+      highligh: true,
     },
   })
+
+  console.log(heroNews.docs[0].category)
 
   const { docs, totalDocs } = heroNews
 

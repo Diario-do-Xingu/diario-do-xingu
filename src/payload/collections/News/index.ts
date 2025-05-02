@@ -28,6 +28,15 @@ export const News: CollectionConfig = {
   },
   fields: [
     {
+      name: 'highligh',
+      type: 'text',
+      label: 'Destaque',
+      required: true,
+      admin: {
+        description: 'Tag de chamada da notícia',
+      },
+    },
+    {
       name: 'heading',
       type: 'text',
       label: 'Título',

@@ -6,7 +6,7 @@ import { Badge } from '../ui/badge'
 
 type HomeNewsHeroCardProps = {
   size: 'lg' | 'sm'
-  doc: Pick<News, 'heading' | 'subheading' | 'heroImage'>
+  doc: Pick<News, 'heading' | 'subheading' | 'heroImage' | 'highligh'>
   index: number
 }
 
@@ -34,9 +34,11 @@ export function HomeNewsHeroCard(props: HomeNewsHeroCardProps) {
       />
 
       <CardContent className="flex h-full flex-col gap-3 p-5 pb-10 text-white">
-        <Badge className="w-max text-sm font-bold" variant={colors[index % colors.length]}>
-          {`'Ozempic de rico'`}
-        </Badge>
+        {doc.highligh && (
+          <Badge className="w-max text-sm font-bold" variant={colors[index % colors.length]}>
+            {doc.highligh}
+          </Badge>
+        )}
 
         <div className="flex flex-1 flex-col justify-center">
           <h3 className="mt-6 text-3xl font-bold leading-tight">{doc.heading}</h3>
@@ -59,9 +61,11 @@ export function HomeNewsHeroCard(props: HomeNewsHeroCardProps) {
       />
 
       <CardContent className="flex h-full flex-col justify-between gap-16 p-5 pb-7 text-white">
-        <Badge className="w-max text-sm font-bold" variant={colors[index % colors.length]}>
-          {`'Ozempic de rico'`}
-        </Badge>
+        {doc.highligh && (
+          <Badge className="w-max text-sm font-bold" variant={colors[index % colors.length]}>
+            {doc.highligh}
+          </Badge>
+        )}
 
         <div className="flex flex-1 flex-col items-center">
           <h3 className="text-xl font-bold leading-tight">{doc.heading}</h3>
