@@ -6,8 +6,8 @@ export function middleware(req: NextRequest) {
 
   // Forward headers for client IP
   const forwardedHeaders = {
-    'X-Forwarded-For': req.headers.get('x-forwarded-for') || req.ip,
-    'X-Real-IP': req.headers.get('x-real-ip') || req.ip,
+    'X-Forwarded-For': req.headers.get('x-forwarded-for') || '',
+    'X-Real-IP': req.headers.get('x-real-ip') || '',
   }
 
   console.log(req.headers.entries())
