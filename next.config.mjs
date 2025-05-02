@@ -37,14 +37,14 @@ const nextConfig = {
   transpilePackages: ['@t3-oss/env-nextjs', '@t3-oss/env-core'],
   async rewrites() {
     return [
-      {
-        source: `/script.js`,
-        destination: `${process.env.UMAMI_URI}/script.js`,
-      },
-      {
-        source: `/api/:path*`,
-        destination: `${process.env.UMAMI_URI}/api/:path*`,
-      },
+      // {
+      //   source: `/script.js`,
+      //   destination: `/script.js`,
+      // },
+      // {
+      //   source: `/api/send`,
+      //   destination: `/api/send`,
+      // },
     ]
   },
 }

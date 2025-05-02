@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { env } from '@/env'
 import Script from 'next/script'
 
 /**
@@ -65,7 +67,15 @@ export function Umami({ trackOutboundLinks, ...props }: UmamiProps) {
 
   return (
     <>
-      <Script async defer src="/script.js" {...dataAttributes} />
+      {/* <Script async defer src="/script.js" {...dataAttributes} /> */}
+      {/* <Script async defer src="/script.js" {...dataAttributes} /> */}
+      <Script
+        async
+        defer
+        src={`${env.UMAMI_URI}/script.js`}
+        {...dataAttributes}
+        // data-host-url="https://dev-diariodoxingu-analytics.vkav.net"
+      />
 
       {/* track outbound links */}
       {trackOutboundLinks && (
