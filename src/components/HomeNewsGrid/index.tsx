@@ -1,0 +1,40 @@
+import { cn } from '@/utilities/ui'
+import { HomeNewsHeroCard } from '../HomeNewsHeroCard'
+import { getPayload } from '@/lib/payload/getPayload'
+import { COLLECTION_SLUGS } from '@/constants'
+
+export async function HomeNewsGrid() {
+  const payload = await getPayload()
+
+  const heroNews = await payload.find({
+    collection: COLLECTION_SLUGS.News,
+    limit: 3,
+    sort: '-publishedAt',
+    overrideAccess: false,
+    select: {
+      heading: true,
+      subheading: true,
+      heroImage: true,
+    },
+  })
+
+  const { docs, totalDocs } = heroNews
+
+  return (
+    <div
+      className={cn(
+        'container grid grid-cols-1 gap-4 xl:max-w-5xl',
+        'lg:grid-cols-2 lg:grid-rows-2',
+      )}
+    >
+      {docs.map((doc, i) => (
+        <HomeNewsHeroCard
+          key={i}
+          index={i}
+          size={totalDocs < 3 ? 'lg' : i === 0 ? 'lg' : 'sm'}
+          doc={doc}
+        />
+      ))}
+    </div>
+  )
+}
