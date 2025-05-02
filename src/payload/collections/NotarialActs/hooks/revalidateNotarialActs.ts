@@ -13,21 +13,20 @@ export const revalidateNotarialActs: CollectionAfterChangeHook<NotarialAct> = as
     if (doc._status === 'published') {
       const path = `/${COLLECTION_URL_PATHS.NotarialActs}/${doc.slug}`
 
-      payload.logger.info(`Revalidating notarial act at path: ${path}`)
-
-      revalidatePath(path)
       await revalidatePaths(payload)
+
+      payload.logger.info(`Revalidating notarial act at path: ${path}`)
+      revalidatePath(path)
       // revalidateTag(`${COLLECTION_URL_PATHS.NotarialActs}-sitemap`)
     }
 
     if (previousDoc._status === 'published' && doc._status !== 'published') {
       const oldPath = `/${COLLECTION_URL_PATHS.NotarialActs}/${previousDoc.slug}`
 
-      payload.logger.info(`Revalidating old notarial act at path: ${oldPath}`)
-
-      revalidatePath(oldPath)
       await revalidatePaths(payload)
 
+      payload.logger.info(`Revalidating old notarial act at path: ${oldPath}`)
+      revalidatePath(oldPath)
       // revalidateTag(`${COLLECTION_URL_PATHS.NotarialActs}-sitemap`)
     }
   }
@@ -41,10 +40,10 @@ export const revalidateDelete: CollectionAfterDeleteHook<NotarialAct> = async ({
   if (!context.disableRevalidate) {
     const path = `/${COLLECTION_URL_PATHS.NotarialActs}/${doc?.slug}`
 
-    payload.logger.info(`Revalidating deleted notarial act at path: ${path}`)
-
-    revalidatePath(path)
     await revalidatePaths(payload)
+
+    payload.logger.info(`Revalidating deleted notarial act at path: ${path}`)
+    revalidatePath(path)
     // revalidateTag(`${COLLECTION_URL_PATHS.NotarialActs}-sitemap`)
   }
   return doc
@@ -58,12 +57,15 @@ async function revalidatePaths(payload: BasePayload) {
 
   const totalPages = Math.ceil(totalDocs / ARCHIVE_LIMIT.NotarialActs)
 
-  const rootPath = `/${COLLECTION_URL_PATHS.NotarialActs}`
-  revalidatePath(rootPath)
-  payload.logger.info(`Revalidating path: ${rootPath}`)
+  const pagePaths = Array.from(
+    { length: totalPages },
+    (_, i) => `/${COLLECTION_URL_PATHS.NotarialActs}/page/${i + 1}`,
+  )
 
-  for (let i = 1; i <= totalPages; i++) {
-    const path = `/${COLLECTION_URL_PATHS.NotarialActs}/page/${i}`
+  const rootPath = `/${COLLECTION_URL_PATHS.NotarialActs}`
+  const paths = ['/', rootPath, ...pagePaths]
+
+  for (const path of paths) {
     payload.logger.info(`Revalidating path: ${path}`)
     revalidatePath(path)
   }
