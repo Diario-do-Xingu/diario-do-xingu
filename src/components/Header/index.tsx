@@ -50,7 +50,7 @@ export async function Header() {
   const logoAlt = hasLogo ? logo?.alt || 'Logo Diário do Xingu' : ''
 
   return (
-    <header className="sticky top-0 z-50 mb-10 border-b-4 border-b-secondary bg-primary">
+    <header className="sticky top-0 z-50 border-b-4 border-b-secondary bg-primary">
       <div className="relative w-full bg-white">
         <div className="container flex gap-4 overflow-auto">
           {links.map((link, i) => (

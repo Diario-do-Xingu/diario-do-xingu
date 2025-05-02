@@ -34,7 +34,7 @@ export function HomeNewsHeroCard(props: HomeNewsHeroCardProps) {
       >
         <Image
           alt={imageAlt}
-          className="absolute -z-10 h-full w-full object-cover brightness-[40%] transition-transform duration-300 group-hover:scale-[105%]"
+          className="absolute h-full w-full object-cover brightness-[40%] transition-transform duration-300 group-hover:scale-[105%]"
           height={image.height!}
           quality={100}
           src={image.url!}
@@ -44,7 +44,7 @@ export function HomeNewsHeroCard(props: HomeNewsHeroCardProps) {
         <CardContent className={cn('h-full p-5 pb-10', 'flex flex-col gap-16')}>
           {doc.highligh && (
             <Badge
-              className={cn('w-max text-sm font-bold')}
+              className={cn('relative w-max text-sm font-bold')}
               variant={colors[index % colors.length]}
             >
               {doc.highligh}

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import { Card } from '../ui/card'
 
 export function WeatherWidget() {
   useEffect(() => {
@@ -24,17 +25,19 @@ export function WeatherWidget() {
   }, [])
 
   return (
-    <div
-      className="tomorrow"
-      data-location-id="010153"
-      data-language="PT"
-      data-unit-system="METRIC"
-      data-skin="light"
-      data-widget-type="upcoming"
-      style={{
-        paddingBottom: '22px',
-        position: 'relative',
-      }}
-    />
+    <Card className="bg-accent p-3">
+      <div
+        className="tomorrow"
+        data-location-id="010153"
+        data-language="PT"
+        data-unit-system="METRIC"
+        data-skin="light"
+        data-widget-type="upcoming"
+        style={{
+          paddingBottom: '22px',
+          position: 'relative',
+        }}
+      />
+    </Card>
   )
 }

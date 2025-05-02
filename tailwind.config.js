@@ -3,6 +3,8 @@ module.exports = {
   darkMode: ['class'],
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   safelist: [
+    'row-span-2',
+    'row-span-1',
     'lg:col-span-4',
     'lg:col-span-6',
     'lg:col-span-8',

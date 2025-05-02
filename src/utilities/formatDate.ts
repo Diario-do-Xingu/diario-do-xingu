@@ -60,15 +60,15 @@ export function formatDateAndRelative(dateStr: string): string {
   if (diffMin < 1) {
     relative = 'Atualizado agora'
   } else if (diffMin < 60) {
-    relative = `Atualizado há ${diffMin} minuto${diffMin > 1 ? 's' : ''}`
+    relative = `Há ${diffMin} minuto${diffMin > 1 ? 's' : ''}`
   } else if (diffHr < 24) {
-    relative = `Atualizado há ${diffHr} hora${diffHr > 1 ? 's' : ''}`
+    relative = `Há ${diffHr} hora${diffHr > 1 ? 's' : ''}`
   } else if (diffDays < 30) {
-    relative = `Atualizado há ${diffDays} dia${diffDays > 1 ? 's' : ''}`
+    relative = `Há ${diffDays} dia${diffDays > 1 ? 's' : ''}`
   } else if (diffDays < 365) {
-    relative = `Atualizado há ${diffMonths} mês${diffMonths > 1 ? 'es' : ''}`
+    relative = `Há ${diffMonths} mês${diffMonths > 1 ? 'es' : ''}`
   } else {
-    relative = `Atualizado há ${diffYears} ano${diffYears > 1 ? 's' : ''}`
+    relative = `Há ${diffYears} ano${diffYears > 1 ? 's' : ''}`
   }
 
   return `${formattedDate} - ${relative}`

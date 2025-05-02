@@ -103,4 +103,8 @@
     margin: 0;
     line-height: 1.5;
   }
+
+  .container-y-padding {
+    @apply pb-8 pt-10;
+  }
 }

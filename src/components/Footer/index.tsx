@@ -1,5 +1,4 @@
-import { getCachedGlobal, getGlobal } from '@/utilities/getGlobals'
-import { ImageMedia } from '../Media/ImageMedia'
+import { getCachedGlobal } from '@/utilities/getGlobals'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
@@ -19,7 +18,7 @@ export async function Footer() {
   const logoAlt = hasLogo ? logo?.alt || 'Logo Diário do Xingu' : ''
 
   return (
-    <footer className="mt-8 border-t-4 border-t-tertiary bg-primary py-3 pb-4 font-varela text-primary-foreground">
+    <footer className="border-t-4 border-t-tertiary bg-primary py-3 pb-4 font-varela text-primary-foreground">
       <div className="container">
         <div className="mb-4 grid grid-cols-1 items-center gap-6 lg:grid-cols-3">
           <Link href="/" className="justify-self-center lg:justify-self-start">

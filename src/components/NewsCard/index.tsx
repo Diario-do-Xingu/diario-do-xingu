@@ -9,7 +9,7 @@ import { cn } from '@/utilities/ui'
 
 export type NewsData = Pick<
   News,
-  'slug' | 'heading' | 'subheading' | 'heroImage' | 'category' | 'publishedAt'
+  'slug' | 'heading' | 'subheading' | 'heroImage' | 'category' | 'publishedAt' | 'highligh'
 >
 
 type NewsCartProps = {
@@ -31,7 +31,7 @@ export function NewsCard(props: NewsCartProps) {
       href={getNewsLink(doc.slug!)}
       className="grid gap-3 transition-transform lg:grid-cols-12 lg:gap-5 lg:hover:scale-[103%]"
     >
-      <div className="aspect-[3/2] overflow-hidden rounded-xl shadow-sm shadow-zinc-400 lg:col-span-5">
+      <div className="aspect-[3/2] overflow-hidden rounded-xl shadow-md shadow-zinc-400 lg:col-span-5">
         <ImageMedia
           resource={doc.heroImage.image}
           alt={doc.heroImage.description ?? ''}
@@ -39,7 +39,9 @@ export function NewsCard(props: NewsCartProps) {
         />
       </div>
 
-      <div className="flex flex-col gap-2.5 lg:col-span-7 lg:py-3">
+      <div className="flex flex-col gap-2.5 lg:col-span-7 lg:pt-1">
+        <span className="font-globo text-sm font-bold text-primary">{doc.highligh}</span>
+
         <div className="flex flex-col gap-1">
           <h3 className="font-globo text-xl font-bold leading-snug lg:text-2xl">{doc.heading}</h3>
           {doc.subheading && (

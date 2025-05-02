@@ -4,7 +4,7 @@ import { ARCHIVE_LIMIT, COLLECTION_SLUGS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
 import { PageComponent } from './PageComponent'
 
-export default async function NewsList() {
+export default async function Page() {
   const payload = await getPayload()
 
   const news = await payload.find({
