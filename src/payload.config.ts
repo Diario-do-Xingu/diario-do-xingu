@@ -1,5 +1,3 @@
-// storage-adapter-import-placeholder
-import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
 
@@ -23,6 +21,7 @@ import { News } from '@/payload/collections/News'
 import { Authors } from '@/payload/collections/Authors'
 import { NewsCategories } from '@/payload/collections/News/categories'
 import { defaultLexical } from '@/payload/fields/defaultLexical'
+import { COLLECTION_SLUGS } from './constants'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -46,55 +45,46 @@ export default buildConfig({
   collections: [News, NotarialActs, Authors, NewsCategories, Media, Users],
   globals: [SiteInfo, Advertisement, SiteMetadata],
   editor: defaultLexical,
-  secret: env.PAYLOAD_SECRET || '',
+  secret: env.PAYLOAD_SECRET,
   serverURL: env.NEXT_PUBLIC_SERVER_URL,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  // db: postgresAdapter({
-  //   pool: {
-  //     connectionString: env.DATABASE_URI || '',
-  //   },
-  //   prodMigrations: migrations,
-  // }),
   db: mongooseAdapter({
-    // Mongoose-specific arguments go here.
-    // URL is required.
-    url: env.DATABASE_URI || '',
+    url: env.DATABASE_URI,
     connectOptions: {
       dbName: 'diario-do-xingu',
     },
   }),
   sharp,
   plugins: [
-    payloadCloudPlugin(),
     uploadthingStorage({
       collections: {
         media: true,
+        [COLLECTION_SLUGS.NotarialActs]: true,
       },
       options: {
         token: env.UPLOADTHING_TOKEN,
       },
     }),
-    // storage-adapter-placeholder
   ],
   jobs: {
     access: {
       run: ({ req }): boolean => {
         if (req.user) return true
         const authHeader = req.headers.get('authorization')
-        return authHeader === `Bearer ${process.env.CRON_SECRET}`
+        return authHeader === `Bearer ${env.CRON_SECRET}`
       },
     },
     tasks: [],
-    // autoRun: [
-    //   {
-    //     cron: '* * * * *',
-    //     queue: 'default',
-    //   },
-    // ],
-    // shouldAutoRun: () => {
-    //   return true
-    // },
+    autoRun: [
+      {
+        cron: '* * * * *',
+        queue: 'default',
+      },
+    ],
+    shouldAutoRun: () => {
+      return true
+    },
   },
 })

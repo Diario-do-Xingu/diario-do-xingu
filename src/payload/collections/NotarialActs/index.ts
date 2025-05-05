@@ -23,7 +23,7 @@ export const NotarialActs: CollectionConfig = {
     useAsTitle: 'heading',
   },
   upload: {
-    staticDir: 'public/notarial-acts',
+    // staticDir: 'public/notarial-acts',
     bulkUpload: false,
     displayPreview: false,
     pasteURL: false,

@@ -26,7 +26,8 @@ export function NotarialActsCard(props: NotarialActsCardProps) {
     ? `${getClientSideURL()}/${COLLECTION_URL_PATHS.NotarialActs}/${doc.key}`
     : '#'
 
-  const downloadLink = `${getClientSideURL()}/notarial-acts/${filename}`
+  const downloadLink = doc.url
+
   return (
     <Card className="bg-[#F8F8F8] transition-all hover:scale-[100.2%] hover:bg-card hover:shadow-xl">
       <Link href={href}>
@@ -44,7 +45,6 @@ export function NotarialActsCard(props: NotarialActsCardProps) {
             <Badge variant="secondary" className="flex gap-2 text-sm">
               <Calendar className="size-4" />
               {formatDateWithTime(publishedAt!, ' -')}
-              {/* {formatDate(publishedAt!)} */}
             </Badge>
 
             <Badge className="flex gap-2 text-sm">
@@ -55,7 +55,7 @@ export function NotarialActsCard(props: NotarialActsCardProps) {
         </CardContent>
       </Link>
 
-      {filename && (
+      {downloadLink && (
         <CardFooter className="flex flex-col items-stretch gap-2">
           <a
             href={downloadLink}

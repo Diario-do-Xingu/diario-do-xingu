@@ -266,6 +266,7 @@ export interface NotarialAct {
   key?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
+  _key?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -502,6 +503,7 @@ export interface NotarialActsSelect<T extends boolean = true> {
   key?: T;
   slug?: T;
   slugLock?: T;
+  _key?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

@@ -6,13 +6,17 @@ export const env = createEnv({
     DATABASE_URI: z.string().url(),
     PAYLOAD_SECRET: z.string().min(1),
     CRON_SECRET: z.string().min(1),
+    UPLOADTHING_TOKEN: z.string().min(1),
+
+    // Optionals
     UMAMI_WEBSITE_ID: z.string().min(1).optional(),
     UMAMI_URI: z.string().url().optional(),
     SHARP_IGNORE_GLOBAL_LIBVIPS: z.string().min(1).optional(),
-    UPLOADTHING_TOKEN: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_SERVER_URL: z.string().url(),
+
+    // Optionals
     NEXT_PUBLIC_IS_DEV: z
       .string()
       .refine((s) => s === 'true' || s === 'false')
