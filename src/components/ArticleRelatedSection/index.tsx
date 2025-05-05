@@ -1,6 +1,6 @@
 import { getPayload } from '@/lib/payload/getPayload'
 import { Card, CardContent, CardHeader } from '../ui/card'
-import { COLLECTION_SLUGS } from '@/constants'
+import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 import { Fragment } from 'react'
 import Link from 'next/link'
 import { ImageMedia } from '../Media/ImageMedia'
@@ -46,7 +46,7 @@ export async function ArticleRelatedSection(props: {
           return (
             <Fragment key={item.slug!}>
               <Link
-                href="#"
+                href={`/${COLLECTION_URL_PATHS.News}/${item.slug}`}
                 className="flex flex-col gap-4 transition-transform hover:scale-[102%]"
               >
                 <ImageMedia

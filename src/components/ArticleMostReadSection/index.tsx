@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from '../ui/card'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getPayload } from '@/lib/payload/getPayload'
-import { ARCHIVE_LIMIT, COLLECTION_SLUGS } from '@/constants'
+import { ARCHIVE_LIMIT, COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 import { Media } from '@/payload-types'
 
 export async function ArticleMostReadSection() {
@@ -31,14 +31,14 @@ export async function ArticleMostReadSection() {
           return (
             <Fragment key={item.slug!}>
               <Link
-                href="#"
+                href={`/${COLLECTION_URL_PATHS.News}/${item.slug}`}
                 className="flex items-center gap-5 transition-transform hover:scale-[102%]"
               >
                 <div className="font-bold text-red-700">{item.heading}</div>
 
                 <Image
                   alt={imageAlt}
-                  className="rounded-default aspect-square size-28 object-cover"
+                  className="aspect-square size-28 rounded-default object-cover"
                   height={image.height!}
                   quality={100}
                   src={image.url!}
