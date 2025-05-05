@@ -247,10 +247,6 @@ export interface NewsCategory {
 export interface Author {
   id: string;
   name: string;
-  /**
-   * Não obrigatório. ex: Diário do Xingu
-   */
-  placeOfWork?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -535,7 +531,6 @@ export interface NotarialActsSelect<T extends boolean = true> {
  */
 export interface AuthorsSelect<T extends boolean = true> {
   name?: T;
-  placeOfWork?: T;
   updatedAt?: T;
   createdAt?: T;
 }

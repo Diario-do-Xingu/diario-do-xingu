@@ -59,6 +59,7 @@ export default buildConfig({
   sharp,
   plugins: [
     uploadthingStorage({
+      clientUploads: true,
       collections: {
         media: true,
         [COLLECTION_SLUGS.NotarialActs]: true,

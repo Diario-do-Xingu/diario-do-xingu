@@ -24,26 +24,26 @@ export const Authors: CollectionConfig = {
       required: true,
       hooks: {
         beforeValidate: [
-          ({ value }) => {
-            if (typeof value === 'string') {
-              return value
-                .toLowerCase()
-                .split(' ')
-                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(' ')
-            }
-            return value
-          },
+          // ({ value }) => {
+          //   if (typeof value === 'string') {
+          //     return value
+          //       .toLowerCase()
+          //       .split(' ')
+          //       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          //       .join(' ')
+          //   }
+          //   return value
+          // },
         ],
       },
     },
-    {
-      name: 'placeOfWork',
-      label: 'Empresa',
-      type: 'text',
-      admin: {
-        description: 'Não obrigatório. ex: Diário do Xingu',
-      },
-    },
+    // {
+    //   name: 'placeOfWork',
+    //   label: 'Empresa',
+    //   type: 'text',
+    //   admin: {
+    //     description: 'Não obrigatório. ex: Diário do Xingu',
+    //   },
+    // },
   ],
 }

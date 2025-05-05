@@ -14,6 +14,7 @@ import { ArticleHighlightSection } from '@/components/ArticleHighlightSection'
 import { Advertisement } from '@/components/Advertisement'
 import RichText from '@/components/RichText'
 import { ImageMedia } from '@/components/Media/ImageMedia'
+import { ArticleRelatedSection } from '@/components/ArticleRelatedSection'
 
 type Args = {
   params: Promise<{
@@ -81,6 +82,15 @@ export default async function Page({ params: paramsPromise }: Args) {
 
             <RichText data={article.content} enableGutter={false} />
           </div>
+        </GridLeft>
+
+        <GridLeft className="row-start-2">
+          <ArticleRelatedSection
+            categoryId={
+              typeof article.category === 'string' ? article.category : article.category.id
+            }
+            currentArticleSlug={article.slug!}
+          />
         </GridLeft>
 
         <GridRight className="mt-10 space-y-5 lg:mt-0">
