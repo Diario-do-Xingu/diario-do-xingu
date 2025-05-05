@@ -1,6 +1,7 @@
 // storage-adapter-import-placeholder
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
 
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -67,6 +68,14 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
+    uploadthingStorage({
+      collections: {
+        media: true,
+      },
+      options: {
+        token: env.UPLOADTHING_TOKEN,
+      },
+    }),
     // storage-adapter-placeholder
   ],
   jobs: {

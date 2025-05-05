@@ -29,31 +29,31 @@ export const Media: CollectionConfig = {
       },
     ],
     bulkUpload: false,
-    adminThumbnail: ({ doc }) => {
-      // @ts-expect-error no worries
-      return `${getServerSideURL()}/media/${doc.sizes?.thumbnail?.filename || doc.filename}`
-    },
+    // adminThumbnail: ({ doc }) => {
+    //   // @ts-expect-error no worries
+    //   return `${getServerSideURL()}/media/${doc.sizes?.thumbnail?.filename || doc.filename}`
+    // },
   },
-  hooks: {
-    afterRead: [
-      ({ doc }) => {
-        const serverURL = getServerSideURL()
+  // hooks: {
+  //   afterRead: [
+  //     ({ doc }) => {
+  //       const serverURL = getServerSideURL()
 
-        // Add base URL to main file
-        doc.url = `${serverURL}/media/${doc.filename}`
+  //       // Add base URL to main file
+  //       doc.url = `${serverURL}/media/${doc.filename}`
 
-        // Add base URL to each size
-        if (doc.sizes) {
-          Object.keys(doc.sizes).forEach((sizeKey) => {
-            const size = doc.sizes[sizeKey]
-            if (size?.width && size?.height) {
-              size.url = `${serverURL}/media/${size.filename}`
-            }
-          })
-        }
+  //       // Add base URL to each size
+  //       if (doc.sizes) {
+  //         Object.keys(doc.sizes).forEach((sizeKey) => {
+  //           const size = doc.sizes[sizeKey]
+  //           if (size?.width && size?.height) {
+  //             size.url = `${serverURL}/media/${size.filename}`
+  //           }
+  //         })
+  //       }
 
-        return doc
-      },
-    ],
-  },
+  //       return doc
+  //     },
+  //   ],
+  // },
 }

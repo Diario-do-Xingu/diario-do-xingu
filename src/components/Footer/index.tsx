@@ -6,9 +6,9 @@ import { getSocialIcon } from '@/utilities/getSocialIcon'
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import { Media, SiteInfo } from '@/payload-types'
 import { COLLECTION_SLUGS } from '@/constants'
-import Image from 'next/image'
 
 import defaultLogo from '@/assets/images/default-logo.png'
+import { ImageMedia } from '../Media/ImageMedia'
 
 export async function Footer() {
   const siteInfo = (await getCachedGlobal(COLLECTION_SLUGS.SiteInfo, 1)()) as SiteInfo
@@ -22,14 +22,11 @@ export async function Footer() {
       <div className="container">
         <div className="mb-4 grid grid-cols-1 items-center gap-6 lg:grid-cols-3">
           <Link href="/" className="justify-self-center lg:justify-self-start">
-            <Image
-              alt={logoAlt}
-              className={'w-[200px]'}
-              height={logo?.height || 200}
-              quality={100}
-              src={logo?.url || defaultLogo}
-              width={logo?.width || 200}
-            />
+            {logo ? (
+              <ImageMedia alt={logoAlt} imgClassName={'w-[200px]'} resource={logo} />
+            ) : (
+              <ImageMedia alt={logoAlt} imgClassName={'w-[200px]'} src={defaultLogo} />
+            )}
           </Link>
 
           <div className="flex flex-col items-center justify-self-center tracking-wide lg:items-start lg:justify-self-center">

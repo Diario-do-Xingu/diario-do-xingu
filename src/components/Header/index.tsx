@@ -7,8 +7,8 @@ import { cn } from '@/utilities/ui'
 import { getSocialIcon } from '@/utilities/getSocialIcon'
 import { Media, SiteInfo } from '@/payload-types'
 import { COLLECTION_URL_PATHS, COLLECTION_SLUGS } from '@/constants'
-import Image from 'next/image'
 import defaultLogo from '@/assets/images/default-logo.png'
+import { ImageMedia } from '../Media/ImageMedia'
 
 const date = new Date(Date.now())
 const formattedDate = writingDate(date.getTime())
@@ -75,14 +75,11 @@ export async function Header() {
         <span className="hidden justify-self-start text-sm lg:block">{formattedDate}</span>
 
         <Link href="/" className="justify-self-start lg:justify-self-center">
-          <Image
-            alt={logoAlt}
-            className={'w-[200px]'}
-            height={logo?.height || 200}
-            quality={100}
-            src={logo?.url || defaultLogo}
-            width={logo?.width || 200}
-          />
+          {logo ? (
+            <ImageMedia alt={logoAlt} imgClassName={'w-[200px]'} resource={logo} />
+          ) : (
+            <ImageMedia alt={logoAlt} imgClassName={'w-[200px]'} src={defaultLogo} />
+          )}
         </Link>
 
         <div className="flex gap-2 justify-self-end">

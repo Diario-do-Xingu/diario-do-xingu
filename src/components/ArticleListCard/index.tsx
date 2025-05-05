@@ -26,6 +26,8 @@ export function ArticleListCard(props: ArticleListCardProps) {
 
   const category = doc.category as NewsCategory
 
+  console.log(doc)
+
   return (
     <Link
       href={getNewsLink(doc.slug!)}
