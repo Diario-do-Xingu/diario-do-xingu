@@ -4,7 +4,6 @@ import { Card, CardContent } from '../ui/card'
 import Image from 'next/image'
 import { Badge } from '../ui/badge'
 import Link from 'next/link'
-import { getServerSideURL } from '@/utilities/getURL'
 import { COLLECTION_URL_PATHS } from '@/constants'
 
 type HomeHeroArticleCardProps = {
@@ -23,7 +22,7 @@ export function HomeHeroArticleCard(props: HomeHeroArticleCardProps) {
 
   return (
     <Link
-      href={`${getServerSideURL()}/${COLLECTION_URL_PATHS.News}/${doc.slug}`}
+      href={`/${COLLECTION_URL_PATHS.News}/${doc.slug}`}
       className={cn(
         `col-span-1 row-span-${size === 'lg' ? '2' : '1'}`,
         'min-h-[300px] max-w-4xl lg:min-h-[auto]',

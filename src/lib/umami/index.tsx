@@ -82,7 +82,7 @@ export function Umami({ trackOutboundLinks, ...props }: UmamiProps) {
         <Script id="umami-outbound-tracking">
           {`
             (() => {
-              const name = 'click-link-externo';
+              const name = 'Click link externo';
               document.querySelectorAll('a').forEach(a => {
                 if (a.host !== window.location.host && !a.getAttribute('data-umami-event')) {
                   a.setAttribute('data-umami-event', name);

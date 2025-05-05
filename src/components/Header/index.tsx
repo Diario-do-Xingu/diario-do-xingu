@@ -88,7 +88,8 @@ export async function Header() {
               key={i}
               href={social.link}
               target="_blank"
-              className="size-min rounded-full bg-white/20 p-2 transition-all hover:scale-[110%]"
+              className="grid place-items-center rounded-full bg-white/20 p-2 transition-transform hover:scale-[110%]"
+              data-umami-event={`Abrir ${social.type} Diário do Xingu`}
             >
               <FontAwesomeIcon icon={getSocialIcon(social.type)} className="size-7" />
             </a>

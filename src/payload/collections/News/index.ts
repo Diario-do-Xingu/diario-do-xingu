@@ -12,6 +12,7 @@ import {
 import { MediaBlock } from '@/payload/blocks/MediaBlock'
 import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished'
 import { revalidateDelete, revalidateNews } from './hooks/revalidateNews'
+import { Author } from '@/payload-types'
 
 export const News: CollectionConfig = {
   slug: COLLECTION_SLUGS.News,
@@ -160,6 +161,27 @@ export const News: CollectionConfig = {
         description: 'Conta automaticamente o numero de vezes visitado por mais de 5 segundos.',
       },
     },
+    {
+      name: 'populatedAuthors',
+      type: 'array',
+      access: {
+        update: () => false,
+      },
+      admin: {
+        disabled: true,
+        readOnly: true,
+      },
+      fields: [
+        {
+          name: 'id',
+          type: 'text',
+        },
+        {
+          name: 'name',
+          type: 'text',
+        },
+      ],
+    },
     ...slugField('heading', {
       slugOverrides: {
         unique: true,
@@ -170,6 +192,36 @@ export const News: CollectionConfig = {
   hooks: {
     afterChange: [revalidateNews],
     afterDelete: [revalidateDelete],
+    afterRead: [
+      async ({ doc, req: { payload } }) => {
+        if (doc?.authors && doc?.authors?.length > 0) {
+          const authorDocs: Author[] = []
+
+          for (const author of doc.authors) {
+            try {
+              const authorDoc = await payload.findByID({
+                id: typeof author === 'object' ? author?.id : author,
+                collection: COLLECTION_SLUGS.Authors,
+                depth: 0,
+              })
+
+              if (authorDoc) {
+                authorDocs.push(authorDoc)
+              }
+
+              if (authorDocs.length > 0) {
+                doc.populatedAuthors = authorDocs.map((authorDoc) => ({
+                  name: authorDoc.name,
+                  id: authorDoc.id,
+                }))
+              }
+            } catch {}
+          }
+        }
+
+        return doc
+      },
+    ],
   },
   versions: {
     drafts: {

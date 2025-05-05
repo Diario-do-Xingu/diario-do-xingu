@@ -1,7 +1,7 @@
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faCoffee, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { getSocialIcon } from '@/utilities/getSocialIcon'
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import { Media, SiteInfo } from '@/payload-types'
@@ -50,7 +50,7 @@ export async function Footer() {
                 key={i}
                 href={social.link}
                 target="_blank"
-                className="rounded-full bg-white/20 p-2 transition-all hover:scale-[110%]"
+                className="grid place-items-center rounded-full bg-white/20 p-2 transition-transform hover:scale-[110%]"
               >
                 <FontAwesomeIcon icon={getSocialIcon(social.type)} className="size-7" />
               </a>
@@ -58,9 +58,15 @@ export async function Footer() {
           </div>
         </div>
 
-        <span className="text-xs tracking-wide">
-          © {new Date().getFullYear()} Diário do Xingu - Todos os direitos reservados
-        </span>
+        <div className="flex flex-col">
+          <span className="text-xs tracking-wide">
+            © {new Date().getFullYear()} Diário do Xingu - Todos os direitos reservados
+          </span>
+          <span className="text-xs tracking-wide">
+            Developed with <FontAwesomeIcon icon={faCoffee} className="inline size-4" /> by{' '}
+            <b className="font-globo">vkav labs</b>
+          </span>
+        </div>
       </div>
     </footer>
   )

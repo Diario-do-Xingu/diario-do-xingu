@@ -182,6 +182,12 @@ export interface News {
    * Conta automaticamente o numero de vezes visitado por mais de 5 segundos.
    */
   readCount?: number | null;
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -486,6 +492,12 @@ export interface NewsSelect<T extends boolean = true> {
   authors?: T;
   publishedAt?: T;
   readCount?: T;
+  populatedAuthors?:
+    | T
+    | {
+        id?: T;
+        name?: T;
+      };
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -789,6 +801,7 @@ export interface TaskSchedulePublish {
  */
 export interface MediaBlock {
   media: string | Media;
+  caption?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';

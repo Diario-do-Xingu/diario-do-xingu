@@ -3,7 +3,6 @@ import { ImageMedia } from '../Media/ImageMedia'
 import Link from 'next/link'
 import { Badge } from '../ui/badge'
 import { formatDateAndRelative } from '@/utilities/formatDate'
-import { getServerSideURL } from '@/utilities/getURL'
 import { COLLECTION_URL_PATHS } from '@/constants'
 import { cn } from '@/utilities/ui'
 
@@ -23,7 +22,7 @@ export function ArticleListCard(props: ArticleListCardProps) {
 
   return (
     <Link
-      href={`${getServerSideURL()}/${COLLECTION_URL_PATHS.News}/${doc.slug}`}
+      href={`/${COLLECTION_URL_PATHS.News}/${doc.slug}`}
       className="grid gap-3 transition-transform lg:grid-cols-12 lg:gap-5 lg:hover:scale-[103%]"
     >
       <div className="aspect-[3/2] overflow-hidden rounded-xl shadow-md shadow-zinc-400 lg:col-span-5">
