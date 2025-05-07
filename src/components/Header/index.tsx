@@ -14,7 +14,7 @@ const date = new Date(Date.now())
 const formattedDate = writingDate(date.getTime())
 
 const colors = ['text-primary', 'text-secondary', 'text-tertiary', 'text-accent']
-const links = [
+const links: { label: string; link: string; color?: string }[] = [
   {
     label: 'home',
     link: '/',
