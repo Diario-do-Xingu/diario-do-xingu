@@ -27,19 +27,19 @@ const links = [
     label: 'publicações legais',
     link: `/${COLLECTION_URL_PATHS.NotarialActs}`,
   },
-  {
-    label: 'edições digitais',
-    link: '#',
-  },
-  {
-    label: 'tabela brasileirão',
-    link: '#',
-    color: 'text-red-500',
-  },
-  {
-    label: 'contato',
-    link: '#',
-  },
+  // {
+  //   label: 'edições digitais',
+  //   link: '#',
+  // },
+  // {
+  //   label: 'tabela brasileirão',
+  //   link: '#',
+  //   color: 'text-red-500',
+  // },
+  // {
+  //   label: 'contato',
+  //   link: '#',
+  // },
 ]
 
 export async function Header() {

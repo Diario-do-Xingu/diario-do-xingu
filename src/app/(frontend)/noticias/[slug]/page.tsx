@@ -91,15 +91,6 @@ export default async function Page({ params: paramsPromise }: Args) {
           />
         </GridLeft>
 
-        {/* <GridLeft className="row-start-2">
-          <ArticleRelatedSection
-            categoryId={
-              typeof article.category === 'string' ? article.category : article.category.id
-            }
-            currentArticleSlug={article.slug!}
-          />
-        </GridLeft> */}
-
         <GridRight className="mt-10 space-y-5 lg:mt-0">
           <ArticleHighlightSection />
           <WeatherWidget />
@@ -110,4 +101,23 @@ export default async function Page({ params: paramsPromise }: Args) {
       </Grid>
     </div>
   )
+}
+
+export async function generateStaticParams() {
+  const payload = await getPayload()
+
+  const { docs } = await payload.find({
+    collection: COLLECTION_SLUGS.News,
+    overrideAccess: false,
+    draft: false,
+    limit: 100,
+    pagination: false,
+    select: {
+      slug: true,
+    },
+  })
+
+  const params = docs.map(({ slug }) => ({ slug }))
+
+  return params
 }

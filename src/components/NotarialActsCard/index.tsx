@@ -6,9 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { NotarialAct } from '@/payload-types'
 
 import Link from 'next/link'
-import { getClientSideURL } from '@/utilities/getURL'
 import { COLLECTION_URL_PATHS } from '@/constants'
-import { env } from '@/env'
 import { formatDateWithTime } from '@/utilities/formatDate'
 
 type NotarialActsCardProps = {
@@ -20,17 +18,11 @@ export function NotarialActsCard(props: NotarialActsCardProps) {
 
   const { content, heading, filename, key, publishedAt } = doc
 
-  const linkFeatureEnabled = env.NEXT_PUBLIC_FEATURE_NOTARIAL_ACT_LINK
-
-  const href = linkFeatureEnabled
-    ? `${getClientSideURL()}/${COLLECTION_URL_PATHS.NotarialActs}/${doc.key}`
-    : '#'
-
   const downloadLink = doc.url
 
   return (
     <Card className="bg-[#F8F8F8] transition-all hover:scale-[100.2%] hover:bg-card hover:shadow-xl">
-      <Link href={href}>
+      <Link href={`/${COLLECTION_URL_PATHS.NotarialActs}/${doc.key}`}>
         <CardHeader className="pb-2">
           <h4 className="font-bold">{heading}</h4>
         </CardHeader>
