@@ -23,9 +23,9 @@ export async function Footer() {
         <div className="mb-4 grid grid-cols-1 items-center gap-6 lg:grid-cols-3">
           <Link href="/" className="justify-self-center lg:justify-self-start">
             {logo ? (
-              <ImageMedia alt={logoAlt} imgClassName={'w-[200px]'} resource={logo} />
+              <ImageMedia priority alt={logoAlt} imgClassName={'w-[200px]'} resource={logo} />
             ) : (
-              <ImageMedia alt={logoAlt} imgClassName={'w-[200px]'} src={defaultLogo} />
+              <ImageMedia priority alt={logoAlt} imgClassName={'w-[200px]'} src={defaultLogo} />
             )}
           </Link>
 

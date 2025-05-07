@@ -28,9 +28,9 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     height = fullHeight!
     alt = altFromResource || ''
 
-    const cacheTag = resource.updatedAt
+    // const cacheTag = resource.updatedAt
 
-    src = `${url}?${cacheTag}`
+    src = `${url}`
   }
 
   const loading = loadingFromProps || (!priority ? 'lazy' : undefined)

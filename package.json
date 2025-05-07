@@ -35,13 +35,17 @@
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "cross-env": "7.0.3",
+    "flip-book": "^1.9.9",
     "graphql": "16.8.1",
     "jiti": "2.4.2",
     "lucide-react": "0.503.0",
     "next": "15.3.0",
     "payload": "3.33.0",
+    "pdfjs-dist": "^4.8.69",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-pageflip": "^2.0.3",
+    "react-pdf": "^9.2.1",
     "sharp": "0.32.6",
     "tailwind-merge": "3.2.0",
     "tailwindcss-animate": "1.0.7",
@@ -71,8 +75,9 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "sharp",
+      "canvas",
       "esbuild",
+      "sharp",
       "unrs-resolver"
     ]
   }

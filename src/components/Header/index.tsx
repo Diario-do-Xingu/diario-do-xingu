@@ -76,9 +76,9 @@ export async function Header() {
 
         <Link href="/" className="justify-self-start lg:justify-self-center">
           {logo ? (
-            <ImageMedia alt={logoAlt} imgClassName={'w-[200px]'} resource={logo} />
+            <ImageMedia priority alt={logoAlt} imgClassName={'w-[200px]'} resource={logo} />
           ) : (
-            <ImageMedia alt={logoAlt} imgClassName={'w-[200px]'} src={defaultLogo} />
+            <ImageMedia priority alt={logoAlt} imgClassName={'w-[200px]'} src={defaultLogo} />
           )}
         </Link>
 

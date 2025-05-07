@@ -82,9 +82,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
             <RichText data={article.content} enableGutter={false} />
           </div>
-        </GridLeft>
 
-        <GridLeft className="row-start-2">
           <ArticleRelatedSection
             categoryId={
               typeof article.category === 'string' ? article.category : article.category.id
@@ -92,6 +90,15 @@ export default async function Page({ params: paramsPromise }: Args) {
             currentArticleSlug={article.slug!}
           />
         </GridLeft>
+
+        {/* <GridLeft className="row-start-2">
+          <ArticleRelatedSection
+            categoryId={
+              typeof article.category === 'string' ? article.category : article.category.id
+            }
+            currentArticleSlug={article.slug!}
+          />
+        </GridLeft> */}
 
         <GridRight className="mt-10 space-y-5 lg:mt-0">
           <ArticleHighlightSection />

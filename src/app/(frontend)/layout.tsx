@@ -75,7 +75,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           />
         )}
 
-        <body className="bg-zinc-100">
+        <body className="grid min-h-screen grid-cols-1 grid-rows-[max-content_1fr_max-content] bg-zinc-100">
           <Header />
           <main>{children}</main>
           <Footer />
