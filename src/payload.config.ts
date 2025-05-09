@@ -51,12 +51,13 @@ export default buildConfig({
   },
   db: mongooseAdapter({
     url: env.DATABASE_URI,
-    // connectOptions: {
-    //   dbName: 'diario-do-xingu',
-    // },
   }),
   sharp,
-  plugins: [payloadCloudPlugin()],
+  plugins: [
+    payloadCloudPlugin({
+      debug: !env.NEXT_PUBLIC_IS_LIVE,
+    }),
+  ],
   jobs: {
     access: {
       run: ({ req }): boolean => {
