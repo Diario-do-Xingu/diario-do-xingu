@@ -6,7 +6,6 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
-import { en } from '@payloadcms/translations/languages/en'
 import { pt } from '@payloadcms/translations/languages/pt'
 
 import { env } from '@/env'
@@ -37,7 +36,6 @@ export default buildConfig({
   },
   i18n: {
     supportedLanguages: {
-      en,
       pt,
     },
   },
