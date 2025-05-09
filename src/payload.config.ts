@@ -51,9 +51,9 @@ export default buildConfig({
   },
   db: mongooseAdapter({
     url: env.DATABASE_URI,
-    connectOptions: {
-      dbName: 'diario-do-xingu',
-    },
+    // connectOptions: {
+    //   dbName: 'diario-do-xingu',
+    // },
   }),
   sharp,
   plugins: [payloadCloudPlugin()],
