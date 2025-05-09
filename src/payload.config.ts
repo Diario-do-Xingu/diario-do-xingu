@@ -21,7 +21,6 @@ import { News } from '@/payload/collections/News'
 import { Authors } from '@/payload/collections/Authors'
 import { NewsCategories } from '@/payload/collections/News/categories'
 import { defaultLexical } from '@/payload/fields/defaultLexical'
-import { COLLECTION_SLUGS } from './constants'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
