@@ -11,7 +11,6 @@ const isDev = process.env.NEXT_PUBLIC_IS_DEV ? process.env.NEXT_PUBLIC_IS_DEV ==
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: isDev ? undefined : 'standalone',
   images: {
     remotePatterns: [
       ...[NEXT_PUBLIC_SERVER_URL].map((item) => {

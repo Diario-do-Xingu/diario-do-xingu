@@ -1,6 +1,6 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
 
+import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -57,18 +57,7 @@ export default buildConfig({
     },
   }),
   sharp,
-  plugins: [
-    uploadthingStorage({
-      clientUploads: true,
-      collections: {
-        media: true,
-        [COLLECTION_SLUGS.NotarialActs]: true,
-      },
-      options: {
-        token: env.UPLOADTHING_TOKEN,
-      },
-    }),
-  ],
+  plugins: [payloadCloudPlugin()],
   jobs: {
     access: {
       run: ({ req }): boolean => {
