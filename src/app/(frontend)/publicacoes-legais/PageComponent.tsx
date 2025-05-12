@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { COLLECTION_URL_PATHS } from '@/constants'
 import { NotarialAct } from '@/payload-types'
 import { PaginatedDocs } from 'payload'
+import { SearchForm } from './SearchForm'
 
 type PageComponentProps = {
   notarialActs: PaginatedDocs<NotarialAct>
@@ -21,6 +22,13 @@ export function PageComponent({ notarialActs }: PageComponentProps) {
           <Badge>{`Total ${notarialActs.totalDocs} registros`}</Badge>
         </div>
       </div>
+      <div className="mt-2 h-px bg-foreground"></div>
+
+      <div className="mt-10 flex flex-col gap-2">
+        <h3 className="text-primary">Consulta</h3>
+        <SearchForm />
+      </div>
+
       <div className="mt-2 h-px bg-foreground"></div>
 
       <div className="mt-10 flex flex-col gap-3">
