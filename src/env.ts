@@ -6,7 +6,6 @@ export const env = createEnv({
     DATABASE_URI: z.string().url(),
     PAYLOAD_SECRET: z.string().min(1),
     CRON_SECRET: z.string().min(1),
-    // UPLOADTHING_TOKEN: z.string().min(1),
 
     // Optionals
     UMAMI_WEBSITE_ID: z.string().min(1).optional(),
@@ -15,13 +14,6 @@ export const env = createEnv({
   },
   client: {
     NEXT_PUBLIC_SERVER_URL: z.string().url(),
-
-    // Optionals
-    NEXT_PUBLIC_IS_DEV: z
-      .string()
-      .refine((s) => s === 'true' || s === 'false')
-      .transform((s) => s === 'true')
-      .default('false'),
 
     NEXT_PUBLIC_IS_LIVE: z
       .string()
@@ -32,7 +24,6 @@ export const env = createEnv({
   // You need to destructure client variables:
   experimental__runtimeEnv: {
     NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
-    NEXT_PUBLIC_IS_DEV: process.env.NEXT_PUBLIC_IS_DEV,
     NEXT_PUBLIC_IS_LIVE: process.env.NEXT_PUBLIC_IS_LIVE,
   },
 })

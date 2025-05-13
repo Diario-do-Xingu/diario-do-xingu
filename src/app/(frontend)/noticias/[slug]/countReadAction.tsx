@@ -30,7 +30,7 @@ export async function countReadAction({ articleId, currentReadCount }: Args) {
   //   return // Do not send the request
   // }
 
-  if (env.NEXT_PUBLIC_IS_DEV) {
+  if (!env.NEXT_PUBLIC_IS_LIVE) {
     payload.logger.info(`Skip increase article read view for dev`)
     return
   }

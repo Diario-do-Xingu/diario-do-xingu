@@ -287,6 +287,8 @@ export interface NotarialAct {
  */
 export interface User {
   id: string;
+  fullname?: string | null;
+  roles: ('admin' | 'editor')[];
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -580,6 +582,8 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  fullname?: T;
+  roles?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

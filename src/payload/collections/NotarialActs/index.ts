@@ -80,7 +80,7 @@ export const NotarialActs: CollectionConfig = {
       slugOverrides: {
         unique: true,
         admin: {
-          condition: () => env.NEXT_PUBLIC_IS_DEV,
+          condition: () => !env.NEXT_PUBLIC_IS_LIVE,
         },
       },
     }),
