@@ -1,0 +1,31 @@
+.btn--style-primary {
+  --bg-color: #203f3d;
+  --color: white;
+  --hover-bg: #3d6966;
+}
+
+.step-nav__home {
+  width: 24px;
+  height: 24px;
+}
+
+.admin-logo {
+  background-color: #203f3d;
+  padding-inline: 40px;
+  padding-block: 20px;
+  border-radius: 10px;
+}
+
+:where([data-theme='dark']) {
+  .admin-logo {
+    background-color: transparent;
+  }
+}
+
+.nav__controls {
+  width: 100%;
+
+  .signout-button {
+    width: 100%;
+  }
+}

@@ -27,13 +27,38 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   admin: {
     user: Users.slug,
+    suppressHydrationWarning: true,
     importMap: {
       baseDir: path.resolve(dirname),
     },
     timezones: {
       defaultTimezone: 'America/Sao_Paulo',
     },
+    components: {
+      graphics: {
+        Logo: '@/payload/logo#AdminLogo',
+        Icon: '@/payload/logo#AdminIcon',
+      },
+      logout: {
+        Button: '@/payload/components/SignOutButton#SignOutButton',
+      },
+    },
+    meta: {
+      icons: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          url: '/favicon.ico',
+        },
+        {
+          rel: 'apple-touch-icon',
+          type: 'image/png',
+          url: '/apple-icon.png',
+        },
+      ],
+    },
   },
+
   i18n: {
     supportedLanguages: {
       pt,
