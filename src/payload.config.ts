@@ -20,6 +20,7 @@ import { News } from '@/payload/collections/News'
 import { Authors } from '@/payload/collections/Authors'
 import { NewsCategories } from '@/payload/collections/News/categories'
 import { defaultLexical } from '@/payload/fields/defaultLexical'
+import { schedulePublish } from '@/payload/handlers/schedule-publish'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -89,7 +90,7 @@ export default buildConfig({
         return authHeader === `Bearer ${env.CRON_SECRET}`
       },
     },
-    tasks: [],
+    tasks: [schedulePublish],
     autoRun: [
       {
         cron: '* * * * *',
