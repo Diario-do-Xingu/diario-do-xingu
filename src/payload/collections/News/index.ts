@@ -13,6 +13,7 @@ import { MediaBlock } from '@/payload/blocks/MediaBlock'
 import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished'
 import { revalidateDelete, revalidateNews } from './hooks/revalidateNews'
 import { Author } from '@/payload-types'
+import { authenticated } from '@/payload/access/authenticated'
 
 export const News: CollectionConfig = {
   slug: COLLECTION_SLUGS.News,
@@ -22,6 +23,9 @@ export const News: CollectionConfig = {
   },
   access: {
     read: authenticatedOrPublished,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
   },
   admin: {
     useAsTitle: 'heading',

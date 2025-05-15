@@ -1,5 +1,6 @@
 import { COLLECTION_SLUGS } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
+import { authenticated } from '@/payload/access/authenticated'
 import { slugField } from '@/payload/fields/slug'
 import type { CollectionConfig } from 'payload'
 
@@ -11,6 +12,9 @@ export const NewsCategories: CollectionConfig = {
   },
   access: {
     read: anyone,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
   },
   admin: {
     useAsTitle: 'name',

@@ -7,6 +7,7 @@ import { slugField } from '@/payload/fields/slug'
 import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished'
 import { COLLECTION_SLUGS } from '@/constants'
 import { env } from '@/env'
+import { authenticated } from '@/payload/access/authenticated'
 
 export const NotarialActs: CollectionConfig = {
   slug: COLLECTION_SLUGS.NotarialActs,
@@ -16,6 +17,9 @@ export const NotarialActs: CollectionConfig = {
   },
   access: {
     read: authenticatedOrPublished,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
   },
 
   admin: {
