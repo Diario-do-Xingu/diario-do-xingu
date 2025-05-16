@@ -102,11 +102,13 @@ export interface Config {
     'site-info': SiteInfo;
     advertisement: Advertisement;
     'site-metadata': SiteMetadatum;
+    'payload-cloud-instance': PayloadCloudInstance;
   };
   globalsSelect: {
     'site-info': SiteInfoSelect<false> | SiteInfoSelect<true>;
     advertisement: AdvertisementSelect<false> | AdvertisementSelect<true>;
     'site-metadata': SiteMetadataSelect<false> | SiteMetadataSelect<true>;
+    'payload-cloud-instance': PayloadCloudInstanceSelect<false> | PayloadCloudInstanceSelect<true>;
   };
   locale: null;
   user: User & {
@@ -863,6 +865,16 @@ export interface SiteMetadatum {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-cloud-instance".
+ */
+export interface PayloadCloudInstance {
+  id: string;
+  instance: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-info_select".
  */
 export interface SiteInfoSelect<T extends boolean = true> {
@@ -914,6 +926,16 @@ export interface SiteMetadataSelect<T extends boolean = true> {
   siteName?: T;
   siteTitle?: T;
   siteDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-cloud-instance_select".
+ */
+export interface PayloadCloudInstanceSelect<T extends boolean = true> {
+  instance?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -15,6 +15,7 @@ import { Advertisement } from '@/components/Advertisement'
 import RichText from '@/components/RichText'
 import { ImageMedia } from '@/components/Media/ImageMedia'
 import { ArticleRelatedSection } from '@/components/ArticleRelatedSection'
+import { DigitalEditionsSection } from '@/components/DigitalEditions/DigitalEditionsSection'
 
 type Args = {
   params: Promise<{
@@ -76,7 +77,7 @@ export default async function Page({ params: paramsPromise }: Args) {
             <div className="overflow-hidden">
               <ImageMedia
                 resource={article.heroImage.image}
-                imgClassName="rounded-default w-full"
+                imgClassName="rounded-default w-full max-h-[600px] object-cover"
               />
               {article.heroImage.description && (
                 <span className="ps-2 text-xs text-zinc-600">{article.heroImage.description}</span>
@@ -98,6 +99,7 @@ export default async function Page({ params: paramsPromise }: Args) {
           <ArticleHighlightSection />
           <WeatherWidget />
           <ArticleMostReadSection />
+          <DigitalEditionsSection />
           <Advertisement />
           <SoccerWidget />
         </GridRight>

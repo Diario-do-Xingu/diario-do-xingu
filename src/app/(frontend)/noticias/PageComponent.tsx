@@ -9,6 +9,7 @@ import { News } from '@/payload-types'
 import { PaginatedDocs } from 'payload'
 import { ArticleHighlightSection } from '@/components/ArticleHighlightSection'
 import { ArticleMostReadSection } from '@/components/ArticleMostReadSection'
+import { DigitalEditionsSection } from '@/components/DigitalEditions/DigitalEditionsSection'
 
 type PageComponentProps = {
   news: PaginatedDocs<News>
@@ -61,6 +62,7 @@ export function PageComponent({ news }: PageComponentProps) {
         <ArticleHighlightSection />
         <WeatherWidget />
         <ArticleMostReadSection />
+        <DigitalEditionsSection />
         <Advertisement />
         <SoccerWidget />
       </GridRight>

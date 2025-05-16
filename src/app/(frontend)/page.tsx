@@ -12,6 +12,7 @@ import { getPayload } from '@/lib/payload/getPayload'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { ArticleHighlightSection } from '@/components/ArticleHighlightSection'
+import { DigitalEditionsSection } from '@/components/DigitalEditions/DigitalEditionsSection'
 
 export default async function HomePage() {
   const payload = await getPayload()
@@ -48,6 +49,7 @@ export default async function HomePage() {
           <ArticleHighlightSection />
           <WeatherWidget />
           <ArticleMostReadSection />
+          <DigitalEditionsSection />
           <Advertisement />
           <SoccerWidget />
         </GridRight>

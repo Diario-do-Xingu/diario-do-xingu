@@ -13,6 +13,7 @@ export async function ArticleMostReadSection() {
     collection: COLLECTION_SLUGS.News,
     limit: ARCHIVE_LIMIT.MostRead,
     sort: '-readCount',
+    pagination: false,
   })
 
   const { docs, totalDocs } = mostReadNews
