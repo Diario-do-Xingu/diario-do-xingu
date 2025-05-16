@@ -11,7 +11,7 @@ export const MediaBlock: Block = {
     {
       name: 'media',
       type: 'upload',
-      relationTo: 'media',
+      relationTo: 'article-media',
       required: true,
     },
     {

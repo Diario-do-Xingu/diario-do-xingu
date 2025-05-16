@@ -66,7 +66,7 @@ export const News: CollectionConfig = {
                 {
                   name: 'image',
                   type: 'upload',
-                  relationTo: 'media',
+                  relationTo: 'article-media',
                   label: 'Arquivo',
                   required: true,
                   admin: {

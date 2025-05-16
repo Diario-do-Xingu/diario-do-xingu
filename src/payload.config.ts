@@ -20,6 +20,7 @@ import { News } from '@/payload/collections/News'
 import { NewsCategories } from '@/payload/collections/News/categories'
 import { defaultLexical } from '@/payload/fields/defaultLexical'
 import { schedulePublish } from '@/payload/handlers/schedule-publish'
+import { ArticleMedia } from './payload/collections/ArticleMedia'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -64,7 +65,7 @@ export default buildConfig({
       pt,
     },
   },
-  collections: [News, NotarialActs, NewsCategories, Media, Users],
+  collections: [News, NotarialActs, NewsCategories, Media, ArticleMedia, Users],
   globals: [SiteInfo, Advertisement, SiteMetadata],
   editor: defaultLexical,
   secret: env.PAYLOAD_SECRET,

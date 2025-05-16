@@ -71,6 +71,7 @@ export interface Config {
     'notarial-acts': NotarialAct;
     'news-categories': NewsCategory;
     media: Media;
+    'article-media': ArticleMedia;
     users: User;
     'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
@@ -83,6 +84,7 @@ export interface Config {
     'notarial-acts': NotarialActsSelect<false> | NotarialActsSelect<true>;
     'news-categories': NewsCategoriesSelect<false> | NewsCategoriesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    'article-media': ArticleMediaSelect<false> | ArticleMediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -153,7 +155,7 @@ export interface News {
     /**
      * Image do card da notícia
      */
-    image: string | Media;
+    image: string | ArticleMedia;
     description?: string | null;
   };
   content: {
@@ -195,11 +197,10 @@ export interface News {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
+ * via the `definition` "article-media".
  */
-export interface Media {
+export interface ArticleMedia {
   id: string;
-  alt?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -267,6 +268,35 @@ export interface NotarialAct {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: string;
+  alt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -403,6 +433,10 @@ export interface PayloadLockedDocument {
         value: string | Media;
       } | null)
     | ({
+        relationTo: 'article-media';
+        value: string | ArticleMedia;
+      } | null)
+    | ({
         relationTo: 'users';
         value: string | User;
       } | null)
@@ -524,6 +558,37 @@ export interface NewsCategoriesSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "article-media_select".
+ */
+export interface ArticleMediaSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -788,7 +853,7 @@ export interface TaskSchedulePublish {
  * via the `definition` "MediaBlock".
  */
 export interface MediaBlock {
-  media: string | Media;
+  media: string | ArticleMedia;
   caption?: string | null;
   id?: string | null;
   blockName?: string | null;
