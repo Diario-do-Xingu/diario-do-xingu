@@ -1,12 +1,16 @@
 import type { GlobalConfig } from 'payload'
 import { revalidateMetadata } from './hooks/revalidateMetadata'
-import { COLLECTION_SLUGS } from '@/constants'
+import { COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
+import { anyone } from '@/payload/access/anyone'
 
 export const SiteMetadata: GlobalConfig = {
   slug: COLLECTION_SLUGS.SiteMetadata,
   label: 'Site Metadata',
   access: {
-    read: () => true,
+    read: anyone,
+  },
+  admin: {
+    group: COLLECTION_GROUP.Configuration,
   },
   fields: [
     {

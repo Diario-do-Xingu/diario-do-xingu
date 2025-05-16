@@ -1,12 +1,16 @@
 import type { GlobalConfig } from 'payload'
 import { revalidateSiteInfo } from './hooks/revalidateSiteInfo'
-import { COLLECTION_SLUGS } from '@/constants'
+import { COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
+import { anyone } from '@/payload/access/anyone'
 
 export const SiteInfo: GlobalConfig = {
   slug: COLLECTION_SLUGS.SiteInfo,
   label: 'Informações Gerais',
   access: {
-    read: () => true,
+    read: anyone,
+  },
+  admin: {
+    group: COLLECTION_GROUP.Configuration,
   },
   fields: [
     {

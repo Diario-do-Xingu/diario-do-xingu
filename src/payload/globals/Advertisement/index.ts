@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 import { revalidateAdvertisement } from './hooks/revalidateAdvertisement'
-import { COLLECTION_SLUGS } from '@/constants'
+import { COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
 
 export const Advertisement: GlobalConfig = {
@@ -8,6 +8,9 @@ export const Advertisement: GlobalConfig = {
   label: 'Publicidade',
   access: {
     read: anyone,
+  },
+  admin: {
+    group: COLLECTION_GROUP.Configuration,
   },
   fields: [
     {

@@ -21,3 +21,7 @@ export const COLLECTION_URL_PATHS = {
   NotarialActs: 'publicacoes-legais',
   News: 'noticias',
 } as const
+
+export const COLLECTION_GROUP = {
+  Configuration: 'Configuração',
+} as const
