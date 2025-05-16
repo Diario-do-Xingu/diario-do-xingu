@@ -29,7 +29,7 @@ export function ArticleListCard(props: ArticleListCardProps) {
         <ImageMedia
           resource={doc.heroImage.image}
           alt={doc.heroImage.description ?? ''}
-          imgClassName="object-cover h-full"
+          imgClassName="object-cover w-full h-full"
         />
       </div>
 

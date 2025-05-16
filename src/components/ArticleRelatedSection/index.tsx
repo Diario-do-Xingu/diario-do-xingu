@@ -39,7 +39,7 @@ export async function ArticleRelatedSection(props: {
         <h4 className="text-md font-globo font-bold text-primary">Artigos Relacionados</h4>
       </CardHeader>
 
-      <CardContent className="flex flex-col flex-nowrap gap-7 pt-5 lg:flex-row">
+      <CardContent className="grid grid-cols-1 gap-7 pt-5 lg:grid-cols-4">
         {docs.map((item) => {
           const imageAlt = item.heroImage.description || item.heroImage.description || ''
 

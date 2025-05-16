@@ -1,6 +1,6 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import { COLLECTION_SLUGS, ARCHIVE_LIMIT } from '@/constants'
+import { COLLECTION_SLUGS } from '@/constants'
 import { notFound } from 'next/navigation'
 
 import { PageComponent } from '../../PageComponent'
@@ -23,7 +23,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   const news = await payload.find({
     collection: COLLECTION_SLUGS.News,
-    limit: ARCHIVE_LIMIT.News,
+    limit: 16,
     overrideAccess: false,
     page: sanitizedPageNumber,
     sort: '-publishedAt',

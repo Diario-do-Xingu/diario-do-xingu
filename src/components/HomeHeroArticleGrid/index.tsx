@@ -21,7 +21,9 @@ export async function HomeHeroArticleGrid() {
     },
   })
 
-  const { docs, totalDocs } = heroNews
+  const { docs } = heroNews
+
+  const filteredFirstThree = docs.slice(0, 3).filter(Boolean)
 
   return (
     <div
@@ -30,11 +32,11 @@ export async function HomeHeroArticleGrid() {
         'lg:grid-cols-2 lg:grid-rows-2',
       )}
     >
-      {docs.map((doc, i) => (
+      {filteredFirstThree.map((doc, i) => (
         <HomeHeroArticleCard
           key={i}
           index={i}
-          size={totalDocs < 3 ? 'lg' : i === 0 ? 'lg' : 'sm'}
+          size={filteredFirstThree.length < 3 ? 'lg' : i === 0 ? 'lg' : 'sm'}
           doc={doc}
         />
       ))}

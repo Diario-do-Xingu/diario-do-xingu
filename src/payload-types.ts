@@ -69,7 +69,6 @@ export interface Config {
   collections: {
     news: News;
     'notarial-acts': NotarialAct;
-    authors: Author;
     'news-categories': NewsCategory;
     media: Media;
     users: User;
@@ -82,7 +81,6 @@ export interface Config {
   collectionsSelect: {
     news: NewsSelect<false> | NewsSelect<true>;
     'notarial-acts': NotarialActsSelect<false> | NotarialActsSelect<true>;
-    authors: AuthorsSelect<false> | AuthorsSelect<true>;
     'news-categories': NewsCategoriesSelect<false> | NewsCategoriesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -178,18 +176,17 @@ export interface News {
    */
   showInHighlights?: boolean | null;
   category: string | NewsCategory;
-  authors?: (string | Author)[] | null;
+  authors?:
+    | {
+        name?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   publishedAt?: string | null;
   /**
    * Conta automaticamente o numero de vezes visitado por mais de 5 segundos.
    */
   readCount?: number | null;
-  populatedAuthors?:
-    | {
-        id?: string | null;
-        name?: string | null;
-      }[]
-    | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -237,16 +234,6 @@ export interface NewsCategory {
   name: string;
   slug?: string | null;
   slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "authors".
- */
-export interface Author {
-  id: string;
-  name: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -408,10 +395,6 @@ export interface PayloadLockedDocument {
         value: string | NotarialAct;
       } | null)
     | ({
-        relationTo: 'authors';
-        value: string | Author;
-      } | null)
-    | ({
         relationTo: 'news-categories';
         value: string | NewsCategory;
       } | null)
@@ -486,15 +469,14 @@ export interface NewsSelect<T extends boolean = true> {
   content?: T;
   showInHighlights?: T;
   category?: T;
-  authors?: T;
-  publishedAt?: T;
-  readCount?: T;
-  populatedAuthors?:
+  authors?:
     | T
     | {
-        id?: T;
         name?: T;
+        id?: T;
       };
+  publishedAt?: T;
+  readCount?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -524,15 +506,6 @@ export interface NotarialActsSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "authors_select".
- */
-export interface AuthorsSelect<T extends boolean = true> {
-  name?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

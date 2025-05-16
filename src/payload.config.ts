@@ -17,7 +17,6 @@ import { SiteInfo } from '@/payload/globals/SiteInfo'
 import { Advertisement } from '@/payload/globals/Advertisement'
 import { SiteMetadata } from '@/payload/globals/Metadata'
 import { News } from '@/payload/collections/News'
-import { Authors } from '@/payload/collections/Authors'
 import { NewsCategories } from '@/payload/collections/News/categories'
 import { defaultLexical } from '@/payload/fields/defaultLexical'
 import { schedulePublish } from '@/payload/handlers/schedule-publish'
@@ -65,7 +64,7 @@ export default buildConfig({
       pt,
     },
   },
-  collections: [News, NotarialActs, Authors, NewsCategories, Media, Users],
+  collections: [News, NotarialActs, NewsCategories, Media, Users],
   globals: [SiteInfo, Advertisement, SiteMetadata],
   editor: defaultLexical,
   secret: env.PAYLOAD_SECRET,

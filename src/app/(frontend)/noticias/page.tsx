@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ARCHIVE_LIMIT, COLLECTION_SLUGS } from '@/constants'
+import { COLLECTION_SLUGS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
 import { PageComponent } from './PageComponent'
 
@@ -9,7 +9,7 @@ export default async function Page() {
 
   const news = await payload.find({
     collection: COLLECTION_SLUGS.News,
-    limit: ARCHIVE_LIMIT.News,
+    limit: 16,
     overrideAccess: false,
     sort: '-publishedAt',
   })

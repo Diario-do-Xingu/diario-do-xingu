@@ -42,7 +42,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   if (!article) return redirect('/')
 
-  const authors = (article.populatedAuthors ?? []).map((a) => a.name!)
+  const authors = (article.authors ?? []).map((a) => a.name!)
 
   return (
     <div>
@@ -74,7 +74,10 @@ export default async function Page({ params: paramsPromise }: Args) {
 
           <div className="mt-10 space-y-5 lg:space-y-10">
             <div className="overflow-hidden">
-              <ImageMedia resource={article.heroImage.image} imgClassName="rounded-default" />
+              <ImageMedia
+                resource={article.heroImage.image}
+                imgClassName="rounded-default w-full"
+              />
               {article.heroImage.description && (
                 <span className="ps-2 text-xs text-zinc-600">{article.heroImage.description}</span>
               )}
