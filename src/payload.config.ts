@@ -78,9 +78,13 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    payloadCloudPlugin({
-      debug: !env.NEXT_PUBLIC_IS_LIVE,
-    }),
+    ...(env.NEXT_PUBLIC_USE_PAYLOAD_CLOUD
+      ? [
+          payloadCloudPlugin({
+            debug: !env.NEXT_PUBLIC_IS_LIVE,
+          }),
+        ]
+      : []),
   ],
   jobs: {
     access: {

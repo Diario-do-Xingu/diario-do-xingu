@@ -1,6 +1,9 @@
 import { createEnv } from '@t3-oss/env-nextjs'
 import { z } from 'zod'
 
+// import * as dotenv from 'dotenv'
+// dotenv.config()
+
 export const env = createEnv({
   server: {
     DATABASE_URI: z.string().url(),
@@ -20,10 +23,17 @@ export const env = createEnv({
       .refine((s) => s === 'true' || s === 'false')
       .transform((s) => s === 'true')
       .default('false'),
+
+    NEXT_PUBLIC_USE_PAYLOAD_CLOUD: z
+      .string()
+      .refine((s) => s === 'true' || s === 'false')
+      .transform((s) => s === 'true')
+      .default('true'),
   },
   // You need to destructure client variables:
   experimental__runtimeEnv: {
     NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
     NEXT_PUBLIC_IS_LIVE: process.env.NEXT_PUBLIC_IS_LIVE,
+    NEXT_PUBLIC_USE_PAYLOAD_CLOUD: process.env.NEXT_PUBLIC_USE_PAYLOAD_CLOUD,
   },
 })

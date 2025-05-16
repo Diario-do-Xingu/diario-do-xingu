@@ -46,7 +46,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   return (
     <div>
-      <CountRead articleId={article.id} currentReadCount={article.readCount || 0} />
+      <CountRead articleId={article.id} />
       <Grid className="container-y-padding container">
         <GridLeft>
           <div className="space-y-5">

@@ -5,13 +5,21 @@ import { getPayload } from '@/lib/payload/getPayload'
 
 type Args = {
   articleId: string
-  currentReadCount: number
 }
 
-export async function countReadAction({ articleId, currentReadCount }: Args) {
+export async function countReadAction({ articleId }: Args) {
   // const userCookies = await cookies()
-
   const payload = await getPayload()
+
+  if (!env.NEXT_PUBLIC_IS_LIVE) {
+    payload.logger.info(`Skip increase article read view for dev`)
+    return
+  }
+
+  const article = await payload.findByID({
+    collection: 'news',
+    id: articleId,
+  })
 
   // const { data, error } = await tryCatch<string[]>(
   //   (async () => JSON.parse(userCookies.get('readArticles')?.value || '[]') as string[])(),
@@ -30,16 +38,11 @@ export async function countReadAction({ articleId, currentReadCount }: Args) {
   //   return // Do not send the request
   // }
 
-  if (!env.NEXT_PUBLIC_IS_LIVE) {
-    payload.logger.info(`Skip increase article read view for dev`)
-    return
-  }
-
   await payload.update({
     collection: 'news',
     id: articleId,
     data: {
-      readCount: (currentReadCount || 0) + 1,
+      readCount: (article.readCount || 0) + 1,
     },
     context: {
       disableRevalidate: true,

@@ -3,24 +3,17 @@
 import { useEffect } from 'react'
 import { countReadAction } from './countReadAction'
 
-export function CountRead({
-  articleId,
-  currentReadCount,
-}: {
-  articleId: string
-  currentReadCount: number
-}) {
+export function CountRead({ articleId }: { articleId: string }) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       countReadAction({
         articleId,
-        currentReadCount,
       })
     }, 5000)
 
     return () => {
       clearTimeout(timeout)
     }
-  }, [currentReadCount, articleId])
+  }, [articleId])
   return null
 }
