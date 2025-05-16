@@ -68,11 +68,13 @@ export interface Config {
   blocks: {};
   collections: {
     news: News;
-    'notarial-acts': NotarialAct;
     'news-categories': NewsCategory;
+    'notarial-acts': NotarialAct;
+    'digital-editions': DigitalEdition;
     media: Media;
     'article-media': ArticleMedia;
     users: User;
+    'digital-edition-thumbs': DigitalEditionThumb;
     'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -81,11 +83,13 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     news: NewsSelect<false> | NewsSelect<true>;
-    'notarial-acts': NotarialActsSelect<false> | NotarialActsSelect<true>;
     'news-categories': NewsCategoriesSelect<false> | NewsCategoriesSelect<true>;
+    'notarial-acts': NotarialActsSelect<false> | NotarialActsSelect<true>;
+    'digital-editions': DigitalEditionsSelect<false> | DigitalEditionsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'article-media': ArticleMediaSelect<false> | ArticleMediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    'digital-edition-thumbs': DigitalEditionThumbsSelect<false> | DigitalEditionThumbsSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -98,13 +102,11 @@ export interface Config {
     'site-info': SiteInfo;
     advertisement: Advertisement;
     'site-metadata': SiteMetadatum;
-    'payload-cloud-instance': PayloadCloudInstance;
   };
   globalsSelect: {
     'site-info': SiteInfoSelect<false> | SiteInfoSelect<true>;
     advertisement: AdvertisementSelect<false> | AdvertisementSelect<true>;
     'site-metadata': SiteMetadataSelect<false> | SiteMetadataSelect<true>;
-    'payload-cloud-instance': PayloadCloudInstanceSelect<false> | PayloadCloudInstanceSelect<true>;
   };
   locale: null;
   user: User & {
@@ -271,6 +273,56 @@ export interface NotarialAct {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "digital-editions".
+ */
+export interface DigitalEdition {
+  id: string;
+  thumb: string | DigitalEditionThumb;
+  'digital-edition-name': string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "digital-edition-thumbs".
+ */
+export interface DigitalEditionThumb {
+  id: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
@@ -421,12 +473,16 @@ export interface PayloadLockedDocument {
         value: string | News;
       } | null)
     | ({
+        relationTo: 'news-categories';
+        value: string | NewsCategory;
+      } | null)
+    | ({
         relationTo: 'notarial-acts';
         value: string | NotarialAct;
       } | null)
     | ({
-        relationTo: 'news-categories';
-        value: string | NewsCategory;
+        relationTo: 'digital-editions';
+        value: string | DigitalEdition;
       } | null)
     | ({
         relationTo: 'media';
@@ -439,6 +495,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: string | User;
+      } | null)
+    | ({
+        relationTo: 'digital-edition-thumbs';
+        value: string | DigitalEditionThumb;
       } | null)
     | ({
         relationTo: 'payload-jobs';
@@ -519,6 +579,17 @@ export interface NewsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news-categories_select".
+ */
+export interface NewsCategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "notarial-acts_select".
  */
 export interface NotarialActsSelect<T extends boolean = true> {
@@ -543,14 +614,24 @@ export interface NotarialActsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "news-categories_select".
+ * via the `definition` "digital-editions_select".
  */
-export interface NewsCategoriesSelect<T extends boolean = true> {
-  name?: T;
+export interface DigitalEditionsSelect<T extends boolean = true> {
+  thumb?: T;
+  'digital-edition-name'?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -631,6 +712,37 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "digital-edition-thumbs_select".
+ */
+export interface DigitalEditionThumbsSelect<T extends boolean = true> {
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -751,16 +863,6 @@ export interface SiteMetadatum {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-cloud-instance".
- */
-export interface PayloadCloudInstance {
-  id: string;
-  instance: string;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-info_select".
  */
 export interface SiteInfoSelect<T extends boolean = true> {
@@ -812,16 +914,6 @@ export interface SiteMetadataSelect<T extends boolean = true> {
   siteName?: T;
   siteTitle?: T;
   siteDescription?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-cloud-instance_select".
- */
-export interface PayloadCloudInstanceSelect<T extends boolean = true> {
-  instance?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

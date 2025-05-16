@@ -15,6 +15,8 @@ export const COLLECTION_SLUGS = {
   News: 'news',
   NewsCategories: 'news-categories',
   Authors: 'authors',
+  DigitalEditions: 'digital-editions',
+  DigitalEditionThumbs: 'digital-edition-thumbs',
 } as const
 
 export const COLLECTION_URL_PATHS = {
