@@ -1,11 +1,15 @@
 import type { CollectionConfig } from 'payload'
 import { anyone } from '../access/anyone'
+import { COLLECTION_GROUP } from '@/constants'
 
 export const Media: CollectionConfig = {
   slug: 'media',
   labels: {
-    plural: 'Arquivos',
-    singular: 'Arquivo',
+    plural: 'Arquivos Gerais',
+    singular: 'Arquivo Geral',
+  },
+  admin: {
+    group: COLLECTION_GROUP.Configuration,
   },
   access: {
     read: anyone,

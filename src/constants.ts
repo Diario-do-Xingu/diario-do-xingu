@@ -26,4 +26,6 @@ export const COLLECTION_URL_PATHS = {
 
 export const COLLECTION_GROUP = {
   Configuration: 'Configuração',
+  Articles: 'Notícias',
+  NotarialActs: 'Atos Notariais',
 } as const

@@ -1,4 +1,4 @@
-import { ARCHIVE_LIMIT, COLLECTION_SLUGS } from '@/constants'
+import { ARCHIVE_LIMIT, COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
 import { CollectionConfig } from 'payload'
 import { slugField } from '@/payload/fields/slug'
 import {
@@ -28,6 +28,7 @@ export const News: CollectionConfig = {
     delete: authenticated,
   },
   admin: {
+    group: COLLECTION_GROUP.Articles,
     useAsTitle: 'heading',
     defaultColumns: ['_status', 'heading', 'subheading', 'publishedAt'],
   },

@@ -1,4 +1,4 @@
-import { COLLECTION_SLUGS } from '@/constants'
+import { COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
 import { authenticated } from '@/payload/access/authenticated'
 import { slugField } from '@/payload/fields/slug'
@@ -19,6 +19,7 @@ export const NewsCategories: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name'],
+    group: COLLECTION_GROUP.Articles,
   },
   fields: [
     {
