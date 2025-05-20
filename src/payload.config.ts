@@ -20,7 +20,7 @@ import { News } from '@/payload/collections/News'
 import { NewsCategories } from '@/payload/collections/News/categories'
 import { defaultLexical } from '@/payload/fields/defaultLexical'
 import { schedulePublish } from '@/payload/handlers/schedule-publish'
-import { ArticleMedia } from './payload/collections/ArticleMedia'
+import { ArticleMedia } from './payload/collections/News/ArticleMedia'
 import { DigitalEditions } from './payload/collections/DigitalEditions'
 import { DigitalEditionMedia } from './payload/collections/DigitalEditions/media'
 
@@ -61,7 +61,6 @@ export default buildConfig({
       ],
     },
   },
-
   i18n: {
     supportedLanguages: {
       pt,
@@ -70,12 +69,12 @@ export default buildConfig({
   collections: [
     News,
     NewsCategories,
+    ArticleMedia,
     NotarialActs,
     DigitalEditions,
-    Media,
-    ArticleMedia,
-    Users,
     DigitalEditionMedia,
+    Media,
+    Users,
   ],
   globals: [SiteInfo, Advertisement, SiteMetadata],
   editor: defaultLexical,

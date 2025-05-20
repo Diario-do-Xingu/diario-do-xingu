@@ -1,5 +1,8 @@
 import type { CollectionConfig } from 'payload'
-import { anyone } from '../access/anyone'
+
+import { COLLECTION_GROUP } from '@/constants'
+import { anyone } from '@/payload/access/anyone'
+import { authenticated } from '@/payload/access/authenticated'
 
 export const ArticleMedia: CollectionConfig = {
   slug: 'article-media',
@@ -7,15 +10,16 @@ export const ArticleMedia: CollectionConfig = {
     plural: 'Arquivos de Noticia',
     singular: 'Arquivo de Noticia',
   },
+  admin: {
+    group: COLLECTION_GROUP.Articles,
+  },
   access: {
     read: anyone,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
   },
-  fields: [
-    // {
-    //   type: 'text',
-    //   name: 'alt',
-    // },
-  ],
+  fields: [],
   upload: {
     pasteURL: false,
     imageSizes: [

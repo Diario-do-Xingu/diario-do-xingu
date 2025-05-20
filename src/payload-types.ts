@@ -69,12 +69,12 @@ export interface Config {
   collections: {
     news: News;
     'news-categories': NewsCategory;
+    'article-media': ArticleMedia;
     'notarial-acts': NotarialAct;
     'digital-editions': DigitalEdition;
-    media: Media;
-    'article-media': ArticleMedia;
-    users: User;
     'digital-edition-thumbs': DigitalEditionThumb;
+    media: Media;
+    users: User;
     'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,12 +84,12 @@ export interface Config {
   collectionsSelect: {
     news: NewsSelect<false> | NewsSelect<true>;
     'news-categories': NewsCategoriesSelect<false> | NewsCategoriesSelect<true>;
+    'article-media': ArticleMediaSelect<false> | ArticleMediaSelect<true>;
     'notarial-acts': NotarialActsSelect<false> | NotarialActsSelect<true>;
     'digital-editions': DigitalEditionsSelect<false> | DigitalEditionsSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
-    'article-media': ArticleMediaSelect<false> | ArticleMediaSelect<true>;
-    users: UsersSelect<false> | UsersSelect<true>;
     'digital-edition-thumbs': DigitalEditionThumbsSelect<false> | DigitalEditionThumbsSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -479,6 +479,10 @@ export interface PayloadLockedDocument {
         value: string | NewsCategory;
       } | null)
     | ({
+        relationTo: 'article-media';
+        value: string | ArticleMedia;
+      } | null)
+    | ({
         relationTo: 'notarial-acts';
         value: string | NotarialAct;
       } | null)
@@ -487,20 +491,16 @@ export interface PayloadLockedDocument {
         value: string | DigitalEdition;
       } | null)
     | ({
+        relationTo: 'digital-edition-thumbs';
+        value: string | DigitalEditionThumb;
+      } | null)
+    | ({
         relationTo: 'media';
         value: string | Media;
       } | null)
     | ({
-        relationTo: 'article-media';
-        value: string | ArticleMedia;
-      } | null)
-    | ({
         relationTo: 'users';
         value: string | User;
-      } | null)
-    | ({
-        relationTo: 'digital-edition-thumbs';
-        value: string | DigitalEditionThumb;
       } | null)
     | ({
         relationTo: 'payload-jobs';
@@ -592,6 +592,37 @@ export interface NewsCategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "article-media_select".
+ */
+export interface ArticleMediaSelect<T extends boolean = true> {
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "notarial-acts_select".
  */
 export interface NotarialActsSelect<T extends boolean = true> {
@@ -637,10 +668,9 @@ export interface DigitalEditionsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
+ * via the `definition` "digital-edition-thumbs_select".
  */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
+export interface DigitalEditionThumbsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -669,9 +699,10 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "article-media_select".
+ * via the `definition` "media_select".
  */
-export interface ArticleMediaSelect<T extends boolean = true> {
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -714,37 +745,6 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "digital-edition-thumbs_select".
- */
-export interface DigitalEditionThumbsSelect<T extends boolean = true> {
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
-  sizes?:
-    | T
-    | {
-        thumbnail?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
