@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { COLLECTION_GROUP } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
+import { authenticated } from '@/payload/access/authenticated'
 
 export const ArticleMedia: CollectionConfig = {
   slug: 'article-media',
@@ -14,6 +15,9 @@ export const ArticleMedia: CollectionConfig = {
   },
   access: {
     read: anyone,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
   },
   fields: [],
   upload: {
