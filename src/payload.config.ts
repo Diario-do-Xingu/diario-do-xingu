@@ -88,6 +88,14 @@ export default buildConfig({
     url: env.DATABASE_URI,
   }),
   sharp,
+  cors: {
+    origins: [
+      'http://localhost:3000',
+      'https://diariodoxingu.com',
+      'https://diariodoxingu.com.br',
+      'https://diario-do-xingu.payloadcms.app',
+    ],
+  },
   plugins: [
     ...(env.NEXT_PUBLIC_USE_PAYLOAD_CLOUD
       ? [
