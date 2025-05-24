@@ -2,7 +2,7 @@ import type { BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook 
 
 import { revalidatePath } from 'next/cache'
 import { News } from '@/payload-types'
-import { ARCHIVE_LIMIT, COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
+import { COLLECTION_SLUGS, COLLECTION_URL_PATHS, PAGINATED_LIMIT } from '@/constants'
 
 export const revalidateNews: CollectionAfterChangeHook<News> = async ({
   doc,
@@ -57,7 +57,7 @@ async function revalidatePaths(payload: BasePayload) {
     overrideAccess: false,
   })
 
-  const totalPages = Math.ceil(totalDocs / ARCHIVE_LIMIT.News)
+  const totalPages = Math.ceil(totalDocs / PAGINATED_LIMIT.News)
 
   const pagePaths = Array.from(
     { length: totalPages },

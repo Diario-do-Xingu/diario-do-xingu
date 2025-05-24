@@ -1,5 +1,5 @@
 export function capitalizeWords(str: string) {
-  return str.replace(/\b\w/g, (l) => l.toUpperCase())
+  return str.replace(/(^|\s)\S/g, (l) => l.toUpperCase())
 }
 
 export function joinWithAnd(items: string[]): string {

@@ -19,14 +19,16 @@ export default async function HomePage() {
 
   const news = await payload.find({
     collection: COLLECTION_SLUGS.News,
-    limit: 13,
+    limit: 20,
     overrideAccess: false,
     sort: '-publishedAt',
   })
 
+  const heroDocs = news.docs.slice(0, 3).filter(Boolean)
+
   return (
     <div className="container-y-padding">
-      <HomeHeroArticleGrid />
+      <HomeHeroArticleGrid docs={heroDocs} />
 
       <Grid className="container mt-20">
         <GridLeft>

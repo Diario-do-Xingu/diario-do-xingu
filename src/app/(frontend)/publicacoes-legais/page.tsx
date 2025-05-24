@@ -3,6 +3,7 @@ import { PageComponent } from './PageComponent'
 import { getPayload } from '@/lib/payload/getPayload'
 import { z } from 'zod'
 
+export const dynamic = 'force-static'
 export const revalidate = 600
 
 const searchParamsSchema = z.object({
@@ -38,11 +39,7 @@ export default async function Page({
       and: [
         date
           ? {
-              publishedAt: {
-                ...getDates(date),
-                // greater_than_equal: `${date.split('T')[0]}T00:00:00.000Z`,
-                // less_than: `${date.split('T')[0]}T23:59:59.999Z`,
-              },
+              publishedAt: getDates(date),
             }
           : {},
         key

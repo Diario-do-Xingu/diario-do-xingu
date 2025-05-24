@@ -1,6 +1,6 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import { COLLECTION_SLUGS } from '@/constants'
+import { COLLECTION_SLUGS, PAGINATED_LIMIT } from '@/constants'
 import { notFound } from 'next/navigation'
 
 import { PageComponent } from '../../PageComponent'
@@ -23,7 +23,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   const news = await payload.find({
     collection: COLLECTION_SLUGS.News,
-    limit: 16,
+    limit: PAGINATED_LIMIT.News,
     overrideAccess: false,
     page: sanitizedPageNumber,
     sort: '-publishedAt',
@@ -39,7 +39,7 @@ export async function generateStaticParams() {
     overrideAccess: false,
   })
 
-  const totalPages = Math.ceil(totalDocs / 10)
+  const totalPages = Math.ceil(totalDocs / PAGINATED_LIMIT.News)
 
   const pages: { pageNumber: string }[] = []
 

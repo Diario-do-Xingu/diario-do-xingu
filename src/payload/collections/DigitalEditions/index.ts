@@ -5,6 +5,7 @@ import { COLLECTION_SLUGS } from '@/constants'
 
 import { authenticated } from '@/payload/access/authenticated'
 import { anyone } from '@/payload/access/anyone'
+import { revalidateDelete, revalidateDigitalEditions } from './hooks/revalidateDigitalEdition'
 
 export const DigitalEditions: CollectionConfig = {
   slug: COLLECTION_SLUGS.DigitalEditions,
@@ -46,4 +47,9 @@ export const DigitalEditions: CollectionConfig = {
     },
     ...slugField('digital-edition-name'),
   ],
+
+  hooks: {
+    afterChange: [revalidateDigitalEditions],
+    afterDelete: [revalidateDelete],
+  },
 }
