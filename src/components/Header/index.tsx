@@ -27,10 +27,10 @@ const links: { label: string; link: string; color?: string }[] = [
     label: 'publicações legais',
     link: `/${COLLECTION_URL_PATHS.NotarialActs}`,
   },
-  // {
-  //   label: 'edições digitais',
-  //   link: '#',
-  // },
+  {
+    label: 'edições digitais',
+    link: `/${COLLECTION_URL_PATHS.DigitalEditions}`,
+  },
   // {
   //   label: 'tabela brasileirão',
   //   link: '#',

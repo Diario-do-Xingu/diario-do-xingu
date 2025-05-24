@@ -6,6 +6,7 @@ import { COLLECTION_URL_PATHS } from '@/constants'
 import { NotarialAct } from '@/payload-types'
 import { PaginatedDocs } from 'payload'
 import { SearchForm } from './SearchForm'
+import { Suspense } from 'react'
 
 type PageComponentProps = {
   notarialActs: PaginatedDocs<NotarialAct>
@@ -26,7 +27,9 @@ export function PageComponent({ notarialActs }: PageComponentProps) {
 
       <div className="mt-10 flex flex-col gap-2">
         <h3 className="text-primary">Consulta</h3>
-        <SearchForm />
+        <Suspense>
+          <SearchForm />
+        </Suspense>
       </div>
 
       <div className="mt-2 h-px bg-foreground"></div>

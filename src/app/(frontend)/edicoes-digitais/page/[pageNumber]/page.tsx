@@ -1,9 +1,8 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-
 import { COLLECTION_SLUGS, PAGINATED_LIMIT } from '@/constants'
 import { notFound } from 'next/navigation'
-import { PageComponent } from '../../PageComponent'
+import { DigitalEditionsPageComponent } from '../../PageComponent'
 
 export const revalidate = 600
 
@@ -21,25 +20,25 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   if (!Number.isInteger(sanitizedPageNumber)) notFound()
 
-  const notarialActs = await payload.find({
-    collection: COLLECTION_SLUGS.NotarialActs,
-    limit: PAGINATED_LIMIT.NotarialActs,
-    page: sanitizedPageNumber,
+  const digitalEditions = await payload.find({
+    collection: COLLECTION_SLUGS.DigitalEditions,
+    limit: PAGINATED_LIMIT.DigitalEditions,
     overrideAccess: false,
-    sort: '-publishedAt',
+    page: sanitizedPageNumber,
+    sort: '-createdAt',
   })
 
-  return <PageComponent notarialActs={notarialActs} />
+  return <DigitalEditionsPageComponent digitalEditions={digitalEditions} />
 }
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
   const { totalDocs } = await payload.count({
-    collection: COLLECTION_SLUGS.NotarialActs,
+    collection: COLLECTION_SLUGS.DigitalEditions,
     overrideAccess: false,
   })
 
-  const totalPages = Math.ceil(totalDocs / PAGINATED_LIMIT.NotarialActs)
+  const totalPages = Math.ceil(totalDocs / PAGINATED_LIMIT.DigitalEditions)
 
   const pages: { pageNumber: string }[] = []
 
