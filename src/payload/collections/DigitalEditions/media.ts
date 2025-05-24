@@ -24,6 +24,16 @@ export const DigitalEditionMedia: CollectionConfig = {
     bulkUpload: false,
     mimeTypes: ['image/*'],
     focalPoint: false,
+    resizeOptions: {
+      fit: 'contain',
+      height: 500,
+      width: 500,
+      background: {
+        b: 255,
+        r: 255,
+        g: 255,
+      },
+    },
     imageSizes: [
       {
         name: 'thumbnail',
