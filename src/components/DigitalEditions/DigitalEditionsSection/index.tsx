@@ -17,12 +17,12 @@ export async function DigitalEditionsSection() {
   const { docs, totalDocs } = digitalEditions
 
   return (
-    <Card className="mt-10">
-      <CardHeader className="border-b-2 py-4">
+    <Card className="mt-10 bg-tertiary p-4">
+      <CardHeader className="rounded-tl-default rounded-tr-default border-b-2 bg-card py-4">
         <h4 className="text-md font-globo font-bold text-primary">Edições Digitais</h4>
       </CardHeader>
 
-      <CardContent className="grid grid-cols-1 gap-4 pt-5">
+      <CardContent className="grid grid-cols-1 gap-4 rounded-bl-default rounded-br-default bg-card pt-5">
         {docs.map((item, index) => {
           return (
             <Fragment key={item.slug}>

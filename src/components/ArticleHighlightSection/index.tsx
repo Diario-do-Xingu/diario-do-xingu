@@ -26,7 +26,7 @@ export async function ArticleHighlightSection() {
   return (
     <Card className="shadow-none">
       <CardHeader className="border-b-2 py-4">
-        <h4 className="text-md font-globo font-bold text-primary">Destaques</h4>
+        <h4 className="text-md font-globo font-bold text-primary text-red-700">Destaques</h4>
       </CardHeader>
 
       <CardContent className="space-y-5 pt-4">
