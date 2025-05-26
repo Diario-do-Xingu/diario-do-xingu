@@ -91,7 +91,6 @@ export default buildConfig({
     origins: [
       'http://localhost:3000',
       'https://diariodoxingu.com',
-      'https://diariodoxingu.com.br',
       'https://diario-do-xingu.payloadcms.app',
     ],
   },
