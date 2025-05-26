@@ -2,16 +2,13 @@ import { getCachedGlobal } from '@/utilities/getGlobals'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import Link from 'next/link'
-import { writingDate } from '@/utilities/formatDate'
 import { cn } from '@/utilities/ui'
 import { getSocialIcon } from '@/utilities/getSocialIcon'
 import { Media, SiteInfo } from '@/payload-types'
 import { COLLECTION_URL_PATHS, COLLECTION_SLUGS } from '@/constants'
 import defaultLogo from '@/assets/images/default-logo.png'
 import { ImageMedia } from '../Media/ImageMedia'
-
-const date = new Date(Date.now())
-const formattedDate = writingDate(date.getTime())
+import { DisplayDate } from './DisplayDate'
 
 const colors = ['text-primary', 'text-secondary', 'text-tertiary', 'text-accent']
 const links: { label: string; link: string; color?: string }[] = [
@@ -72,7 +69,9 @@ export async function Header() {
       </div>
 
       <div className="container grid grid-cols-2 items-center py-4 text-primary-foreground lg:grid-cols-3 lg:py-2">
-        <span className="hidden justify-self-start text-sm lg:block">{formattedDate}</span>
+        <span className="hidden justify-self-start text-sm lg:block">
+          <DisplayDate />
+        </span>
 
         <Link href="/" className="justify-self-start lg:justify-self-center">
           {logo ? (
