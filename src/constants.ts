@@ -22,8 +22,17 @@ export const COLLECTION_SLUGS = {
 export const COLLECTION_URL_PATHS = {
   NotarialActs: 'publicacoes-legais',
   News: 'noticias',
+  DigitalEditions: 'edicoes-digitais',
 } as const
 
 export const COLLECTION_GROUP = {
   Configuration: 'Configuração',
+  Articles: 'Notícias',
+  NotarialActs: 'Atos Notariais',
+} as const
+
+export const PAGINATED_LIMIT = {
+  DigitalEditions: 12,
+  News: 20,
+  NotarialActs: 10,
 } as const

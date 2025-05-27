@@ -1,6 +1,8 @@
 import type { CollectionConfig } from 'payload'
 import { admins } from '../access/admins'
 import { checkRole } from './Users/checkRole'
+import { COLLECTION_GROUP } from '@/constants'
+import { anyone } from '../access/anyone'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -10,9 +12,10 @@ export const Users: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'email',
+    group: COLLECTION_GROUP.Configuration,
   },
   access: {
-    // read: admins,
+    read: anyone,
     create: admins,
     delete: admins,
     update: ({ req: { user } }) => {

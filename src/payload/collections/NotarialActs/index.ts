@@ -5,7 +5,7 @@ import { revalidateDelete, revalidateNotarialActs } from './hooks/revalidateNota
 
 import { slugField } from '@/payload/fields/slug'
 import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished'
-import { COLLECTION_SLUGS } from '@/constants'
+import { COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
 import { env } from '@/env'
 import { authenticated } from '@/payload/access/authenticated'
 
@@ -25,6 +25,7 @@ export const NotarialActs: CollectionConfig = {
   admin: {
     defaultColumns: ['key', 'heading', 'publishedAt', '_status'],
     useAsTitle: 'heading',
+    group: COLLECTION_GROUP.NotarialActs,
   },
   upload: {
     // staticDir: 'public/notarial-acts',

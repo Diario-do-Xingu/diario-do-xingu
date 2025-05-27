@@ -18,7 +18,7 @@ type PageComponentProps = {
 export function PageComponent({ news }: PageComponentProps) {
   const { docs } = news
 
-  const firstListNumber = 6
+  const firstListNumber = 3
   const filteredFirstThree = docs.slice(0, firstListNumber).filter(Boolean)
   const restDocs = docs.slice(firstListNumber).filter(Boolean)
 
