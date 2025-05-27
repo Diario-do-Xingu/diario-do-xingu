@@ -7,7 +7,6 @@ import { ArticleMostReadSection } from '@/components/ArticleMostReadSection'
 import { WeatherWidget } from '@/components/WeatherWidget'
 import { SoccerWidget } from '@/components/SoccerWidget'
 import { joinWithAnd } from '@/utilities/formatString'
-import { formatDateAndRelative } from '@/utilities/formatDate'
 import { ArticleShareLinks } from '@/components/ArticleShareLinks'
 import { getClientSideURL } from '@/utilities/getURL'
 import { ArticleHighlightSection } from '@/components/ArticleHighlightSection'
@@ -16,6 +15,7 @@ import RichText from '@/components/RichText'
 import { ImageMedia } from '@/components/Media/ImageMedia'
 import { ArticleRelatedSection } from '@/components/ArticleRelatedSection'
 import { DigitalEditionsSection } from '@/components/DigitalEditions/DigitalEditionsSection'
+import { PublishedAtClient } from './PublishedAtClient'
 
 type Args = {
   params: Promise<{
@@ -58,11 +58,13 @@ export default async function Page({ params: paramsPromise }: Args) {
             )}
 
             <div className="space-y-1">
-              <p className="font-globo text-sm font-bold text-zinc-600">
-                Por {joinWithAnd(authors)}
-              </p>
+              {authors.length > 0 && (
+                <p className="font-globo text-sm font-bold text-zinc-600">
+                  Por {joinWithAnd(authors)}
+                </p>
+              )}
               <p className="text-xs font-medium text-zinc-500">
-                {formatDateAndRelative(article.publishedAt || '')}
+                <PublishedAtClient publishedAt={article.publishedAt || ''} />
               </p>
             </div>
 
