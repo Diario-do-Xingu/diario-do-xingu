@@ -2,6 +2,12 @@
 
 [Payload Secret Generator](https://payloadsecret.io/)
 
+## Create NEXT_SERVER_ACTIONS_ENCRYPTION_KEY
+
+```bash
+node -e "console.log('NEXT_SERVER_ACTIONS_ENCRYPTION_KEY=', Buffer.from(require('crypto').randomBytes(32)).toString('base64'))"
+```
+
 ## Quick start
 
 This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.

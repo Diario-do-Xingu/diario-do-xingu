@@ -9,6 +9,7 @@ export const env = createEnv({
     DATABASE_URI: z.string().url(),
     PAYLOAD_SECRET: z.string().min(1),
     CRON_SECRET: z.string().min(1),
+    NEXT_SERVER_ACTIONS_ENCRYPTION_KEY: z.string().min(1),
 
     // Optionals
     UMAMI_WEBSITE_ID: z.string().min(1).optional(),
