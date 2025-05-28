@@ -174,38 +174,13 @@ export const News: CollectionConfig = {
       slugOverrides: {
         unique: true,
         index: true,
+        required: true,
       },
     }),
   ],
   hooks: {
     afterChange: [revalidateNews],
     afterDelete: [revalidateDelete],
-    afterRead: [
-      // async ({ doc, req: { payload } }) => {
-      //   if (doc?.authors && doc?.authors?.length > 0) {
-      //     const authorDocs: Author[] = []
-      //     for (const author of doc.authors) {
-      //       try {
-      //         const authorDoc = await payload.findByID({
-      //           id: typeof author === 'object' ? author?.id : author,
-      //           collection: COLLECTION_SLUGS.Authors,
-      //           depth: 0,
-      //         })
-      //         if (authorDoc) {
-      //           authorDocs.push(authorDoc)
-      //         }
-      //         if (authorDocs.length > 0) {
-      //           doc.populatedAuthors = authorDocs.map((authorDoc) => ({
-      //             name: authorDoc.name,
-      //             id: authorDoc.id,
-      //           }))
-      //         }
-      //       } catch {}
-      //     }
-      //   }
-      //   return doc
-      // },
-    ],
   },
   versions: {
     drafts: {

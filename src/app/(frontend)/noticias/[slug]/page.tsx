@@ -1,4 +1,4 @@
-import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
+import { COLLECTION_SLUGS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
 import { redirect } from 'next/navigation'
 import { CountRead } from './CountRead'
@@ -6,16 +6,14 @@ import { Grid, GridLeft, GridRight } from '@/components/Grid'
 import { ArticleMostReadSection } from '@/components/ArticleMostReadSection'
 import { WeatherWidget } from '@/components/WeatherWidget'
 import { SoccerWidget } from '@/components/SoccerWidget'
-import { joinWithAnd } from '@/utilities/formatString'
-import { ArticleShareLinks } from '@/components/ArticleShareLinks'
-import { getClientSideURL } from '@/utilities/getURL'
 import { ArticleHighlightSection } from '@/components/ArticleHighlightSection'
 import { Advertisement } from '@/components/Advertisement'
 import RichText from '@/components/RichText'
-import { ImageMedia } from '@/components/Media/ImageMedia'
+
 import { ArticleRelatedSection } from '@/components/ArticleRelatedSection'
 import { DigitalEditionsSection } from '@/components/DigitalEditions/DigitalEditionsSection'
-import { PublishedAtClient } from './PublishedAtClient'
+
+import { ArticleHero } from '@/components/Articles/ArticleHero'
 
 type Args = {
   params: Promise<{
@@ -43,51 +41,14 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   if (!article) return redirect('/')
 
-  const authors = (article.authors ?? []).map((a) => a.name!)
-
   return (
     <div>
       <CountRead articleId={article.id} />
       <Grid className="container-y-padding container">
         <GridLeft>
-          <div className="space-y-5">
-            <h1 className="text-3xl text-primary">{article.heading}</h1>
+          <ArticleHero article={article} />
 
-            {article.subheading && (
-              <h2 className="text text-base font-normal">{article.subheading}</h2>
-            )}
-
-            <div className="space-y-1">
-              {authors.length > 0 && (
-                <p className="font-globo text-sm font-bold text-zinc-600">
-                  Por {joinWithAnd(authors)}
-                </p>
-              )}
-              <p className="text-xs font-medium text-zinc-500">
-                <PublishedAtClient publishedAt={article.publishedAt || ''} />
-              </p>
-            </div>
-
-            <ArticleShareLinks
-              text={article.heading}
-              className="w-full"
-              link={`${getClientSideURL()}/${COLLECTION_URL_PATHS.News}/${article.slug}`}
-            />
-          </div>
-
-          <div className="mt-10 space-y-5 lg:space-y-10">
-            <div className="overflow-hidden">
-              <ImageMedia
-                resource={article.heroImage.image}
-                imgClassName="rounded-default w-full max-h-[600px] object-cover"
-              />
-              {article.heroImage.description && (
-                <span className="ps-2 text-xs text-zinc-600">{article.heroImage.description}</span>
-              )}
-            </div>
-
-            <RichText data={article.content} enableGutter={false} />
-          </div>
+          <RichText className="mt-8" data={article.content} enableGutter={false} />
 
           <ArticleRelatedSection
             categoryId={

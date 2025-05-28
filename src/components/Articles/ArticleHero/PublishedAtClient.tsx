@@ -4,11 +4,11 @@ import { formatDateAndRelative } from '@/utilities/formatDate'
 import { useEffect, useState } from 'react'
 
 export function PublishedAtClient(props: { publishedAt: string }) {
-  const [string, setString] = useState('')
+  const [publishedAt, setPublishedAt] = useState<string | null>(null)
 
   useEffect(() => {
-    setString(formatDateAndRelative(props.publishedAt))
+    setPublishedAt(props.publishedAt)
   }, [props.publishedAt])
 
-  return string
+  return publishedAt && <time dateTime={publishedAt}>{formatDateAndRelative(publishedAt)}</time>
 }
