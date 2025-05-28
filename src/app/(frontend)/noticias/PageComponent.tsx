@@ -1,6 +1,6 @@
 import { Advertisement } from '@/components/Advertisement'
 import { Grid, GridFull, GridLeft, GridRight } from '@/components/Grid'
-import { ArticleList } from '@/components/ArticleList'
+import { ArticleList } from '@/components/Articles/ArticleList'
 import { Pagination } from '@/components/Pagination'
 import { SoccerWidget } from '@/components/SoccerWidget'
 import { WeatherWidget } from '@/components/WeatherWidget'

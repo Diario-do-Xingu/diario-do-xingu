@@ -11,14 +11,17 @@ export function ArticleList(props: ArticleListProps) {
   const { news } = props
 
   const { docs, totalDocs } = news
+
   return (
     <div className="flex flex-col gap-9">
-      {docs.map((item, i) => {
-        return (
-          <Fragment key={item.slug!}>
-            <ArticleListCard doc={item} />
+      {docs.map((article, i) => {
+        const showDivider = i < totalDocs - 1
 
-            {i < totalDocs - 1 && <div className="divider h-[1px] bg-zinc-300"></div>}
+        return (
+          <Fragment key={article.slug}>
+            <ArticleListCard article={article} />
+
+            {showDivider && <div className="divider h-[1px] bg-zinc-300"></div>}
           </Fragment>
         )
       })}

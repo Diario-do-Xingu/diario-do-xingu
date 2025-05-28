@@ -3,7 +3,7 @@
 import { formatDateAndRelative } from '@/utilities/formatDate'
 import { useEffect, useState } from 'react'
 
-export function PublishedAtClient(props: { publishedAt: string }) {
+export function RelativePublishedAtClient(props: { publishedAt: string }) {
   const [publishedAt, setPublishedAt] = useState<string | null>(null)
 
   useEffect(() => {

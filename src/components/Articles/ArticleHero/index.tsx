@@ -1,10 +1,10 @@
 import { News } from '@/payload-types'
 import { joinWithAnd } from '@/utilities/formatString'
-import { PublishedAtClient } from './PublishedAtClient'
 import { ArticleShareLinks } from '@/components/ArticleShareLinks'
 import { getClientSideURL } from '@/utilities/getURL'
 import { COLLECTION_URL_PATHS } from '@/constants'
 import { ImageMedia } from '@/components/Media/ImageMedia'
+import { RelativePublishedAtClient } from '@/components/RelativePublishedAtClient'
 
 type ArticleHero = {
   article: News
@@ -33,7 +33,7 @@ export function ArticleHero({ article }: ArticleHero) {
 
         {publishedAt && (
           <div className="text-xs font-medium text-zinc-500">
-            <PublishedAtClient publishedAt={publishedAt} />
+            <RelativePublishedAtClient publishedAt={publishedAt} />
           </div>
         )}
       </div>
