@@ -193,7 +193,7 @@ export interface News {
    * Conta automaticamente o numero de vezes visitado por mais de 5 segundos.
    */
   readCount?: number | null;
-  slug?: string | null;
+  slug: string;
   slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
