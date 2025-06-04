@@ -20,8 +20,9 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
 
       <GridRight className="space-y-5">
         <WeatherWidget />
-        <Advertisement />
+        <Advertisement adType="firstSideAdsBanner" />
         <SoccerWidget />
+        <Advertisement adType="secondSideAdsBanner" />
       </GridRight>
     </Grid>
   )

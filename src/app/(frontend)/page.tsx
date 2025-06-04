@@ -52,8 +52,9 @@ export default async function HomePage() {
           <WeatherWidget />
           <ArticleMostReadSection />
           <DigitalEditionsSection />
-          <Advertisement />
+          <Advertisement adType="firstSideAdsBanner" />
           <SoccerWidget />
+          <Advertisement adType="secondSideAdsBanner" />
         </GridRight>
       </Grid>
     </div>

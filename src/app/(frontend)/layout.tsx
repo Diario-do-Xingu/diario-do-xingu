@@ -14,6 +14,7 @@ import { COLLECTION_SLUGS } from '@/constants'
 import { Umami } from '@/lib/umami'
 import { env } from '@/env'
 import { getCachedGlobal } from '@/utilities/getGlobals'
+import { Advertisement } from '@/components/Advertisement'
 
 const globoFont = localFont({
   src: [
@@ -77,6 +78,15 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
         <body className="grid min-h-screen grid-cols-1 grid-rows-[max-content_1fr_max-content] bg-zinc-100">
           <Header />
+
+          <div className="container mx-auto mt-8 w-max max-w-[800px]">
+            <Advertisement
+              adType="topAdsBanner"
+              containerClassName="p-1 rounded-sm"
+              imgClassName="rounded-sm"
+            />
+          </div>
+
           <main>{children}</main>
           <Footer />
         </body>

@@ -844,8 +844,25 @@ export interface Advertisement {
     image?: (string | null) | Media;
     link?: string | null;
   };
+  /**
+   * Melhor dimensão da image: largura 800px; altura 150px
+   */
+  topAdsBanner?: AdvertisementBlock[] | null;
+  firstSideAdsBanner?: AdvertisementBlock[] | null;
+  secondSideAdsBanner?: AdvertisementBlock[] | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AdvertisementBlock".
+ */
+export interface AdvertisementBlock {
+  image?: (string | null) | Media;
+  link?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'advertisementBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -913,9 +930,34 @@ export interface AdvertisementSelect<T extends boolean = true> {
         image?: T;
         link?: T;
       };
+  topAdsBanner?:
+    | T
+    | {
+        advertisementBlock?: T | AdvertisementBlockSelect<T>;
+      };
+  firstSideAdsBanner?:
+    | T
+    | {
+        advertisementBlock?: T | AdvertisementBlockSelect<T>;
+      };
+  secondSideAdsBanner?:
+    | T
+    | {
+        advertisementBlock?: T | AdvertisementBlockSelect<T>;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AdvertisementBlock_select".
+ */
+export interface AdvertisementBlockSelect<T extends boolean = true> {
+  image?: T;
+  link?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

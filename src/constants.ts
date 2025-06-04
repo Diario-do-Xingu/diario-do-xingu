@@ -32,7 +32,7 @@ export const COLLECTION_GROUP = {
 } as const
 
 export const PAGINATED_LIMIT = {
-  DigitalEditions: 12,
+  DigitalEditions: 50,
   News: 20,
   NotarialActs: 10,
 } as const

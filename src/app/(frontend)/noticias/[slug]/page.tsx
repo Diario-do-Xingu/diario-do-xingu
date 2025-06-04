@@ -63,8 +63,9 @@ export default async function Page({ params: paramsPromise }: Args) {
           <WeatherWidget />
           <ArticleMostReadSection />
           <DigitalEditionsSection />
-          <Advertisement />
+          <Advertisement adType="firstSideAdsBanner" />
           <SoccerWidget />
+          <Advertisement adType="secondSideAdsBanner" />
         </GridRight>
       </Grid>
     </div>

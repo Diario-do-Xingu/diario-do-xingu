@@ -4,19 +4,35 @@ import { Advertisement as AdvertisementType, Media } from '@/payload-types'
 import Link from 'next/link'
 import { Card } from '../ui/card'
 import { COLLECTION_SLUGS } from '@/constants'
+import { AdType } from '@/payload/globals/Advertisement'
+import { cn } from '@/utilities/ui'
 
-export async function Advertisement() {
-  const advertisement = (await getCachedGlobal(
+type AdType = (typeof AdType)[keyof typeof AdType]
+
+type AdvertisementProps = {
+  adType: AdType
+  containerClassName?: string
+  imgClassName?: string
+}
+
+export async function Advertisement(props: AdvertisementProps) {
+  const { adType, containerClassName, imgClassName } = props
+
+  const advertisementGlobal = (await getCachedGlobal(
     COLLECTION_SLUGS.Advertisement,
     2,
   )()) as AdvertisementType
 
-  if (!advertisement.sideBarAdvertisement || !advertisement.sideBarAdvertisement.image) return null
+  const advertisement = advertisementGlobal[adType]?.[0]
 
-  const { image, link } = advertisement.sideBarAdvertisement
+  if (!advertisement || !advertisement.image) return null
 
-  const imageComponent = <ImageMedia resource={image as Media} imgClassName="w-full rounded-lg" />
+  const { image, link } = advertisement
+
+  const imageComponent = (
+    <ImageMedia resource={image as Media} imgClassName={cn('w-full rounded-lg', imgClassName)} />
+  )
   const component = link ? <Link href={link}>{imageComponent}</Link> : <div>{imageComponent}</div>
 
-  return <Card className="top-36 z-10 bg-[#F8F8F8] p-3">{component}</Card>
+  return <Card className={cn('bg-[#F8F8F8] p-3', containerClassName)}>{component}</Card>
 }

@@ -68,8 +68,9 @@ export function DigitalEditionsPageComponent({ digitalEditions }: PageComponentP
         <WeatherWidget />
         <ArticleMostReadSection />
         <DigitalEditionsSection />
-        <Advertisement />
+        <Advertisement adType="firstSideAdsBanner" />
         <SoccerWidget />
+        <Advertisement adType="secondSideAdsBanner" />
       </GridRight>
     </Grid>
   )

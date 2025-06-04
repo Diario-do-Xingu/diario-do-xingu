@@ -63,8 +63,9 @@ export function PageComponent({ news }: PageComponentProps) {
         <WeatherWidget />
         <ArticleMostReadSection />
         <DigitalEditionsSection />
-        <Advertisement />
+        <Advertisement adType="firstSideAdsBanner" />
         <SoccerWidget />
+        <Advertisement adType="secondSideAdsBanner" />
       </GridRight>
     </Grid>
   )
