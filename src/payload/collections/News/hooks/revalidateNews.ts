@@ -2,7 +2,7 @@ import type { BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook 
 
 import { revalidatePath } from 'next/cache'
 import { News } from '@/payload-types'
-import { COLLECTION_SLUGS, COLLECTION_URL_PATHS, PAGINATED_LIMIT } from '@/constants'
+import { COLLECTION_URL_PATHS } from '@/constants'
 
 export const revalidateNews: CollectionAfterChangeHook<News> = async ({
   doc,
@@ -52,20 +52,9 @@ export const revalidateDelete: CollectionAfterDeleteHook<News> = async ({
 }
 
 async function revalidatePaths(payload: BasePayload) {
-  const { totalDocs } = await payload.count({
-    collection: COLLECTION_SLUGS.News,
-    overrideAccess: false,
-  })
-
-  const totalPages = Math.ceil(totalDocs / PAGINATED_LIMIT.News)
-
-  const pagePaths = Array.from(
-    { length: totalPages },
-    (_, i) => `/${COLLECTION_URL_PATHS.News}/page/${i + 1}`,
-  )
-
   const rootPath = `/${COLLECTION_URL_PATHS.News}`
-  const paths = ['/', rootPath, ...pagePaths]
+  const firstPage = `${rootPath}/page/1`
+  const paths = ['/', rootPath, firstPage]
 
   for (const path of paths) {
     payload.logger.info(`Revalidating path: ${path}`)

@@ -2,7 +2,7 @@ import type { BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook 
 
 import { revalidatePath } from 'next/cache'
 import { NotarialAct } from '@/payload-types'
-import { ARCHIVE_LIMIT, COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
+import { COLLECTION_URL_PATHS } from '@/constants'
 
 export const revalidateNotarialActs: CollectionAfterChangeHook<NotarialAct> = async ({
   doc,
@@ -50,20 +50,9 @@ export const revalidateDelete: CollectionAfterDeleteHook<NotarialAct> = async ({
 }
 
 async function revalidatePaths(payload: BasePayload) {
-  const { totalDocs } = await payload.count({
-    collection: COLLECTION_SLUGS.NotarialActs,
-    overrideAccess: false,
-  })
-
-  const totalPages = Math.ceil(totalDocs / ARCHIVE_LIMIT.NotarialActs)
-
-  const pagePaths = Array.from(
-    { length: totalPages },
-    (_, i) => `/${COLLECTION_URL_PATHS.NotarialActs}/page/${i + 1}`,
-  )
-
   const rootPath = `/${COLLECTION_URL_PATHS.NotarialActs}`
-  const paths = ['/', rootPath, ...pagePaths]
+  const firstPage = `${rootPath}/page/1`
+  const paths = ['/', rootPath, firstPage]
 
   for (const path of paths) {
     payload.logger.info(`Revalidating path: ${path}`)
