@@ -3,8 +3,8 @@ import { PageComponent } from './PageComponent'
 import { getPayload } from '@/lib/payload/getPayload'
 import { z } from 'zod'
 
-export const dynamic = 'force-static'
-export const revalidate = 600
+// export const dynamic = 'force-static'
+// export const revalidate = 600
 
 const searchParamsSchema = z.object({
   date: z.string().optional(),
