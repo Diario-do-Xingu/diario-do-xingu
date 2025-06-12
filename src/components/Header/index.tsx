@@ -28,15 +28,11 @@ const links: { label: string; link: string; color?: string }[] = [
     label: 'edições digitais',
     link: `/${COLLECTION_URL_PATHS.DigitalEditions}`,
   },
-  // {
-  //   label: 'tabela brasileirão',
-  //   link: '#',
-  //   color: 'text-red-500',
-  // },
-  // {
-  //   label: 'contato',
-  //   link: '#',
-  // },
+  {
+    label: 'tabela brasileirão',
+    link: 'tabela-brasileirao',
+    color: 'text-red-500',
+  },
 ]
 
 export async function Header() {

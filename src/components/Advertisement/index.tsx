@@ -34,5 +34,13 @@ export async function Advertisement(props: AdvertisementProps) {
   )
   const component = link ? <Link href={link}>{imageComponent}</Link> : <div>{imageComponent}</div>
 
-  return <Card className={cn('bg-[#F8F8F8] p-3', containerClassName)}>{component}</Card>
+  return (
+    <Card
+      className={cn('bg-[#F8F8F8] p-3', containerClassName, {
+        topAdsBanner: adType === 'topAdsBanner',
+      })}
+    >
+      {component}
+    </Card>
+  )
 }
