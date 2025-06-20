@@ -1,7 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-export const dynamic = 'force-dynamic'
-
 export default function TabelaBrasileiraoPage() {
   return (
     <Tabs defaultValue="serie-a" className="container-y-padding container flex flex-col">
