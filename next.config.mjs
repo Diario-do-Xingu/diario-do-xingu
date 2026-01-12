@@ -33,6 +33,7 @@ const nextConfig = {
     return headers
   },
   images: {
+    qualities: [100],
     remotePatterns: [
       ...['http://localhost:3000', process.env.NEXT_PUBLIC_SERVER_URL].map((item) => {
         const url = new URL(item)

@@ -24,6 +24,7 @@ import { SocialRowLabel as SocialRowLabel_f3938fab4799b717d2f8dae848211758 } fro
 import { SignOutButton as SignOutButton_bd6e36d4771a8bb113747fe74f514ac2 } from '@/payload/components/SignOutButton'
 import { AdminIcon as AdminIcon_e7b76d3f85fa08abf53aa9875116bc29 } from '@/payload/logo'
 import { AdminLogo as AdminLogo_e7b76d3f85fa08abf53aa9875116bc29 } from '@/payload/logo'
+import { CollectionCards as CollectionCards_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 
 export const importMap = {
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -51,5 +52,6 @@ export const importMap = {
   "@/payload/globals/SiteInfo/SocialRowLabel#SocialRowLabel": SocialRowLabel_f3938fab4799b717d2f8dae848211758,
   "@/payload/components/SignOutButton#SignOutButton": SignOutButton_bd6e36d4771a8bb113747fe74f514ac2,
   "@/payload/logo#AdminIcon": AdminIcon_e7b76d3f85fa08abf53aa9875116bc29,
-  "@/payload/logo#AdminLogo": AdminLogo_e7b76d3f85fa08abf53aa9875116bc29
+  "@/payload/logo#AdminLogo": AdminLogo_e7b76d3f85fa08abf53aa9875116bc29,
+  "@payloadcms/ui/rsc#CollectionCards": CollectionCards_ab83ff7e88da8d3530831f296ec4756a
 }
