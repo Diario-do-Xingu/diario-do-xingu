@@ -44,3 +44,5 @@ next-env.d.ts
 /media
 
 /backup
+# Claude Code worktrees
+.claude/worktrees/

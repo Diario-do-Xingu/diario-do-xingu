@@ -1,0 +1,16 @@
+name: Setup
+description: Install Node, pnpm (version from package.json "packageManager") and dependencies from the lockfile
+
+runs:
+  using: composite
+  steps:
+    - uses: pnpm/action-setup@v6
+
+    - uses: actions/setup-node@v7
+      with:
+        node-version: 24
+        cache: pnpm
+
+    - name: Install (lockfile must be up to date)
+      shell: bash
+      run: pnpm install --frozen-lockfile
