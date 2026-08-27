@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { COLLECTION_GROUP } from '@/constants'
+import { COLLECTION_GROUP, IMAGE_UPLOAD_MIME_TYPES } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
 import { authenticated } from '@/payload/access/authenticated'
 
@@ -22,6 +22,7 @@ export const ArticleMedia: CollectionConfig = {
   fields: [],
   upload: {
     pasteURL: false,
+    mimeTypes: IMAGE_UPLOAD_MIME_TYPES,
     imageSizes: [
       {
         name: 'thumbnail',
