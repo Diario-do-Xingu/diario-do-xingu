@@ -1,4 +1,4 @@
-import { COLLECTION_SLUGS } from '@/constants'
+import { COLLECTION_SLUGS, IMAGE_UPLOAD_MIME_TYPES } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
 import { authenticated } from '@/payload/access/authenticated'
 import type { CollectionConfig } from 'payload'
@@ -22,7 +22,7 @@ export const DigitalEditionMedia: CollectionConfig = {
   upload: {
     pasteURL: false,
     bulkUpload: false,
-    mimeTypes: ['image/*'],
+    mimeTypes: IMAGE_UPLOAD_MIME_TYPES,
     focalPoint: false,
     resizeOptions: {
       fit: 'contain',

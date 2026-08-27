@@ -7,6 +7,20 @@ export const ARCHIVE_LIMIT = {
   MostRead: 4,
 } as const
 
+/**
+ * Image formats accepted by upload collections that run through sharp.
+ * Next.js >= 15.5.24 blocks every other libvips loader process-wide (AVIF/HEIF, JXL, ...)
+ * as mitigation for GHSA-2xp9-vwfh-vxw4, which also breaks Payload uploads in those formats.
+ * Keep this list in sync with what Next leaves unblocked in its image optimizer.
+ */
+export const IMAGE_UPLOAD_MIME_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+  'image/svg+xml',
+]
+
 export const COLLECTION_SLUGS = {
   SiteInfo: 'site-info',
   Advertisement: 'advertisement',
