@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# Nothing here is a real secret. next.config.mjs loads src/env.ts, so every job
+# that touches Next or Payload needs values that pass that schema.
+env:
+  DATABASE_URI: mongodb://localhost:27017/ci
+  PAYLOAD_SECRET: ci-only-not-a-secret
+  CRON_SECRET: ci-only-not-a-secret
+  NEXT_SERVER_ACTIONS_ENCRYPTION_KEY: 4mLm2hqXfM9d3zZ0b1kQ7tYwJ8vRc5nH2pS6uA1eG0o=
+  NEXT_PUBLIC_SERVER_URL: http://localhost:3000
+  NEXT_PUBLIC_IS_LIVE: 'false'
+  NEXT_PUBLIC_USE_PAYLOAD_CLOUD: 'false'
+  NEXT_TELEMETRY_DISABLED: '1'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - run: pnpm lint
+
+  typecheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      # Generates next-env.d.ts and route types without a full build
+      - run: pnpm exec next typegen
+      - run: pnpm typecheck
+
+  payload-types:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # The committed types include the Payload Cloud plugin's global, which the plugin only
+    # registers when PAYLOAD_CLOUD=true. It makes no network calls at config time, so this
+    # is enough to reproduce the file exactly.
+    env:
+      PAYLOAD_CLOUD: 'true'
+      NEXT_PUBLIC_USE_PAYLOAD_CLOUD: 'true'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - name: Generated Payload types are committed
+        run: |
+          pnpm generate:types
+          if ! git diff --exit-code -- src/payload-types.ts; then
+            echo "::error file=src/payload-types.ts::Stale generated types. Run 'pnpm generate:types' and commit the result."
+            exit 1
+          fi
+
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # Static generation queries Payload at build time, so it needs a reachable (empty) MongoDB
+    services:
+      mongo:
+        image: mongo:8
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --quiet --eval 'db.runCommand({ ping: 1 })'"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - run: pnpm build

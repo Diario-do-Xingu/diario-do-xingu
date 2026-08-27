@@ -1,0 +1,32 @@
+name: Production smoke check
+
+# Payload Cloud does not report deploy status back to GitHub, so this periodically
+# probes the live site for the two things most likely to break silently after a
+# deploy: the homepage itself and the Next.js image optimizer (sharp/libvips).
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    env:
+      SITE: https://diariodoxingu.com
+
+    steps:
+      - name: Homepage responds
+        run: |
+          code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 "$SITE/")
+          echo "GET / -> $code"
+          [ "$code" = "200" ] || { echo "::error::Homepage returned HTTP $code"; exit 1; }
+
+      - name: Image optimizer converts to WebP
+        run: |
+          url="$SITE/_next/image?url=%2Fapi%2Fmedia%2Ffile%2Flogo-1.png&w=256&q=100"
+          out=$(curl -sS -o /dev/null -w '%{http_code} %{content_type}' -H 'Accept: image/webp' --max-time 30 "$url")
+          echo "GET /_next/image -> $out"
+          [ "$out" = "200 image/webp" ] || { echo "::error::Image optimizer returned '$out' (expected '200 image/webp')"; exit 1; }
