@@ -1,8 +1,7 @@
-import type { BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
-
 import { revalidatePath } from 'next/cache'
-import { NotarialAct } from '@/payload-types'
+import type { BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
 import { COLLECTION_URL_PATHS } from '@/constants'
+import type { NotarialAct } from '@/payload-types'
 
 export const revalidateNotarialActs: CollectionAfterChangeHook<NotarialAct> = async ({
   doc,

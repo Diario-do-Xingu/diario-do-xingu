@@ -1,11 +1,9 @@
-import { News } from '@/payload-types'
-import { ImageMedia } from '../../Media/ImageMedia'
 import Link from 'next/link'
-import { Badge } from '../../ui/badge'
-
 import { COLLECTION_URL_PATHS } from '@/constants'
-
+import type { News } from '@/payload-types'
+import { ImageMedia } from '../../Media/ImageMedia'
 import { RelativePublishedAtClient } from '../../RelativePublishedAtClient'
+import { Badge } from '../../ui/badge'
 
 type ArticleListCardProps = {
   article: News
@@ -32,24 +30,24 @@ export function ArticleListCard({ article }: ArticleListCardProps) {
       </div>
 
       <div className="flex flex-col gap-2.5 lg:col-span-7 lg:pt-1">
-        <span className="font-globo text-sm font-bold text-primary">{highligh}</span>
+        <span className="font-bold font-globo text-primary text-sm">{highligh}</span>
 
         <div className="flex flex-col gap-1">
-          <h3 className="font-globo text-xl font-bold leading-snug lg:text-2xl">{heading}</h3>
+          <h3 className="font-bold font-globo text-xl leading-snug lg:text-2xl">{heading}</h3>
 
           {subheading && (
-            <h6 className="text-sm font-semibold leading-snug text-zinc-600">{subheading}</h6>
+            <h6 className="font-semibold text-sm text-zinc-600 leading-snug">{subheading}</h6>
           )}
         </div>
 
         {typeof category === 'object' && (
           <Badge variant="accent" className="mt-2 w-max">
-            <span className="text-sm font-bold tracking-wide">{`${category.name}`}</span>
+            <span className="font-bold text-sm tracking-wide">{`${category.name}`}</span>
           </Badge>
         )}
 
         {publishedAt && (
-          <div className="text-xs font-bold tracking-wide text-red-600">
+          <div className="font-bold text-red-600 text-xs tracking-wide">
             <RelativePublishedAtClient publishedAt={publishedAt} />
           </div>
         )}

@@ -1,13 +1,14 @@
+import { fileURLToPath } from 'node:url'
 import { withPayload } from '@payloadcms/next/withPayload'
 import { createJiti } from 'jiti'
-
-import { fileURLToPath } from 'url'
 
 const jiti = createJiti(fileURLToPath(import.meta.url))
 await jiti.import('./src/env')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Biome replaces ESLint in this project; keep Next from picking up any stray
+  // ESLint install/config during builds.
   eslint: {
     ignoreDuringBuilds: true,
   },

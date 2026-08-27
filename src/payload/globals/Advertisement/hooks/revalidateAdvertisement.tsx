@@ -1,6 +1,5 @@
-import type { GlobalAfterChangeHook } from 'payload'
-
 import { revalidatePath, revalidateTag } from 'next/cache'
+import type { GlobalAfterChangeHook } from 'payload'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 
 const tag = `global_${COLLECTION_SLUGS.Advertisement}`

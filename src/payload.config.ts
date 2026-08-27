@@ -1,28 +1,25 @@
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
-import path from 'path'
+import { pt } from '@payloadcms/translations/languages/pt'
 import { buildConfig } from 'payload'
-import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
-import { pt } from '@payloadcms/translations/languages/pt'
-
 import { env } from '@/env'
-
-import { Users } from '@/payload/collections/Users'
 import { Media } from '@/payload/collections/Media'
-import { NotarialActs } from '@/payload/collections/NotarialActs'
-import { SiteInfo } from '@/payload/globals/SiteInfo'
-import { Advertisement } from '@/payload/globals/Advertisement'
-import { SiteMetadata } from '@/payload/globals/Metadata'
 import { News } from '@/payload/collections/News'
 import { NewsCategories } from '@/payload/collections/News/categories'
+import { NotarialActs } from '@/payload/collections/NotarialActs'
+import { Users } from '@/payload/collections/Users'
 import { defaultLexical } from '@/payload/fields/defaultLexical'
+import { Advertisement } from '@/payload/globals/Advertisement'
+import { SiteMetadata } from '@/payload/globals/Metadata'
+import { SiteInfo } from '@/payload/globals/SiteInfo'
 import { schedulePublish } from '@/payload/handlers/schedule-publish'
-import { ArticleMedia } from './payload/collections/News/ArticleMedia'
 import { DigitalEditions } from './payload/collections/DigitalEditions'
 import { DigitalEditionMedia } from './payload/collections/DigitalEditions/media'
+import { ArticleMedia } from './payload/collections/News/ArticleMedia'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)

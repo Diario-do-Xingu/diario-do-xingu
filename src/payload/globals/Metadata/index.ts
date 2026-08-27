@@ -1,7 +1,7 @@
 import type { GlobalConfig } from 'payload'
-import { revalidateMetadata } from './hooks/revalidateMetadata'
 import { COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
+import { revalidateMetadata } from './hooks/revalidateMetadata'
 
 export const SiteMetadata: GlobalConfig = {
   slug: COLLECTION_SLUGS.SiteMetadata,

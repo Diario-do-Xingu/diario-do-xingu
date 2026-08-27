@@ -1,12 +1,9 @@
-import { Download, Calendar, KeyRound, ExternalLink } from 'lucide-react'
-
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-
-import { NotarialAct } from '@/payload-types'
-
+import { Calendar, Download, ExternalLink, KeyRound } from 'lucide-react'
 import Link from 'next/link'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { COLLECTION_URL_PATHS } from '@/constants'
+import type { NotarialAct } from '@/payload-types'
 import { formatDateWithTime } from '@/utilities/formatDate'
 
 type NotarialActsCardProps = {
@@ -54,8 +51,9 @@ export function NotarialActsCard(props: NotarialActsCardProps) {
             target="_blank"
             data-umami-event="Abrir arquivo ato notarial"
             data-umami-event-chave={key}
+            rel="noopener"
           >
-            <Badge className="flex gap-2 bg-zinc-300 py-1 text-sm text-blue-600 underline hover:bg-zinc-100">
+            <Badge className="flex gap-2 bg-zinc-300 py-1 text-blue-600 text-sm underline hover:bg-zinc-100">
               <Download />
               {filename}
             </Badge>

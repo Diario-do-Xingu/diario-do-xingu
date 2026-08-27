@@ -1,12 +1,12 @@
+import type { PaginatedDocs } from 'payload'
+import { Suspense } from 'react'
 import { GridLeft } from '@/components/Grid'
 import { NotarialActsCard } from '@/components/NotarialActsCard'
 import { Pagination } from '@/components/Pagination'
 import { Badge } from '@/components/ui/badge'
 import { COLLECTION_URL_PATHS } from '@/constants'
-import { NotarialAct } from '@/payload-types'
-import { PaginatedDocs } from 'payload'
+import type { NotarialAct } from '@/payload-types'
 import { SearchForm } from './SearchForm'
-import { Suspense } from 'react'
 
 type PageComponentProps = {
   notarialActs: PaginatedDocs<NotarialAct>

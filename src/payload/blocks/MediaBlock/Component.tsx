@@ -1,5 +1,5 @@
 import { ImageMedia } from '@/components/Media/ImageMedia'
-import { MediaBlock as MediaBlockProps } from '@/payload-types'
+import type { MediaBlock as MediaBlockProps } from '@/payload-types'
 import { cn } from '@/utilities/ui'
 
 type Props = MediaBlockProps & {

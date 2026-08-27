@@ -1,7 +1,7 @@
-import { ARCHIVE_LIMIT, COLLECTION_SLUGS } from '@/constants'
-import { PageComponent } from './PageComponent'
-import { getPayload } from '@/lib/payload/getPayload'
 import { z } from 'zod'
+import { ARCHIVE_LIMIT, COLLECTION_SLUGS } from '@/constants'
+import { getPayload } from '@/lib/payload/getPayload'
+import { PageComponent } from './PageComponent'
 
 // export const dynamic = 'force-static'
 // export const revalidate = 600
@@ -29,7 +29,7 @@ export default async function Page({
 
   const parsedSearchParams = searchParamsSchema.safeParse(await searchParams)
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  // biome-ignore lint/complexity/noBannedTypes: Payload's `where` clause is built incrementally; `{}` is the empty-filter shape.
   let where: {} | undefined = {}
 
   if (parsedSearchParams.success) {

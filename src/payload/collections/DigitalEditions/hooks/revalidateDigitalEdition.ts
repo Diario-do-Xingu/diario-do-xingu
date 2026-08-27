@@ -1,8 +1,7 @@
-import type { BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
-
 import { revalidatePath } from 'next/cache'
-import { DigitalEdition } from '@/payload-types'
+import type { BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS, PAGINATED_LIMIT } from '@/constants'
+import type { DigitalEdition } from '@/payload-types'
 
 export const revalidateDigitalEditions: CollectionAfterChangeHook<DigitalEdition> = async ({
   doc,

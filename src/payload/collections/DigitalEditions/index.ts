@@ -1,10 +1,9 @@
 import type { CollectionConfig } from 'payload'
-
-import { slugField } from '@/payload/fields/slug'
 import { COLLECTION_SLUGS } from '@/constants'
+import { anyone } from '@/payload/access/anyone'
 
 import { authenticated } from '@/payload/access/authenticated'
-import { anyone } from '@/payload/access/anyone'
+import { slugField } from '@/payload/fields/slug'
 import { revalidateDelete, revalidateDigitalEditions } from './hooks/revalidateDigitalEdition'
 
 export const DigitalEditions: CollectionConfig = {

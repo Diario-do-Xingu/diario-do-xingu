@@ -9,6 +9,7 @@ export default function TabelaBrasileiraoPage() {
       </TabsList>
       <TabsContent value="serie-a">
         <iframe
+          title="Tabela do Campeonato Brasileiro Série A"
           src={`https://api.api-futebol.com.br/v1/widgets/tabela?client_id=LMUN57AVY9XJ`}
           width="100%"
           className="h-[600px]"
@@ -16,6 +17,7 @@ export default function TabelaBrasileiraoPage() {
       </TabsContent>
       <TabsContent value="serie-b">
         <iframe
+          title="Tabela do Campeonato Brasileiro Série B"
           src={`https://api.api-futebol.com.br/v1/widgets/tabela?client_id=7KDJD7KWHXPS`}
           width="100%"
           className="h-[600px]"

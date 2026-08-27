@@ -1,7 +1,7 @@
+import type { CollectionConfig } from 'payload'
 import { COLLECTION_SLUGS } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
 import { authenticated } from '@/payload/access/authenticated'
-import type { CollectionConfig } from 'payload'
 
 export const Authors: CollectionConfig = {
   slug: COLLECTION_SLUGS.Authors,

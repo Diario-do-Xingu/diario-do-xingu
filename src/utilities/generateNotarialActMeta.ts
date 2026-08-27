@@ -1,9 +1,9 @@
+import type { Metadata } from 'next'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
-import { Media } from '@/payload-types'
+import type { Media } from '@/payload-types'
 import { getServerSideURL } from './getURL'
 import { mergeOpenGraph } from './mergeOpenGraph'
-import { Metadata } from 'next'
 
 export async function generateNotarialActMeta(): Promise<Metadata> {
   const payload = await getPayload()

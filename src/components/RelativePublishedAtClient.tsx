@@ -1,7 +1,7 @@
 'use client'
 
-import { formatDateAndRelative } from '@/utilities/formatDate'
 import { useEffect, useState } from 'react'
+import { formatDateAndRelative } from '@/utilities/formatDate'
 
 export function RelativePublishedAtClient(props: { publishedAt: string }) {
   const [publishedAt, setPublishedAt] = useState<string | null>(null)

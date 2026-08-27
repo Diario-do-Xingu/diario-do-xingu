@@ -1,6 +1,5 @@
-import type { GlobalAfterChangeHook } from 'payload'
-
 import { revalidateTag } from 'next/cache'
+import type { GlobalAfterChangeHook } from 'payload'
 import { COLLECTION_SLUGS } from '@/constants'
 
 const tag = `global_${COLLECTION_SLUGS.SiteMetadata}`

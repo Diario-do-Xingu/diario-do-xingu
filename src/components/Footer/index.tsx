@@ -1,13 +1,12 @@
-import { getCachedGlobal } from '@/utilities/getGlobals'
-import Link from 'next/link'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee, faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { getSocialIcon } from '@/utilities/getSocialIcon'
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
-import { Media, SiteInfo } from '@/payload-types'
-import { COLLECTION_SLUGS } from '@/constants'
-
+import { faCoffee, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
 import defaultLogo from '@/assets/images/default-logo.png'
+import { COLLECTION_SLUGS } from '@/constants'
+import type { Media, SiteInfo } from '@/payload-types'
+import { getCachedGlobal } from '@/utilities/getGlobals'
+import { getSocialIcon } from '@/utilities/getSocialIcon'
 import { ImageMedia } from '../Media/ImageMedia'
 
 export async function Footer() {
@@ -51,6 +50,7 @@ export async function Footer() {
                 href={social.link}
                 target="_blank"
                 className="grid place-items-center rounded-full bg-white/20 p-2 transition-transform hover:scale-[110%]"
+                rel="noopener"
               >
                 <FontAwesomeIcon icon={getSocialIcon(social.type)} className="size-7" />
               </a>

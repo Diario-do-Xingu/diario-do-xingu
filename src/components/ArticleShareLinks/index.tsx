@@ -1,10 +1,10 @@
 'use client'
 
-import { cn } from '@/utilities/ui'
 import { faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import { faShareNodes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
+import { cn } from '@/utilities/ui'
 
 type ArticleShareLinksProps = {
   text: string
@@ -50,6 +50,7 @@ export function ArticleShareLinks({ link, text, className }: ArticleShareLinksPr
       </a>
       {isShareSupported && (
         <button
+          type="button"
           data-umami-event="Compartilhar artigo geral"
           data-umami-event-title={text}
           onClick={async () => {

@@ -1,10 +1,10 @@
-import { Fragment } from 'react'
-import { Card, CardContent, CardHeader } from '../ui/card'
-import Link from 'next/link'
 import Image from 'next/image'
-import { getPayload } from '@/lib/payload/getPayload'
+import Link from 'next/link'
+import { Fragment } from 'react'
 import { ARCHIVE_LIMIT, COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
-import { Media } from '@/payload-types'
+import { getPayload } from '@/lib/payload/getPayload'
+import type { Media } from '@/payload-types'
+import { Card, CardContent, CardHeader } from '../ui/card'
 
 export async function ArticleMostReadSection() {
   const payload = await getPayload()
@@ -21,7 +21,7 @@ export async function ArticleMostReadSection() {
   return (
     <Card className="shadow-none">
       <CardHeader className="border-b-2 py-4">
-        <h4 className="text-md font-globo font-bold text-red-700">Mais Lidas</h4>
+        <h4 className="font-bold font-globo text-md text-red-700">Mais Lidas</h4>
       </CardHeader>
 
       <CardContent className="space-y-5 pt-4">

@@ -1,20 +1,20 @@
-import React from 'react'
+import type React from 'react'
 import './globals.css'
 
+import type { Metadata } from 'next'
 import { Open_Sans, Varela_Round } from 'next/font/google'
 import localFont from 'next/font/local'
-import { cn } from '@/utilities/ui'
-import { Header } from '@/components/Header'
+import { Advertisement } from '@/components/Advertisement'
 import { Footer } from '@/components/Footer'
+import { Header } from '@/components/Header'
+import { COLLECTION_SLUGS } from '@/constants'
+import { env } from '@/env'
+import { Umami } from '@/lib/umami'
+import type { Media, SiteMetadatum } from '@/payload-types'
+import { getCachedGlobal } from '@/utilities/getGlobals'
 import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import { Media, SiteMetadatum } from '@/payload-types'
-import { Metadata } from 'next'
-import { COLLECTION_SLUGS } from '@/constants'
-import { Umami } from '@/lib/umami'
-import { env } from '@/env'
-import { getCachedGlobal } from '@/utilities/getGlobals'
-import { Advertisement } from '@/components/Advertisement'
+import { cn } from '@/utilities/ui'
 
 const globoFont = localFont({
   src: [
@@ -61,37 +61,35 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
-    <>
-      <html
-        lang="pt"
-        className={cn(openSans.variable, varelaRound.variable, globoFont.variable, 'antialiased')}
-        suppressHydrationWarning
-      >
-        {!!env.UMAMI_WEBSITE_ID && !!env.UMAMI_URI && (
-          <Umami
-            umamiWebsiteId={env.UMAMI_WEBSITE_ID}
-            umamiAutoTrack={true}
-            umamiExcludeSearch
-            trackOutboundLinks
+    <html
+      lang="pt"
+      className={cn(openSans.variable, varelaRound.variable, globoFont.variable, 'antialiased')}
+      suppressHydrationWarning
+    >
+      {!!env.UMAMI_WEBSITE_ID && !!env.UMAMI_URI && (
+        <Umami
+          umamiWebsiteId={env.UMAMI_WEBSITE_ID}
+          umamiAutoTrack={true}
+          umamiExcludeSearch
+          trackOutboundLinks
+        />
+      )}
+
+      <body className="grid min-h-screen grid-cols-1 grid-rows-[max-content_1fr_max-content] bg-zinc-100 has-[.topAdsBanner]:grid-rows-[max-content_min-content_1fr_max-content]">
+        <Header />
+
+        <div className="container mx-auto mt-8 hidden w-max max-w-[100vw] has-[.topAdsBanner]:block">
+          <Advertisement
+            adType="topAdsBanner"
+            containerClassName="p-1 rounded-sm"
+            imgClassName="rounded-sm"
           />
-        )}
+        </div>
 
-        <body className="grid min-h-screen grid-cols-1 grid-rows-[max-content_1fr_max-content] bg-zinc-100 has-[.topAdsBanner]:grid-rows-[max-content_min-content_1fr_max-content]">
-          <Header />
-
-          <div className="container mx-auto mt-8 hidden w-max max-w-[100vw] has-[.topAdsBanner]:block">
-            <Advertisement
-              adType="topAdsBanner"
-              containerClassName="p-1 rounded-sm"
-              imgClassName="rounded-sm"
-            />
-          </div>
-
-          <main>{children}</main>
-          <Footer />
-        </body>
-      </html>
-    </>
+        <main>{children}</main>
+        <Footer />
+      </body>
+    </html>
   )
 }
 

@@ -1,4 +1,4 @@
-import { FieldAccess } from 'payload'
+import type { FieldAccess } from 'payload'
 import { checkRole } from '@/payload/collections/Users/checkRole'
 
 type isAdmin = FieldAccess

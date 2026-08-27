@@ -1,6 +1,6 @@
+import type { News } from '@/payload-types'
 import { cn } from '@/utilities/ui'
 import { HomeHeroArticleCard } from '../HomeHeroArticleCard'
-import { News } from '@/payload-types'
 
 export async function HomeHeroArticleGrid({ docs }: { docs: News[] }) {
   return (

@@ -1,6 +1,6 @@
 'use client'
-import { SiteInfo } from '@/payload-types'
-import { RowLabelProps, useRowLabel } from '@payloadcms/ui'
+import { type RowLabelProps, useRowLabel } from '@payloadcms/ui'
+import type { SiteInfo } from '@/payload-types'
 
 export const SocialRowLabel: React.FC<RowLabelProps> = () => {
   const data = useRowLabel<NonNullable<SiteInfo['socials']>[number]>()

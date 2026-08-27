@@ -1,13 +1,14 @@
-import { getCachedGlobal } from '@/utilities/getGlobals'
-import { ImageMedia } from '../Media/ImageMedia'
-import { Advertisement as AdvertisementType, Media } from '@/payload-types'
 import Link from 'next/link'
-import { Card } from '../ui/card'
 import { COLLECTION_SLUGS } from '@/constants'
-import { AdType } from '@/payload/globals/Advertisement'
+// biome-ignore lint/style/useImportType: AdType is a runtime const; `typeof AdTypes` below needs the value binding.
+import { AdType as AdTypes } from '@/payload/globals/Advertisement'
+import type { Advertisement as AdvertisementType, Media } from '@/payload-types'
+import { getCachedGlobal } from '@/utilities/getGlobals'
 import { cn } from '@/utilities/ui'
+import { ImageMedia } from '../Media/ImageMedia'
+import { Card } from '../ui/card'
 
-type AdType = (typeof AdType)[keyof typeof AdType]
+type AdType = (typeof AdTypes)[keyof typeof AdTypes]
 
 type AdvertisementProps = {
   adType: AdType
@@ -25,7 +26,7 @@ export async function Advertisement(props: AdvertisementProps) {
 
   const advertisement = advertisementGlobal[adType]?.[0]
 
-  if (!advertisement || !advertisement.image) return null
+  if (!advertisement?.image) return null
 
   const { image, link } = advertisement
 

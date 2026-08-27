@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, useAuth, ConfirmationModal, useModal } from '@payloadcms/ui'
+import { Button, ConfirmationModal, useAuth, useModal } from '@payloadcms/ui'
 import { useRouter } from 'next/navigation'
 
 export function SignOutButton() {

@@ -1,8 +1,8 @@
+import type { CollectionConfig } from 'payload'
 import { COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
 import { authenticated } from '@/payload/access/authenticated'
 import { slugField } from '@/payload/fields/slug'
-import type { CollectionConfig } from 'payload'
 
 export const NewsCategories: CollectionConfig = {
   slug: COLLECTION_SLUGS.NewsCategories,

@@ -1,5 +1,5 @@
-import { DigitalEdition } from '@/payload-types'
-import { PaginatedDocs } from 'payload'
+import Link from 'next/link'
+import type { PaginatedDocs } from 'payload'
 import { Advertisement } from '@/components/Advertisement'
 import { ArticleHighlightSection } from '@/components/ArticleHighlightSection'
 import { ArticleMostReadSection } from '@/components/ArticleMostReadSection'
@@ -10,7 +10,7 @@ import { Pagination } from '@/components/Pagination'
 import { SoccerWidget } from '@/components/SoccerWidget'
 import { WeatherWidget } from '@/components/WeatherWidget'
 import { COLLECTION_URL_PATHS } from '@/constants'
-import Link from 'next/link'
+import type { DigitalEdition } from '@/payload-types'
 
 type PageComponentProps = {
   digitalEditions: PaginatedDocs<DigitalEdition>
@@ -44,7 +44,7 @@ export function DigitalEditionsPageComponent({ digitalEditions }: PageComponentP
                 </div>
 
                 <div className="mt-auto px-2 pb-2">
-                  <span className="font-globo text-xl font-bold text-red-500">
+                  <span className="font-bold font-globo text-red-500 text-xl">
                     {edition['digital-edition-name']}
                   </span>
                 </div>

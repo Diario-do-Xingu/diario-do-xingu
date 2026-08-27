@@ -1,19 +1,17 @@
+import { redirect } from 'next/navigation'
+import { Advertisement } from '@/components/Advertisement'
+import { ArticleHighlightSection } from '@/components/ArticleHighlightSection'
+import { ArticleMostReadSection } from '@/components/ArticleMostReadSection'
+import { ArticleRelatedSection } from '@/components/ArticleRelatedSection'
+import { ArticleHero } from '@/components/Articles/ArticleHero'
+import { DigitalEditionsSection } from '@/components/DigitalEditions/DigitalEditionsSection'
+import { Grid, GridLeft, GridRight } from '@/components/Grid'
+import RichText from '@/components/RichText'
+import { SoccerWidget } from '@/components/SoccerWidget'
+import { WeatherWidget } from '@/components/WeatherWidget'
 import { COLLECTION_SLUGS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
-import { redirect } from 'next/navigation'
 import { CountRead } from './CountRead'
-import { Grid, GridLeft, GridRight } from '@/components/Grid'
-import { ArticleMostReadSection } from '@/components/ArticleMostReadSection'
-import { WeatherWidget } from '@/components/WeatherWidget'
-import { SoccerWidget } from '@/components/SoccerWidget'
-import { ArticleHighlightSection } from '@/components/ArticleHighlightSection'
-import { Advertisement } from '@/components/Advertisement'
-import RichText from '@/components/RichText'
-
-import { ArticleRelatedSection } from '@/components/ArticleRelatedSection'
-import { DigitalEditionsSection } from '@/components/DigitalEditions/DigitalEditionsSection'
-
-import { ArticleHero } from '@/components/Articles/ArticleHero'
 
 type Args = {
   params: Promise<{
