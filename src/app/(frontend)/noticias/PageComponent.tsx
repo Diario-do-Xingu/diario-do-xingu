@@ -1,15 +1,15 @@
+import type { PaginatedDocs } from 'payload'
 import { Advertisement } from '@/components/Advertisement'
-import { Grid, GridFull, GridLeft, GridRight } from '@/components/Grid'
+import { ArticleHighlightSection } from '@/components/ArticleHighlightSection'
+import { ArticleMostReadSection } from '@/components/ArticleMostReadSection'
 import { ArticleList } from '@/components/Articles/ArticleList'
+import { DigitalEditionsSection } from '@/components/DigitalEditions/DigitalEditionsSection'
+import { Grid, GridFull, GridLeft, GridRight } from '@/components/Grid'
 import { Pagination } from '@/components/Pagination'
 import { SoccerWidget } from '@/components/SoccerWidget'
 import { WeatherWidget } from '@/components/WeatherWidget'
 import { COLLECTION_URL_PATHS } from '@/constants'
-import { News } from '@/payload-types'
-import { PaginatedDocs } from 'payload'
-import { ArticleHighlightSection } from '@/components/ArticleHighlightSection'
-import { ArticleMostReadSection } from '@/components/ArticleMostReadSection'
-import { DigitalEditionsSection } from '@/components/DigitalEditions/DigitalEditionsSection'
+import type { News } from '@/payload-types'
 
 type PageComponentProps = {
   news: PaginatedDocs<News>

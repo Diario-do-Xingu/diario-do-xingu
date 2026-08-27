@@ -1,18 +1,16 @@
-import React from 'react'
-
+import Link from 'next/link'
 import { Advertisement } from '@/components/Advertisement'
-import { Grid, GridLeft, GridRight } from '@/components/Grid'
-import { HomeHeroArticleGrid } from '@/components/HomeHeroArticleGrid'
+import { ArticleHighlightSection } from '@/components/ArticleHighlightSection'
 import { ArticleMostReadSection } from '@/components/ArticleMostReadSection'
 import { ArticleList } from '@/components/Articles/ArticleList'
+import { DigitalEditionsSection } from '@/components/DigitalEditions/DigitalEditionsSection'
+import { Grid, GridLeft, GridRight } from '@/components/Grid'
+import { HomeHeroArticleGrid } from '@/components/HomeHeroArticleGrid'
 import { SoccerWidget } from '@/components/SoccerWidget'
+import { Button } from '@/components/ui/button'
 import { WeatherWidget } from '@/components/WeatherWidget'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import { ArticleHighlightSection } from '@/components/ArticleHighlightSection'
-import { DigitalEditionsSection } from '@/components/DigitalEditions/DigitalEditionsSection'
 
 export default async function HomePage() {
   const payload = await getPayload()
@@ -33,7 +31,7 @@ export default async function HomePage() {
       <Grid className="container mt-20">
         <GridLeft>
           <h2 className="text-3xl text-primary">Últimas Notícias</h2>
-          <div className="mb-5 mt-2 h-px bg-foreground"></div>
+          <div className="mt-2 mb-5 h-px bg-foreground"></div>
 
           <ArticleList
             news={{
@@ -42,7 +40,7 @@ export default async function HomePage() {
             }}
           />
 
-          <Button asChild className="mt-14 w-full text-lg font-bold" size="lg">
+          <Button asChild className="mt-14 w-full font-bold text-lg" size="lg">
             <Link href={COLLECTION_URL_PATHS.News}>Ver todas</Link>
           </Button>
         </GridLeft>

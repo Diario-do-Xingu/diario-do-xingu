@@ -1,13 +1,12 @@
 import type { CollectionConfig } from 'payload'
 import { v4 as uuidV4 } from 'uuid'
-import { changeFilename } from './hooks/changeFilename'
-import { revalidateDelete, revalidateNotarialActs } from './hooks/revalidateNotarialActs'
-
-import { slugField } from '@/payload/fields/slug'
-import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished'
 import { COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
 import { env } from '@/env'
 import { authenticated } from '@/payload/access/authenticated'
+import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished'
+import { slugField } from '@/payload/fields/slug'
+import { changeFilename } from './hooks/changeFilename'
+import { revalidateDelete, revalidateNotarialActs } from './hooks/revalidateNotarialActs'
 
 export const NotarialActs: CollectionConfig = {
   slug: COLLECTION_SLUGS.NotarialActs,

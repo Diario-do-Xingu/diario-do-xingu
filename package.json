@@ -9,13 +9,15 @@
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation rm -rf .next && pnpm build && pnpm start",
     "dev:safe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "format": "biome format --write .",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
-    "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
-    "lint:fix": "cross-env NODE_OPTIONS=--no-deprecation next lint --fix",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "reinstall": "cross-env NODE_OPTIONS=--no-deprecation rm -rf node_modules && rm pnpm-lock.yaml && pnpm install",
-    "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -53,19 +55,13 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.3",
-    "@next/eslint-plugin-next": "15.5.24",
+    "@biomejs/biome": "2.5.10",
     "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^22.19.5",
     "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.23",
-    "eslint": "^9.39.2",
-    "eslint-config-next": "15.5.24",
-    "eslint-plugin-react-hooks": "^5.2.0",
     "postcss": "^8.5.6",
-    "prettier": "^3.7.4",
-    "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "^3.4.19",
     "typescript": "^5.9.3"
   },
@@ -73,14 +69,7 @@
     "node": "24"
   },
   "pnpm": {
-    "onlyBuiltDependencies": [
-      "canvas",
-      "core-js",
-      "esbuild",
-      "fsevents",
-      "sharp",
-      "unrs-resolver"
-    ]
+    "onlyBuiltDependencies": ["canvas", "core-js", "esbuild", "fsevents", "sharp", "unrs-resolver"]
   },
   "packageManager": "pnpm@10.27.0+sha512.72d699da16b1179c14ba9e64dc71c9a40988cbdc65c264cb0e489db7de917f20dcf4d64d8723625f2969ba52d4b7e2a1170682d9ac2a5dcaeaab732b7e16f04a"
 }

@@ -1,6 +1,6 @@
+import NextImage, { type StaticImageData } from 'next/image'
+import type React from 'react'
 import { cn } from '@/utilities/ui'
-import NextImage, { StaticImageData } from 'next/image'
-import React from 'react'
 
 import type { Props as MediaProps } from '../types'
 

@@ -1,8 +1,8 @@
 import type { GlobalConfig } from 'payload'
-import { revalidateAdvertisement } from './hooks/revalidateAdvertisement'
 import { COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
 import { AdvertisementBlock } from '@/payload/blocks/advertisement/advertisement-block'
+import { revalidateAdvertisement } from './hooks/revalidateAdvertisement'
 
 export const AdType = {
   FirstSideAdsBanner: 'firstSideAdsBanner',

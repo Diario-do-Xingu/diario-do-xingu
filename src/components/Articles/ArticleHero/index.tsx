@@ -1,10 +1,10 @@
-import { News } from '@/payload-types'
-import { joinWithAnd } from '@/utilities/formatString'
 import { ArticleShareLinks } from '@/components/ArticleShareLinks'
-import { getClientSideURL } from '@/utilities/getURL'
-import { COLLECTION_URL_PATHS } from '@/constants'
 import { ImageMedia } from '@/components/Media/ImageMedia'
 import { RelativePublishedAtClient } from '@/components/RelativePublishedAtClient'
+import { COLLECTION_URL_PATHS } from '@/constants'
+import type { News } from '@/payload-types'
+import { joinWithAnd } from '@/utilities/formatString'
+import { getClientSideURL } from '@/utilities/getURL'
 
 type ArticleHero = {
   article: News
@@ -22,17 +22,17 @@ export function ArticleHero({ article }: ArticleHero) {
     <div className="space-y-5">
       <h1 className="text-3xl text-primary">{heading}</h1>
 
-      {subheading && <h2 className="text text-base font-normal">{subheading}</h2>}
+      {subheading && <h2 className="text font-normal text-base">{subheading}</h2>}
 
       <div className="space-y-1">
         {hasAuthors && (
-          <p className="font-globo text-sm font-bold text-zinc-600">
+          <p className="font-bold font-globo text-sm text-zinc-600">
             Por {joinWithAnd(authors.map(({ name }) => name ?? ''))}
           </p>
         )}
 
         {publishedAt && (
-          <div className="text-xs font-medium text-zinc-500">
+          <div className="font-medium text-xs text-zinc-500">
             <RelativePublishedAtClient publishedAt={publishedAt} />
           </div>
         )}

@@ -1,9 +1,9 @@
+import Link from 'next/link'
+import { Fragment } from 'react'
 import { ImageMedia } from '@/components/Media/ImageMedia'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
-import Link from 'next/link'
-import { Fragment } from 'react'
 
 export async function DigitalEditionsSection() {
   const payload = await getPayload()
@@ -20,11 +20,11 @@ export async function DigitalEditionsSection() {
     <Card className="mt-10 bg-tertiary p-4">
       <CardHeader className="rounded-tl-default rounded-tr-default border-b-2 bg-card py-4">
         <Link href={COLLECTION_URL_PATHS.DigitalEditions}>
-          <h4 className="text-md font-globo font-bold text-primary underline">Edições Digitais</h4>
+          <h4 className="font-bold font-globo text-md text-primary underline">Edições Digitais</h4>
         </Link>
       </CardHeader>
 
-      <CardContent className="grid grid-cols-1 gap-4 rounded-bl-default rounded-br-default bg-card pt-5">
+      <CardContent className="grid grid-cols-1 gap-4 rounded-br-default rounded-bl-default bg-card pt-5">
         {docs.map((item, index) => {
           return (
             <Fragment key={item.slug}>

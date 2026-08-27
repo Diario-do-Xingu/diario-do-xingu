@@ -1,8 +1,7 @@
-import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-
-import { COLLECTION_SLUGS, PAGINATED_LIMIT } from '@/constants'
 import { notFound } from 'next/navigation'
+import { getPayload } from 'payload'
+import { COLLECTION_SLUGS, PAGINATED_LIMIT } from '@/constants'
 import { PageComponent } from '../../PageComponent'
 
 export const revalidate = 600

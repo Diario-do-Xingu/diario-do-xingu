@@ -1,21 +1,19 @@
 // import { MediaBlock } from '@/blocks/MediaBlock/Component'
-import {
+import type {
   DefaultNodeTypes,
+  DefaultTypedEditorState,
   SerializedBlockNode,
   SerializedLinkNode,
-  type DefaultTypedEditorState,
 } from '@payloadcms/richtext-lexical'
 import {
-  JSXConvertersFunction,
-  LinkJSXConverter,
   RichText as ConvertRichText,
+  type JSXConvertersFunction,
+  LinkJSXConverter,
 } from '@payloadcms/richtext-lexical/react'
-
+import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
+import { MediaBlock } from '@/payload/blocks/MediaBlock/Component'
 import type { MediaBlock as MediaBlockProps } from '@/payload-types'
 import { cn } from '@/utilities/ui'
-
-import { MediaBlock } from '@/payload/blocks/MediaBlock/Component'
-import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 
 type NodeTypes = DefaultNodeTypes | SerializedBlockNode<MediaBlockProps>
 

@@ -1,4 +1,4 @@
-import { TaskConfig, TaskHandlerResult } from 'payload'
+import type { TaskConfig, TaskHandlerResult } from 'payload'
 
 const schedulePublishActionsResult = {
   publish: 'published',

@@ -61,7 +61,7 @@ export function formatDateAndRelative(dateStr: string): string {
   const diffMonths = Math.floor(diffDays / 30)
   const diffYears = Math.floor(diffDays / 365)
 
-  let relative
+  let relative: string
 
   if (diffMin < 1) {
     relative = 'Atualizado agora'

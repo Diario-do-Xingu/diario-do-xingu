@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// biome-ignore-all lint/suspicious/noExplicitAny: Umami accepts arbitrary `data-*` script attributes.
 
-import { env } from '@/env'
 import Script from 'next/script'
+import { env } from '@/env'
 
 /**
  * Props for the Umami component.

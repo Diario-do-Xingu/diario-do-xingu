@@ -1,6 +1,3 @@
-import { ARCHIVE_LIMIT, COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
-import { CollectionConfig } from 'payload'
-import { slugField } from '@/payload/fields/slug'
 import {
   BlocksFeature,
   FixedToolbarFeature,
@@ -9,11 +6,13 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
-import { MediaBlock } from '@/payload/blocks/MediaBlock'
-import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished'
-import { revalidateDelete, revalidateNews } from './hooks/revalidateNews'
-
+import type { CollectionConfig } from 'payload'
+import { ARCHIVE_LIMIT, COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
 import { authenticated } from '@/payload/access/authenticated'
+import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished'
+import { MediaBlock } from '@/payload/blocks/MediaBlock'
+import { slugField } from '@/payload/fields/slug'
+import { revalidateDelete, revalidateNews } from './hooks/revalidateNews'
 
 export const News: CollectionConfig = {
   slug: COLLECTION_SLUGS.News,

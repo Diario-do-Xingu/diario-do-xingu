@@ -1,4 +1,4 @@
-import { CollectionBeforeOperationHook } from 'payload'
+import type { CollectionBeforeOperationHook } from 'payload'
 
 export const changeFilename: CollectionBeforeOperationHook = ({ req, operation }) => {
   if ((operation !== 'create' && operation !== 'update') || !req.file || !req.data) return

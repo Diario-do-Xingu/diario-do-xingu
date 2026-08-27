@@ -1,7 +1,7 @@
 'use client'
 
-import { writingDate } from '@/utilities/formatDate'
 import { useEffect, useState } from 'react'
+import { writingDate } from '@/utilities/formatDate'
 
 export function DisplayDate() {
   const [date, setDate] = useState(new Date())

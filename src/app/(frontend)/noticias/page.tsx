@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { COLLECTION_SLUGS, PAGINATED_LIMIT } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
 import { PageComponent } from './PageComponent'

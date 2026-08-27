@@ -1,10 +1,10 @@
-import { getPayload } from '@/lib/payload/getPayload'
-import { Card, CardContent, CardHeader } from '../ui/card'
-import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
-import { Fragment } from 'react'
 import Link from 'next/link'
-import { ImageMedia } from '../Media/ImageMedia'
+import { Fragment } from 'react'
+import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
+import { getPayload } from '@/lib/payload/getPayload'
 import { formatDateWithTime } from '@/utilities/formatDate'
+import { ImageMedia } from '../Media/ImageMedia'
+import { Card, CardContent, CardHeader } from '../ui/card'
 
 export async function ArticleRelatedSection(props: {
   categoryId: string
@@ -36,7 +36,7 @@ export async function ArticleRelatedSection(props: {
   return (
     <Card className="mt-10">
       <CardHeader className="border-b-2 py-4">
-        <h4 className="text-md font-globo font-bold text-primary">Artigos Relacionados</h4>
+        <h4 className="font-bold font-globo text-md text-primary">Artigos Relacionados</h4>
       </CardHeader>
 
       <CardContent className="grid grid-cols-1 gap-7 pt-5 lg:grid-cols-4">
@@ -56,7 +56,7 @@ export async function ArticleRelatedSection(props: {
                 />
 
                 <div className="font-bold text-red-700">{item.heading}</div>
-                <div className="mt-auto text-sm font-medium text-zinc-500">
+                <div className="mt-auto font-medium text-sm text-zinc-500">
                   {formatDateWithTime(item.publishedAt || '', ' -')}
                 </div>
               </Link>

@@ -16,16 +16,14 @@
   border-radius: 10px;
 }
 
-:where([data-theme='dark']) {
-  .admin-logo {
-    background-color: transparent;
-  }
+:where([data-theme="dark"]) .admin-logo {
+  background-color: transparent;
 }
 
 .nav__controls {
   width: 100%;
+}
 
-  .signout-button {
-    width: 100%;
-  }
+.nav__controls .signout-button {
+  width: 100%;
 }

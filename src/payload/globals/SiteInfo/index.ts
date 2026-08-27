@@ -1,7 +1,7 @@
 import type { GlobalConfig } from 'payload'
-import { revalidateSiteInfo } from './hooks/revalidateSiteInfo'
 import { COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
+import { revalidateSiteInfo } from './hooks/revalidateSiteInfo'
 
 export const SiteInfo: GlobalConfig = {
   slug: COLLECTION_SLUGS.SiteInfo,

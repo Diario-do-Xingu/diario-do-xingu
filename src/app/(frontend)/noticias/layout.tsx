@@ -1,10 +1,10 @@
+import type { Metadata } from 'next'
+import type React from 'react'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
-import { Media, SiteMetadatum } from '@/payload-types'
+import type { Media, SiteMetadatum } from '@/payload-types'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import { Metadata } from 'next'
-import React from 'react'
 
 export default async function PageLayout(props: { children: React.ReactNode }) {
   const { children } = props

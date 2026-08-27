@@ -1,19 +1,19 @@
 // import type { TextFieldSingleValidation } from 'payload'
 import {
+  AlignFeature,
+  BlockquoteFeature,
   BoldFeature,
+  IndentFeature,
   ItalicFeature,
   LinkFeature,
-  ParagraphFeature,
   lexicalEditor,
-  UnderlineFeature,
-  AlignFeature,
-  IndentFeature,
+  OrderedListFeature,
+  ParagraphFeature,
   StrikethroughFeature,
   SubscriptFeature,
   SuperscriptFeature,
-  OrderedListFeature,
+  UnderlineFeature,
   UnorderedListFeature,
-  BlockquoteFeature,
 } from '@payloadcms/richtext-lexical'
 import { COLLECTION_SLUGS } from '@/constants'
 

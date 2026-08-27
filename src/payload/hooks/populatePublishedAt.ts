@@ -1,4 +1,4 @@
-import { FieldHook } from 'payload'
+import type { FieldHook } from 'payload'
 
 export const populatePublishedAt: FieldHook = ({ value, operation }) => {
   if ((operation === 'create' || operation === 'update') && !value) {

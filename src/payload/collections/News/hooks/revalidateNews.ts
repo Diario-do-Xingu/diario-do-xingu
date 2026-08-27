@@ -1,8 +1,7 @@
-import type { BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
-
 import { revalidatePath } from 'next/cache'
-import { News } from '@/payload-types'
+import type { BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
 import { COLLECTION_URL_PATHS } from '@/constants'
+import type { News } from '@/payload-types'
 
 export const revalidateNews: CollectionAfterChangeHook<News> = async ({
   doc,

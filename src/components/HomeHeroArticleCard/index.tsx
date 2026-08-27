@@ -1,10 +1,10 @@
-import { Media, News } from '@/payload-types'
-import { cn } from '@/utilities/ui'
-import { Card, CardContent } from '../ui/card'
 import Image from 'next/image'
-import { Badge } from '../ui/badge'
 import Link from 'next/link'
 import { COLLECTION_URL_PATHS } from '@/constants'
+import type { Media, News } from '@/payload-types'
+import { cn } from '@/utilities/ui'
+import { Badge } from '../ui/badge'
+import { Card, CardContent } from '../ui/card'
 
 type HomeHeroArticleCardProps = {
   size: 'lg' | 'sm'
@@ -43,7 +43,7 @@ export function HomeHeroArticleCard(props: HomeHeroArticleCardProps) {
         <CardContent className={cn('h-full p-5 pb-10', 'flex flex-col gap-16')}>
           {doc.highligh && (
             <Badge
-              className={cn('relative w-max text-sm font-bold')}
+              className={cn('relative w-max font-bold text-sm')}
               variant={colors[index % colors.length]}
             >
               {doc.highligh}
@@ -51,12 +51,12 @@ export function HomeHeroArticleCard(props: HomeHeroArticleCardProps) {
           )}
 
           <div className={cn('mt-auto flex flex-col')}>
-            <h3 className="mt-6 text-2xl font-bold leading-tight text-white drop-shadow-xl">
+            <h3 className="mt-6 font-bold text-2xl text-white leading-tight drop-shadow-xl">
               {doc.heading}
             </h3>
 
             {doc.subheading && (
-              <p className="text-md mt-4 text-clip font-bold text-zinc-100/90 drop-shadow-xl">
+              <p className="mt-4 text-clip font-bold text-md text-zinc-100/90 drop-shadow-xl">
                 {doc.subheading}
               </p>
             )}

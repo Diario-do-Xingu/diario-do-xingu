@@ -1,12 +1,11 @@
-import { getCachedGlobal } from '@/utilities/getGlobals'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 import Link from 'next/link'
-import { cn } from '@/utilities/ui'
-import { getSocialIcon } from '@/utilities/getSocialIcon'
-import { Media, SiteInfo } from '@/payload-types'
-import { COLLECTION_URL_PATHS, COLLECTION_SLUGS } from '@/constants'
 import defaultLogo from '@/assets/images/default-logo.png'
+import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
+import type { Media, SiteInfo } from '@/payload-types'
+import { getCachedGlobal } from '@/utilities/getGlobals'
+import { getSocialIcon } from '@/utilities/getSocialIcon'
+import { cn } from '@/utilities/ui'
 import { ImageMedia } from '../Media/ImageMedia'
 import { DisplayDate } from './DisplayDate'
 import { Stocks } from './Stocks'
@@ -52,7 +51,7 @@ export async function Header() {
               href={link.link}
               key={i}
               className={cn(
-                'whitespace-nowrap border-y-4 border-transparent border-b-transparent px-1 py-1 font-globo text-lg font-bold transition-colors hover:border-b-red-400',
+                'whitespace-nowrap border-transparent border-y-4 border-b-transparent px-1 py-1 font-bold font-globo text-lg transition-colors hover:border-b-red-400',
                 link.color ? link.color : colors[i % colors.length],
                 'hover:border-b-current',
               )}
@@ -62,7 +61,7 @@ export async function Header() {
           ))}
         </div>
 
-        <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-white to-transparent"></div>
+        <div className="pointer-events-none absolute top-0 right-0 h-full w-10 bg-gradient-to-l from-white to-transparent"></div>
       </div>
 
       <div className="border-b-4 border-b-secondary">
@@ -87,6 +86,7 @@ export async function Header() {
                 target="_blank"
                 className="grid place-items-center rounded-full bg-white/20 p-2 transition-transform hover:scale-[110%]"
                 data-umami-event={`Abrir ${social.type} Diário do Xingu`}
+                rel="noopener"
               >
                 <FontAwesomeIcon icon={getSocialIcon(social.type)} className="size-7" />
               </a>

@@ -1,15 +1,14 @@
-import React from 'react'
-
-import { WeatherWidget } from '@/components/WeatherWidget'
-import { SoccerWidget } from '@/components/SoccerWidget'
+import type { Metadata } from 'next'
+import type React from 'react'
 import { Advertisement } from '@/components/Advertisement'
-import { Metadata } from 'next'
-import { getCachedGlobal } from '@/utilities/getGlobals'
+import { Grid, GridRight } from '@/components/Grid'
+import { SoccerWidget } from '@/components/SoccerWidget'
+import { WeatherWidget } from '@/components/WeatherWidget'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
-import { Media, SiteMetadatum } from '@/payload-types'
+import type { Media, SiteMetadatum } from '@/payload-types'
+import { getCachedGlobal } from '@/utilities/getGlobals'
 import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import { Grid, GridRight } from '@/components/Grid'
 
 export default async function PageLayout(props: { children: React.ReactNode }) {
   const { children } = props
