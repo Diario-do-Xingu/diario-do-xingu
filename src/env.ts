@@ -14,7 +14,6 @@ export const env = createEnv({
     // Optionals
     UMAMI_WEBSITE_ID: z.string().min(1).optional(),
     UMAMI_URI: z.string().url().optional(),
-    SHARP_IGNORE_GLOBAL_LIBVIPS: z.string().min(1).optional(),
   },
   client: {
     NEXT_PUBLIC_SERVER_URL: z.string().url(),
