@@ -24,12 +24,12 @@
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.6",
-    "@payloadcms/db-mongodb": "^3.70.0",
-    "@payloadcms/next": "^3.70.0",
-    "@payloadcms/payload-cloud": "^3.70.0",
-    "@payloadcms/richtext-lexical": "^3.70.0",
-    "@payloadcms/translations": "^3.70.0",
-    "@payloadcms/ui": "^3.70.0",
+    "@payloadcms/db-mongodb": "3.79.1",
+    "@payloadcms/next": "3.79.1",
+    "@payloadcms/payload-cloud": "3.79.1",
+    "@payloadcms/richtext-lexical": "3.79.1",
+    "@payloadcms/translations": "3.79.1",
+    "@payloadcms/ui": "3.79.1",
     "@radix-ui/react-popover": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.4",
     "@radix-ui/react-tabs": "^1.1.13",
@@ -42,7 +42,7 @@
     "jiti": "^2.6.1",
     "lucide-react": "^0.503.0",
     "next": "15.5.24",
-    "payload": "^3.70.0",
+    "payload": "3.79.1",
     "pdfjs-dist": "^4.10.38",
     "react": "^19.2.3",
     "react-day-picker": "^8.10.1",
@@ -69,7 +69,10 @@
     "node": "24"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["canvas", "core-js", "esbuild", "fsevents", "sharp", "unrs-resolver"]
+    "onlyBuiltDependencies": ["canvas", "core-js", "esbuild", "fsevents", "sharp", "unrs-resolver"],
+    "overrides": {
+      "fast-xml-parser": ">=5.11.1"
+    }
   },
   "packageManager": "pnpm@10.27.0+sha512.72d699da16b1179c14ba9e64dc71c9a40988cbdc65c264cb0e489db7de917f20dcf4d64d8723625f2969ba52d4b7e2a1170682d9ac2a5dcaeaab732b7e16f04a"
 }
