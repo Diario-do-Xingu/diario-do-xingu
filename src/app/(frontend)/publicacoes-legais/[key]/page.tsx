@@ -1,12 +1,17 @@
 import { ArrowLeft, Calendar, Download, KeyRound } from 'lucide-react'
+import type { Metadata } from 'next'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
+import { cache } from 'react'
 import { GridLeft } from '@/components/Grid'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
 import { formatDateWithTime } from '@/utilities/formatDate'
+import { excerpt } from '@/utilities/formatString'
+import { getSiteMeta } from '@/utilities/getSiteMeta'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
 type Args = {
   params: Promise<{
@@ -14,8 +19,9 @@ type Args = {
   }>
 }
 
-export default async function Page({ params: paramsPromise }: Args) {
-  const { key = '' } = await paramsPromise
+// Shared by generateMetadata and the page so the notice is queried once per request.
+// Anonymous visitors only see published notices (overrideAccess: false).
+const findNotarialAct = cache(async (key: string) => {
   const payload = await getPayload()
 
   const {
@@ -32,7 +38,49 @@ export default async function Page({ params: paramsPromise }: Args) {
     },
   })
 
-  if (!notarialAct) return redirect('/')
+  return notarialAct
+})
+
+export async function generateMetadata({ params }: Args): Promise<Metadata> {
+  const { key = '' } = await params
+  const notarialAct = await findNotarialAct(key)
+
+  if (!notarialAct) return {}
+
+  const { siteName, siteDescription, images } = await getSiteMeta()
+
+  const title = notarialAct.heading
+  const description = excerpt(notarialAct.content) || siteDescription
+  const url = `/${COLLECTION_URL_PATHS.NotarialActs}/${notarialAct.key}`
+
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: mergeOpenGraph({
+      type: 'article',
+      siteName,
+      title,
+      description,
+      url,
+      images,
+      publishedTime: notarialAct.publishedAt ?? undefined,
+      modifiedTime: notarialAct.updatedAt,
+    }),
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images,
+    },
+  }
+}
+
+export default async function Page({ params: paramsPromise }: Args) {
+  const { key = '' } = await paramsPromise
+  const notarialAct = await findNotarialAct(key)
+
+  if (!notarialAct) notFound()
 
   return (
     <GridLeft>

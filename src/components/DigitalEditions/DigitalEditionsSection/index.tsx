@@ -19,7 +19,7 @@ export async function DigitalEditionsSection() {
   return (
     <Card className="mt-10 bg-tertiary p-4">
       <CardHeader className="rounded-tl-default rounded-tr-default border-b-2 bg-card py-4">
-        <Link href={COLLECTION_URL_PATHS.DigitalEditions}>
+        <Link href={`/${COLLECTION_URL_PATHS.DigitalEditions}`}>
           <h4 className="font-bold font-globo text-md text-primary underline">Edições Digitais</h4>
         </Link>
       </CardHeader>

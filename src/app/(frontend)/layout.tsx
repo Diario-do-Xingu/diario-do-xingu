@@ -7,11 +7,9 @@ import localFont from 'next/font/local'
 import { Advertisement } from '@/components/Advertisement'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
-import { COLLECTION_SLUGS } from '@/constants'
 import { env } from '@/env'
 import { Umami } from '@/lib/umami'
-import type { Media, SiteMetadatum } from '@/payload-types'
-import { getCachedGlobal } from '@/utilities/getGlobals'
+import { getSiteMeta } from '@/utilities/getSiteMeta'
 import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { cn } from '@/utilities/ui'
@@ -94,36 +92,25 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const siteMetadata = (await getCachedGlobal(COLLECTION_SLUGS.SiteMetadata, 2)()) as SiteMetadatum
-
-  const shareImage = siteMetadata.cardShareImage as Media | undefined
-  const images: { url: string; secureUrl: string; alt?: string }[] = []
-
-  if (shareImage) {
-    images.push({
-      url: shareImage.url || `${getServerSideURL()}/media/${shareImage.filename}`,
-      secureUrl: shareImage.url || `${getServerSideURL()}/media/${shareImage.filename}`,
-      alt: shareImage.alt || undefined,
-    })
-  }
-
-  const title = siteMetadata.siteTitle || 'Diário do Xingu - Portal de Notícias'
-  const description = siteMetadata.siteDescription || 'Jornal Diário do Xingu'
+  const { siteName, siteTitle, siteDescription, images } = await getSiteMeta()
 
   return {
     metadataBase: new URL(getServerSideURL()),
-    description,
-    title,
+    description: siteDescription,
+    title: {
+      default: siteTitle,
+      template: `%s | ${siteName}`,
+    },
     openGraph: mergeOpenGraph({
-      description,
-      siteName: siteMetadata.siteName || undefined,
-      title,
+      description: siteDescription,
+      siteName,
+      title: siteTitle,
       images,
     }),
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
+      title: siteTitle,
+      description: siteDescription,
       images,
     },
   }

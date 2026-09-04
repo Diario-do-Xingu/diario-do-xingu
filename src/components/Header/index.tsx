@@ -30,7 +30,7 @@ const links: { label: string; link: string; color?: string }[] = [
   },
   {
     label: 'tabela brasileirão',
-    link: 'tabela-brasileirao',
+    link: '/tabela-brasileirao',
     color: 'text-red-500',
   },
 ]

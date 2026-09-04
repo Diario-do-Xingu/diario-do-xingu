@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
+  locale: 'pt_BR',
   description: 'Jornal Diário do Xingu',
   siteName: 'Diário do Xingu',
   title: 'Diário do Xingu - Portal de Notícias',
