@@ -11,6 +11,8 @@ export async function ArticleMostReadSection() {
 
   const mostReadNews = await payload.find({
     collection: COLLECTION_SLUGS.News,
+    draft: false,
+    overrideAccess: false,
     limit: ARCHIVE_LIMIT.MostRead,
     sort: '-readCount',
     pagination: false,

@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { COLLECTION_GROUP } from '@/constants'
 import { admins } from '../access/admins'
-import { anyone } from '../access/anyone'
+import { authenticated } from '../access/authenticated'
 import { checkRole } from './Users/checkRole'
 
 export const Users: CollectionConfig = {
@@ -15,7 +15,7 @@ export const Users: CollectionConfig = {
     group: COLLECTION_GROUP.Configuration,
   },
   access: {
-    read: anyone,
+    read: authenticated,
     create: admins,
     delete: admins,
     update: ({ req: { user } }) => {

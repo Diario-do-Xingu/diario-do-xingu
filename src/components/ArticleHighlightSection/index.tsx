@@ -11,6 +11,8 @@ export async function ArticleHighlightSection() {
 
   const mostReadNews = await payload.find({
     collection: COLLECTION_SLUGS.News,
+    draft: false,
+    overrideAccess: false,
     limit: ARCHIVE_LIMIT.Highlights,
     pagination: false,
     sort: '-publishedAt',
