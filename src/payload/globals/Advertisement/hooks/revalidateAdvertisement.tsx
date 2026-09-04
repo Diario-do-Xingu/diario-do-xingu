@@ -12,7 +12,7 @@ export const revalidateAdvertisement: GlobalAfterChangeHook = ({
 }) => {
   if (!context.disableRevalidate) {
     payload.logger.info(`Revalidating ${tag}`)
-    revalidateTag(`global_${tag}`)
+    revalidateTag(tag)
 
     for (const path of paths) {
       payload.logger.info(`Revalidating ${path}`)

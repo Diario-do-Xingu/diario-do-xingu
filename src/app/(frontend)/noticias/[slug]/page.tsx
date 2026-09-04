@@ -18,6 +18,10 @@ import { getSiteMeta } from '@/utilities/getSiteMeta'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { CountRead } from './CountRead'
 
+// Sidebars and ads are rendered from live queries at generation time; refresh them on the
+// same 10-minute window the list routes use instead of only when this document is republished.
+export const revalidate = 600
+
 type Args = {
   params: Promise<{
     slug?: string

@@ -13,6 +13,10 @@ import { excerpt } from '@/utilities/formatString'
 import { getSiteMeta } from '@/utilities/getSiteMeta'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
+// Same 10-minute window as the list routes, so the layout around this page (ads, widgets)
+// is not frozen at generation time until the notice itself is republished.
+export const revalidate = 600
+
 type Args = {
   params: Promise<{
     key?: string
