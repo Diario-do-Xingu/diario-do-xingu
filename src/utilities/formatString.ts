@@ -11,3 +11,9 @@ export function joinWithAnd(items: string[]): string {
   const last = items[items.length - 1]
   return `${allButLast} e ${last}`
 }
+
+/** Collapses whitespace and cuts plain text to `max` chars for meta descriptions. */
+export function excerpt(text: string, max = 160) {
+  const clean = text.replace(/\s+/g, ' ').trim()
+  return clean.length > max ? `${clean.slice(0, max - 1).trimEnd()}…` : clean
+}

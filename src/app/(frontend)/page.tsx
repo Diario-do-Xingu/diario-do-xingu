@@ -41,7 +41,7 @@ export default async function HomePage() {
           />
 
           <Button asChild className="mt-14 w-full font-bold text-lg" size="lg">
-            <Link href={COLLECTION_URL_PATHS.News}>Ver todas</Link>
+            <Link href={`/${COLLECTION_URL_PATHS.News}`}>Ver todas</Link>
           </Button>
         </GridLeft>
 
