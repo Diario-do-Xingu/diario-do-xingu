@@ -16,6 +16,8 @@ export async function ArticleRelatedSection(props: {
 
   const relatedArticles = await payload.find({
     collection: COLLECTION_SLUGS.News,
+    draft: false,
+    overrideAccess: false,
     limit: 4,
     depth: 1,
     sort: '-publishedAt',
