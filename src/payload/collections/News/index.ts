@@ -163,6 +163,11 @@ export const News: CollectionConfig = {
       name: 'readCount',
       label: 'Contador de Visita',
       defaultValue: 0,
+      // Ignored on REST/GraphQL updates so editors cannot set it; the read-counter action
+      // increments it through the database adapter, which does not go through field access.
+      access: {
+        update: () => false,
+      },
       admin: {
         readOnly: true,
         position: 'sidebar',
