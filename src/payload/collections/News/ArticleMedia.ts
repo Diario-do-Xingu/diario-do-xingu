@@ -1,8 +1,8 @@
 import type { CollectionConfig } from 'payload'
-
 import { COLLECTION_GROUP, IMAGE_UPLOAD_MIME_TYPES } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
 import { authenticated } from '@/payload/access/authenticated'
+import { capPublicLimit } from '@/payload/hooks/capPublicLimit'
 
 export const ArticleMedia: CollectionConfig = {
   slug: 'article-media',
@@ -32,5 +32,8 @@ export const ArticleMedia: CollectionConfig = {
       },
     ],
     bulkUpload: false,
+  },
+  hooks: {
+    beforeOperation: [capPublicLimit],
   },
 }

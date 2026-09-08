@@ -12,6 +12,7 @@ import { authenticated } from '@/payload/access/authenticated'
 import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished'
 import { MediaBlock } from '@/payload/blocks/MediaBlock'
 import { slugField } from '@/payload/fields/slug'
+import { capPublicLimit } from '@/payload/hooks/capPublicLimit'
 import { revalidateDelete, revalidateNews } from './hooks/revalidateNews'
 
 export const News: CollectionConfig = {
@@ -183,6 +184,7 @@ export const News: CollectionConfig = {
     }),
   ],
   hooks: {
+    beforeOperation: [capPublicLimit],
     afterChange: [revalidateNews],
     afterDelete: [revalidateDelete],
   },

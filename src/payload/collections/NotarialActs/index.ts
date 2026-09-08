@@ -5,6 +5,7 @@ import { env } from '@/env'
 import { authenticated } from '@/payload/access/authenticated'
 import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished'
 import { slugField } from '@/payload/fields/slug'
+import { capPublicLimit } from '@/payload/hooks/capPublicLimit'
 import { changeFilename } from './hooks/changeFilename'
 import { revalidateDelete, revalidateNotarialActs } from './hooks/revalidateNotarialActs'
 
@@ -28,6 +29,7 @@ export const NotarialActs: CollectionConfig = {
   },
   upload: {
     // staticDir: 'public/notarial-acts',
+    mimeTypes: ['application/pdf'],
     bulkUpload: false,
     displayPreview: false,
     pasteURL: false,
@@ -91,6 +93,7 @@ export const NotarialActs: CollectionConfig = {
   ],
   hooks: {
     beforeOperation: [
+      capPublicLimit,
       ({ req, operation }) => {
         if (operation !== 'create') return
 
