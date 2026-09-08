@@ -3,6 +3,7 @@ import { COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
 import { authenticated } from '@/payload/access/authenticated'
 import { slugField } from '@/payload/fields/slug'
+import { capPublicLimit } from '@/payload/hooks/capPublicLimit'
 
 export const NewsCategories: CollectionConfig = {
   slug: COLLECTION_SLUGS.NewsCategories,
@@ -33,4 +34,7 @@ export const NewsCategories: CollectionConfig = {
     },
     ...slugField('name'),
   ],
+  hooks: {
+    beforeOperation: [capPublicLimit],
+  },
 }

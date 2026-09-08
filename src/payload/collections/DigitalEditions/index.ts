@@ -1,9 +1,9 @@
 import type { CollectionConfig } from 'payload'
 import { COLLECTION_SLUGS } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
-
 import { authenticated } from '@/payload/access/authenticated'
 import { slugField } from '@/payload/fields/slug'
+import { capPublicLimit } from '@/payload/hooks/capPublicLimit'
 import { revalidateDelete, revalidateDigitalEditions } from './hooks/revalidateDigitalEdition'
 
 export const DigitalEditions: CollectionConfig = {
@@ -48,6 +48,7 @@ export const DigitalEditions: CollectionConfig = {
   ],
 
   hooks: {
+    beforeOperation: [capPublicLimit],
     afterChange: [revalidateDigitalEditions],
     afterDelete: [revalidateDelete],
   },

@@ -1,3 +1,4 @@
+import { timingSafeEqual } from 'node:crypto'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
@@ -12,6 +13,7 @@ import { News } from '@/payload/collections/News'
 import { NewsCategories } from '@/payload/collections/News/categories'
 import { NotarialActs } from '@/payload/collections/NotarialActs'
 import { Users } from '@/payload/collections/Users'
+import { checkRole } from '@/payload/collections/Users/checkRole'
 import { defaultLexical } from '@/payload/fields/defaultLexical'
 import { Advertisement } from '@/payload/globals/Advertisement'
 import { SiteMetadata } from '@/payload/globals/Metadata'
@@ -100,12 +102,20 @@ export default buildConfig({
         ]
       : []),
   ],
+  // The public site reads through the Local API and the admin panel uses REST; nothing uses GraphQL.
+  graphQL: {
+    disable: true,
+  },
+  // The frontend never populates deeper than 2.
+  maxDepth: 3,
   jobs: {
     access: {
+      // Only admins or the cron caller may force the queue to run; everyone else gets 401.
       run: ({ req }): boolean => {
-        if (req.user) return true
-        const authHeader = req.headers.get('authorization')
-        return authHeader === `Bearer ${env.CRON_SECRET}`
+        if (checkRole(['admin'], req.user)) return true
+        const given = Buffer.from(req.headers.get('authorization') ?? '')
+        const expected = Buffer.from(`Bearer ${env.CRON_SECRET}`)
+        return given.length === expected.length && timingSafeEqual(given, expected)
       },
     },
     tasks: [schedulePublish],
@@ -115,8 +125,5 @@ export default buildConfig({
         queue: 'default',
       },
     ],
-    shouldAutoRun: () => {
-      return true
-    },
   },
 })

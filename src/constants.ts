@@ -13,13 +13,7 @@ export const ARCHIVE_LIMIT = {
  * as mitigation for GHSA-2xp9-vwfh-vxw4, which also breaks Payload uploads in those formats.
  * Keep this list in sync with what Next leaves unblocked in its image optimizer.
  */
-export const IMAGE_UPLOAD_MIME_TYPES = [
-  'image/jpeg',
-  'image/png',
-  'image/webp',
-  'image/gif',
-  'image/svg+xml',
-]
+export const IMAGE_UPLOAD_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
 
 export const COLLECTION_SLUGS = {
   SiteInfo: 'site-info',

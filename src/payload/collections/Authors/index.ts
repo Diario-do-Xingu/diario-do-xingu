@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { COLLECTION_SLUGS } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
 import { authenticated } from '@/payload/access/authenticated'
+import { capPublicLimit } from '@/payload/hooks/capPublicLimit'
 
 export const Authors: CollectionConfig = {
   slug: COLLECTION_SLUGS.Authors,
@@ -50,4 +51,7 @@ export const Authors: CollectionConfig = {
     //   },
     // },
   ],
+  hooks: {
+    beforeOperation: [capPublicLimit],
+  },
 }
