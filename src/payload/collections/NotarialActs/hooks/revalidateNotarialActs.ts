@@ -1,6 +1,6 @@
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import type { BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
-import { COLLECTION_URL_PATHS } from '@/constants'
+import { COLLECTION_URL_PATHS, SITEMAP_TAGS } from '@/constants'
 import type { NotarialAct } from '@/payload-types'
 
 export const revalidateNotarialActs: CollectionAfterChangeHook<NotarialAct> = async ({
@@ -16,7 +16,7 @@ export const revalidateNotarialActs: CollectionAfterChangeHook<NotarialAct> = as
 
       payload.logger.info(`Revalidating notarial act at path: ${path}`)
       revalidatePath(path)
-      // revalidateTag(`${COLLECTION_URL_PATHS.NotarialActs}-sitemap`)
+      revalidateTag(SITEMAP_TAGS.NotarialActs)
     }
 
     if (previousDoc._status === 'published' && doc._status !== 'published') {
@@ -26,7 +26,7 @@ export const revalidateNotarialActs: CollectionAfterChangeHook<NotarialAct> = as
 
       payload.logger.info(`Revalidating old notarial act at path: ${oldPath}`)
       revalidatePath(oldPath)
-      // revalidateTag(`${COLLECTION_URL_PATHS.NotarialActs}-sitemap`)
+      revalidateTag(SITEMAP_TAGS.NotarialActs)
     }
   }
   return doc
@@ -43,7 +43,7 @@ export const revalidateDelete: CollectionAfterDeleteHook<NotarialAct> = async ({
 
     payload.logger.info(`Revalidating deleted notarial act at path: ${path}`)
     revalidatePath(path)
-    // revalidateTag(`${COLLECTION_URL_PATHS.NotarialActs}-sitemap`)
+    revalidateTag(SITEMAP_TAGS.NotarialActs)
   }
   return doc
 }
