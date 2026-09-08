@@ -1,6 +1,6 @@
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import type { BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
-import { COLLECTION_URL_PATHS } from '@/constants'
+import { COLLECTION_URL_PATHS, SITEMAP_TAGS } from '@/constants'
 import type { News } from '@/payload-types'
 
 export const revalidateNews: CollectionAfterChangeHook<News> = async ({
@@ -16,7 +16,7 @@ export const revalidateNews: CollectionAfterChangeHook<News> = async ({
 
       payload.logger.info(`Revalidating news at path: ${path}`)
       revalidatePath(path)
-      // revalidateTag('news-sitemap')
+      revalidateTag(SITEMAP_TAGS.News)
     }
 
     // If the news was previously published, we need to revalidate the old path
@@ -27,7 +27,7 @@ export const revalidateNews: CollectionAfterChangeHook<News> = async ({
 
       payload.logger.info(`Revalidating old news at path: ${oldPath}`)
       revalidatePath(oldPath)
-      // revalidateTag('news-sitemap')
+      revalidateTag(SITEMAP_TAGS.News)
     }
   }
   return doc
@@ -44,7 +44,7 @@ export const revalidateDelete: CollectionAfterDeleteHook<News> = async ({
 
     payload.logger.info(`Revalidating deleted news at path: ${path}`)
     revalidatePath(path)
-    // revalidateTag('news-sitemap')
+    revalidateTag(SITEMAP_TAGS.News)
   }
 
   return doc

@@ -44,3 +44,12 @@ export const PAGINATED_LIMIT = {
   News: 20,
   NotarialActs: 10,
 } as const
+
+/**
+ * Cache tags for the sitemap queries. The collection hooks bust them on manual publish, unpublish
+ * and delete; scheduled publishes skip revalidation and rely on the sitemap's time-based refresh.
+ */
+export const SITEMAP_TAGS = {
+  News: 'sitemap-news',
+  NotarialActs: 'sitemap-notarial-acts',
+} as const
