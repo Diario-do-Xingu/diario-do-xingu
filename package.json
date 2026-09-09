@@ -27,7 +27,6 @@
     "@payloadcms/db-mongodb": "3.88.0",
     "@payloadcms/next": "3.88.0",
     "@payloadcms/payload-cloud": "3.88.0",
-    "@payloadcms/plugin-sentry": "3.88.0",
     "@payloadcms/richtext-lexical": "3.88.0",
     "@payloadcms/translations": "3.88.0",
     "@payloadcms/ui": "3.88.0",
