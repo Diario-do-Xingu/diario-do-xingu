@@ -79,3 +79,19 @@ export function formatDateAndRelative(dateStr: string): string {
 
   return `${formattedDate} - ${relative}`
 }
+
+/**
+ * UTC bounds of one calendar day (`yyyy-MM-dd`) in São Paulo, for `publishedAt` queries.
+ * Brazil has had no daylight saving since 2019, so the offset is fixed. Returns undefined
+ * for anything that is not a real date.
+ */
+export function saoPauloDayRange(day: string) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) return undefined
+  const start = new Date(`${day}T00:00:00.000-03:00`)
+  // Midnight in São Paulo is 03:00Z of the same date, so a valid input round-trips exactly;
+  // `new Date('2026-02-30…')` silently rolls over to March and fails this comparison.
+  if (Number.isNaN(start.getTime()) || !start.toISOString().startsWith(day)) return undefined
+  const end = new Date(start)
+  end.setUTCDate(end.getUTCDate() + 1)
+  return { greater_than_equal: start.toISOString(), less_than: end.toISOString() }
+}

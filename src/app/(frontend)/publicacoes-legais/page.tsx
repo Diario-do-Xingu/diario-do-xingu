@@ -1,29 +1,27 @@
 import { z } from 'zod'
 import { ARCHIVE_LIMIT, COLLECTION_SLUGS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
+import { saoPauloDayRange } from '@/utilities/formatDate'
 import { PageComponent } from './PageComponent'
 
 // export const dynamic = 'force-static'
 // export const revalidate = 600
 
+// A repeated query param arrives as an array; the first value wins so one bad param does not drop the other filter.
+const singleParam = z
+  .union([z.string(), z.array(z.string())])
+  .optional()
+  .transform((value) => (Array.isArray(value) ? value[0] : value))
+
 const searchParamsSchema = z.object({
-  date: z.string().optional(),
-  key: z.string().optional(),
+  date: singleParam,
+  key: singleParam,
 })
-
-function getDates(currentDate: string) {
-  const date = currentDate.split('T')[0]
-
-  return {
-    greater_than_equal: `${date}T00:00:00.000Z`,
-    less_than: `${date}T23:59:59.999Z`,
-  }
-}
 
 export default async function Page({
   searchParams,
 }: {
-  searchParams: Promise<{ date?: string; key?: string }>
+  searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
   const payload = await getPayload()
 
@@ -34,12 +32,14 @@ export default async function Page({
 
   if (parsedSearchParams.success) {
     const { date, key } = parsedSearchParams.data
+    // The day the reader picks is a São Paulo day; an unparseable date simply does not filter.
+    const range = date ? saoPauloDayRange(date) : undefined
 
     where = {
       and: [
-        date
+        range
           ? {
-              publishedAt: getDates(date),
+              publishedAt: range,
             }
           : {},
         key
