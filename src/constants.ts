@@ -53,3 +53,7 @@ export const SITEMAP_TAGS = {
   News: 'sitemap-news',
   NotarialActs: 'sitemap-notarial-acts',
 } as const
+
+/** Upload size cap and the message returned when it is exceeded; both are also used by error reporting. */
+export const UPLOAD_LIMIT_BYTES = 64 * 1024 * 1024
+export const UPLOAD_LIMIT_MESSAGE = 'O arquivo excede o limite de 64 MB'
