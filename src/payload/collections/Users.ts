@@ -18,6 +18,9 @@ export const Users: CollectionConfig = {
     read: authenticated,
     create: admins,
     delete: admins,
+    // Payload's default lets any signed-in user clear another account's login lockout
+    // (GHSA-jg8r-5jh2-v2xj); only admins should.
+    unlock: admins,
     update: ({ req: { user } }) => {
       if (!user) return false
       if (checkRole(['admin'], user)) {
