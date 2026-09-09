@@ -1,34 +1,32 @@
-import { revalidatePath, revalidateTag } from 'next/cache'
-import type { BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
+import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
 import { COLLECTION_URL_PATHS, SITEMAP_TAGS } from '@/constants'
+import { revalidatePathSafely, revalidateTagSafely } from '@/payload/hooks/revalidate'
 import type { NotarialAct } from '@/payload-types'
+
+// Notices are addressed by `key`; the create hook keeps `slug` equal to it.
+const pathFor = (slug: NotarialAct['slug']) => `/${COLLECTION_URL_PATHS.NotarialActs}/${slug}`
 
 export const revalidateNotarialActs: CollectionAfterChangeHook<NotarialAct> = async ({
   doc,
-  req: { payload, context },
   previousDoc,
+  req: { payload, context },
 }) => {
-  if (!context.disableRevalidate) {
-    if (doc._status === 'published') {
-      const path = `/${COLLECTION_URL_PATHS.NotarialActs}/${doc.slug}`
+  if (context.disableRevalidate) return doc
 
-      await revalidatePaths(payload)
+  const wasPublished = previousDoc?._status === 'published'
+  const isPublished = doc._status === 'published'
+  if (!wasPublished && !isPublished) return doc
 
-      payload.logger.info(`Revalidating notarial act at path: ${path}`)
-      revalidatePath(path)
-      revalidateTag(SITEMAP_TAGS.NotarialActs)
-    }
-
-    if (previousDoc._status === 'published' && doc._status !== 'published') {
-      const oldPath = `/${COLLECTION_URL_PATHS.NotarialActs}/${previousDoc.slug}`
-
-      await revalidatePaths(payload)
-
-      payload.logger.info(`Revalidating old notarial act at path: ${oldPath}`)
-      revalidatePath(oldPath)
-      revalidateTag(SITEMAP_TAGS.NotarialActs)
-    }
+  const paths = new Set(listPaths())
+  if (isPublished) paths.add(pathFor(doc.slug))
+  // Unpublished, or published under a new slug: the old URL must stop serving the cached page.
+  if (wasPublished && (!isPublished || previousDoc.slug !== doc.slug)) {
+    paths.add(pathFor(previousDoc.slug))
   }
+
+  for (const path of paths) revalidatePathSafely(payload, path)
+  revalidateTagSafely(payload, SITEMAP_TAGS.NotarialActs)
+
   return doc
 }
 
@@ -36,25 +34,15 @@ export const revalidateDelete: CollectionAfterDeleteHook<NotarialAct> = async ({
   doc,
   req: { context, payload },
 }) => {
-  if (!context.disableRevalidate) {
-    const path = `/${COLLECTION_URL_PATHS.NotarialActs}/${doc?.slug}`
+  if (context.disableRevalidate) return doc
 
-    await revalidatePaths(payload)
+  for (const path of [...listPaths(), pathFor(doc?.slug)]) revalidatePathSafely(payload, path)
+  revalidateTagSafely(payload, SITEMAP_TAGS.NotarialActs)
 
-    payload.logger.info(`Revalidating deleted notarial act at path: ${path}`)
-    revalidatePath(path)
-    revalidateTag(SITEMAP_TAGS.NotarialActs)
-  }
   return doc
 }
 
-async function revalidatePaths(payload: BasePayload) {
+const listPaths = () => {
   const rootPath = `/${COLLECTION_URL_PATHS.NotarialActs}`
-  const firstPage = `${rootPath}/page/1`
-  const paths = ['/', rootPath, firstPage]
-
-  for (const path of paths) {
-    payload.logger.info(`Revalidating path: ${path}`)
-    revalidatePath(path)
-  }
+  return ['/', rootPath, `${rootPath}/page/1`]
 }
