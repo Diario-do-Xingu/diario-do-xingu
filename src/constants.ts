@@ -15,6 +15,20 @@ export const ARCHIVE_LIMIT = {
  */
 export const IMAGE_UPLOAD_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
 
+/**
+ * Notarial acts arrive as RTF and DOCX far more often than PDF (roughly 540 RTF, 250 DOCX and 5 PDF
+ * in production). Payload checks the browser's label as well as the type detected from the bytes.
+ * Browsers label `.rtf` as text/rtf, application/rtf or application/msword, so all three are listed;
+ * application/msword is only that label, a real legacy `.doc` is still rejected by byte detection.
+ */
+export const NOTARIAL_ACT_MIME_TYPES = [
+  'application/pdf',
+  'application/rtf',
+  'text/rtf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+]
+
 export const COLLECTION_SLUGS = {
   SiteInfo: 'site-info',
   Advertisement: 'advertisement',
