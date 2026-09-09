@@ -17,11 +17,6 @@ export const NewsCategories: CollectionConfig = {
     update: authenticated,
     delete: authenticated,
   },
-  admin: {
-    useAsTitle: 'name',
-    defaultColumns: ['name'],
-    group: COLLECTION_GROUP.Articles,
-  },
   fields: [
     {
       name: 'name',
@@ -31,9 +26,19 @@ export const NewsCategories: CollectionConfig = {
         description: 'Não é possível criar uma categoria que já existe',
       },
       required: true,
+      unique: true,
+      hooks: {
+        // Surrounding spaces produced near-duplicates such as "Educação " next to "Educação".
+        beforeValidate: [({ value }) => (typeof value === 'string' ? value.trim() : value)],
+      },
     },
     ...slugField('name'),
   ],
+  admin: {
+    useAsTitle: 'name',
+    defaultColumns: ['name'],
+    group: COLLECTION_GROUP.Articles,
+  },
   hooks: {
     beforeOperation: [capPublicLimit],
   },

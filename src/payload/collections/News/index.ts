@@ -17,6 +17,12 @@ import { revalidateDelete, revalidateNews } from './hooks/revalidateNews'
 
 export const News: CollectionConfig = {
   slug: COLLECTION_SLUGS.News,
+  // Every public query filters on _status and sorts by publishedAt or readCount; the Mongo
+  // adapter appends createdAt as a tiebreaker, so the indexes must be compound to be used.
+  indexes: [
+    { fields: ['_status', 'publishedAt', 'createdAt'] },
+    { fields: ['_status', 'readCount', 'createdAt'] },
+  ],
   labels: {
     singular: 'Notícia',
     plural: 'Notícias',
@@ -109,6 +115,7 @@ export const News: CollectionConfig = {
       name: 'showInHighlights',
       label: 'Mostrar artigo nos destaques',
       defaultValue: false,
+      index: true,
       admin: {
         position: 'sidebar',
         description: `Mostra as últimas ${ARCHIVE_LIMIT.Highlights}`,
@@ -119,6 +126,7 @@ export const News: CollectionConfig = {
       label: 'Categoria',
       type: 'relationship',
       required: true,
+      index: true,
       admin: {
         position: 'sidebar',
       },

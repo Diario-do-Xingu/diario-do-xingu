@@ -8,6 +8,7 @@ import type { FieldHook } from 'payload'
 
 export const formatSlug = (val: string): string =>
   val
+    .trim() // 0. Surrounding whitespace would otherwise become a leading/trailing hyphen
     .normalize('NFD') // 1. Decompose accented letters
     .replace(/[\u0300-\u036f]/g, '') // 2. Remove diacritics
     .replace(/\s+/g, '-') // 3. Replace spaces with hyphens
