@@ -13,9 +13,12 @@ import { SoccerWidget } from '@/components/SoccerWidget'
 import { WeatherWidget } from '@/components/WeatherWidget'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
+import type { News } from '@/payload-types'
 import { excerpt } from '@/utilities/formatString'
-import { getSiteMeta } from '@/utilities/getSiteMeta'
+import { absoluteUrl, getSiteMeta } from '@/utilities/getSiteMeta'
+import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { buildNewsArticleJsonLd, serializeJsonLd } from '@/utilities/newsArticleJsonLd'
 import { CountRead } from './CountRead'
 
 // Sidebars and ads are rendered from live queries at generation time; refresh them on the
@@ -50,6 +53,15 @@ const findArticle = cache(async (slug: string) => {
   return article
 })
 
+// Shared between the metadata and the structured data so the two never drift apart.
+const heroImageOf = (article: News) => {
+  const hero = article.heroImage.image
+  if (typeof hero !== 'object' || !hero.url) return undefined
+  return { url: hero.url, width: hero.width ?? undefined, height: hero.height ?? undefined }
+}
+const describe = (article: News, fallback: string) =>
+  excerpt(article.subheading || article.highligh || fallback)
+
 export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const { slug = '' } = await params
   const article = await findArticle(slug)
@@ -57,22 +69,11 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   if (!article) return {}
 
   const { siteName, siteDescription, images: siteImages } = await getSiteMeta()
-  const hero = article.heroImage.image
-
-  const images =
-    typeof hero === 'object' && hero.url
-      ? [
-          {
-            url: hero.url,
-            width: hero.width ?? undefined,
-            height: hero.height ?? undefined,
-            alt: article.heroImage.description || undefined,
-          },
-        ]
-      : siteImages
+  const hero = heroImageOf(article)
+  const images = hero ? [{ ...hero, alt: article.heroImage.description || undefined }] : siteImages
 
   const title = article.heading
-  const description = excerpt(article.subheading || article.highligh || siteDescription)
+  const description = describe(article, siteDescription)
   const url = `/${COLLECTION_URL_PATHS.News}/${article.slug}`
 
   return {
@@ -105,8 +106,23 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   if (!article) notFound()
 
+  const { siteName, siteDescription, logoUrl } = await getSiteMeta()
+  const hero = heroImageOf(article)
+  const jsonLd = buildNewsArticleJsonLd({
+    article,
+    url: `${getServerSideURL()}/${COLLECTION_URL_PATHS.News}/${article.slug}`,
+    image: hero && { ...hero, url: absoluteUrl(hero.url) ?? hero.url },
+    publisher: { name: siteName, logoUrl },
+    description: describe(article, siteDescription),
+  })
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON.stringify output with every '<' escaped to \u003c cannot close the script element
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
+      />
       <CountRead articleId={article.id} />
       <Grid className="container-y-padding container">
         <GridLeft>
