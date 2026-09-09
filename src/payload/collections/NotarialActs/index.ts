@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { v4 as uuidV4 } from 'uuid'
-import { COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
+import { COLLECTION_GROUP, COLLECTION_SLUGS, NOTARIAL_ACT_MIME_TYPES } from '@/constants'
 import { env } from '@/env'
 import { authenticated } from '@/payload/access/authenticated'
 import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished'
@@ -31,7 +31,7 @@ export const NotarialActs: CollectionConfig = {
   },
   upload: {
     // staticDir: 'public/notarial-acts',
-    mimeTypes: ['application/pdf'],
+    mimeTypes: NOTARIAL_ACT_MIME_TYPES,
     bulkUpload: false,
     displayPreview: false,
     pasteURL: false,
