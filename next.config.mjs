@@ -13,8 +13,23 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  poweredByHeader: false,
   async headers() {
-    const headers = []
+    const headers = [
+      {
+        source: '/:path*',
+        headers: [
+          // Browsers ignore HSTS over plain http, so this is inert in local development. The only
+          // subdomain in DNS (www) already redirects to https; one year is the usual first step.
+          { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          // Keeps /admin out of third-party frames; the site itself may still frame its own pages.
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+        ],
+      },
+    ]
 
     // Prevent search engines from indexing the site if it is not live
     // This is useful for staging environments before they are ready to go live

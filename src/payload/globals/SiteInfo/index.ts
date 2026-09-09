@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 import { COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
+import { validateUrl } from '@/payload/fields/validateUrl'
 import { revalidateSiteInfo } from './hooks/revalidateSiteInfo'
 
 export const SiteInfo: GlobalConfig = {
@@ -104,6 +105,7 @@ export const SiteInfo: GlobalConfig = {
           name: 'link',
           type: 'text',
           required: true,
+          validate: validateUrl,
         },
       ],
     },

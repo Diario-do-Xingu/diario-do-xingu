@@ -8,6 +8,16 @@ export const ARCHIVE_LIMIT = {
 } as const
 
 /**
+ * Origins allowed to call the API with credentials (CORS) and to present the auth cookie (CSRF).
+ * localhost stays out of production: any process on an editor's machine could bind port 3000.
+ */
+export const SITE_ORIGINS = [
+  ...(process.env.NODE_ENV === 'production' ? [] : ['http://localhost:3000']),
+  'https://diariodoxingu.com',
+  'https://diario-do-xingu.payloadcms.app',
+]
+
+/**
  * Image formats accepted by upload collections that run through sharp.
  * Next.js >= 15.5.24 blocks every other libvips loader process-wide (AVIF/HEIF, JXL, ...)
  * as mitigation for GHSA-2xp9-vwfh-vxw4, which also breaks Payload uploads in those formats.

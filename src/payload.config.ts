@@ -7,7 +7,7 @@ import { pt } from '@payloadcms/translations/languages/pt'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 
-import { UPLOAD_LIMIT_BYTES, UPLOAD_LIMIT_MESSAGE } from '@/constants'
+import { SITE_ORIGINS, UPLOAD_LIMIT_BYTES, UPLOAD_LIMIT_MESSAGE } from '@/constants'
 import { env } from '@/env'
 import { Media } from '@/payload/collections/Media'
 import { News } from '@/payload/collections/News'
@@ -95,13 +95,10 @@ const config = buildConfig({
     abortOnLimit: true,
     responseOnLimit: UPLOAD_LIMIT_MESSAGE,
   },
-  cors: {
-    origins: [
-      'http://localhost:3000',
-      'https://diariodoxingu.com',
-      'https://diario-do-xingu.payloadcms.app',
-    ],
-  },
+  cors: { origins: SITE_ORIGINS },
+  // Payload already limits the auth cookie to the server URL; this makes the list explicit and
+  // lets the Payload Cloud preview host authenticate too.
+  csrf: SITE_ORIGINS,
   hooks: {
     afterError: [reportPayloadError],
   },
