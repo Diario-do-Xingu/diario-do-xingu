@@ -1,5 +1,6 @@
 import { fileURLToPath } from 'node:url'
 import { withPayload } from '@payloadcms/next/withPayload'
+import { withSentryConfig } from '@sentry/nextjs/config'
 import { createJiti } from 'jiti'
 
 const jiti = createJiti(fileURLToPath(import.meta.url))
@@ -57,4 +58,17 @@ const nextConfig = {
   transpilePackages: ['@t3-oss/env-nextjs', '@t3-oss/env-core'],
 }
 
-export default withPayload(nextConfig, { devBundleServerPackages: false })
+// Uploads source maps when SENTRY_AUTH_TOKEN is set (Payload Cloud); without it the build
+// simply skips the upload, so CI and local builds need nothing.
+export default withSentryConfig(withPayload(nextConfig, { devBundleServerPackages: false }), {
+  org: 'viktor-avelino',
+  project: 'diario-do-xingu',
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  // Quiet when a token is present (the upload report is long); without one the plugin's
+  // 'will not upload source maps' warning must stay visible in the deploy log.
+  silent: Boolean(process.env.SENTRY_AUTH_TOKEN),
+  telemetry: false,
+  widenClientFileUpload: true,
+  webpack: { treeshake: { removeDebugLogging: true } },
+  sourcemaps: { deleteSourcemapsAfterUpload: true },
+})

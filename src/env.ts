@@ -17,6 +17,7 @@ export const env = createEnv({
   },
   client: {
     NEXT_PUBLIC_SERVER_URL: z.string().url(),
+    NEXT_PUBLIC_SENTRY_DSN: z.string().url().optional(),
 
     NEXT_PUBLIC_IS_LIVE: z
       .string()
@@ -33,6 +34,7 @@ export const env = createEnv({
   // You need to destructure client variables:
   experimental__runtimeEnv: {
     NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
+    NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
     NEXT_PUBLIC_IS_LIVE: process.env.NEXT_PUBLIC_IS_LIVE,
     NEXT_PUBLIC_USE_PAYLOAD_CLOUD: process.env.NEXT_PUBLIC_USE_PAYLOAD_CLOUD,
   },
