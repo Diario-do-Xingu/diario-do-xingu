@@ -45,7 +45,7 @@ export async function Header() {
   return (
     <header className="sticky top-0 z-50 bg-primary">
       <div className="relative w-full bg-white">
-        <div className="container flex gap-4 overflow-auto">
+        <nav aria-label="Principal" className="container flex gap-4 overflow-auto">
           {links.map((link, i) => (
             <Link
               href={link.link}
@@ -59,7 +59,7 @@ export async function Header() {
               {link.label}
             </Link>
           ))}
-        </div>
+        </nav>
 
         <div className="pointer-events-none absolute top-0 right-0 h-full w-10 bg-gradient-to-l from-white to-transparent"></div>
       </div>
@@ -72,9 +72,22 @@ export async function Header() {
 
           <Link href="/" className="justify-self-start lg:justify-self-center">
             {logo ? (
-              <ImageMedia priority alt={logoAlt} imgClassName={'w-[200px]'} resource={logo} />
+              <ImageMedia
+                priority
+                alt={logoAlt}
+                imgClassName={'w-[200px]'}
+                resource={logo}
+                variant="card"
+                sizes="200px"
+              />
             ) : (
-              <ImageMedia priority alt={logoAlt} imgClassName={'w-[200px]'} src={defaultLogo} />
+              <ImageMedia
+                priority
+                alt={logoAlt}
+                imgClassName={'w-[200px]'}
+                src={defaultLogo}
+                sizes="200px"
+              />
             )}
           </Link>
 
@@ -84,6 +97,7 @@ export async function Header() {
                 key={i}
                 href={social.link}
                 target="_blank"
+                aria-label={`Abrir ${social.label}`}
                 className="grid place-items-center rounded-full bg-white/20 p-2 transition-transform hover:scale-[110%]"
                 data-umami-event={`Abrir ${social.type} Diário do Xingu`}
                 rel="noopener"

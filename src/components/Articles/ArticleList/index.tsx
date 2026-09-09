@@ -10,12 +10,12 @@ type ArticleListProps = {
 export function ArticleList(props: ArticleListProps) {
   const { news } = props
 
-  const { docs, totalDocs } = news
+  const { docs } = news
 
   return (
     <div className="flex flex-col gap-9">
       {docs.map((article, i) => {
-        const showDivider = i < totalDocs - 1
+        const showDivider = i < docs.length - 1
 
         return (
           <Fragment key={article.slug}>

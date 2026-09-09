@@ -22,9 +22,20 @@ export async function Footer() {
         <div className="mb-4 grid grid-cols-1 items-center gap-6 lg:grid-cols-3">
           <Link href="/" className="justify-self-center lg:justify-self-start">
             {logo ? (
-              <ImageMedia priority alt={logoAlt} imgClassName={'w-[200px]'} resource={logo} />
+              <ImageMedia
+                alt={logoAlt}
+                imgClassName={'w-[200px]'}
+                resource={logo}
+                variant="card"
+                sizes="200px"
+              />
             ) : (
-              <ImageMedia priority alt={logoAlt} imgClassName={'w-[200px]'} src={defaultLogo} />
+              <ImageMedia
+                alt={logoAlt}
+                imgClassName={'w-[200px]'}
+                src={defaultLogo}
+                sizes="200px"
+              />
             )}
           </Link>
 
@@ -49,6 +60,7 @@ export async function Footer() {
                 key={i}
                 href={social.link}
                 target="_blank"
+                aria-label={`Abrir ${social.label}`}
                 className="grid place-items-center rounded-full bg-white/20 p-2 transition-transform hover:scale-[110%]"
                 rel="noopener"
               >

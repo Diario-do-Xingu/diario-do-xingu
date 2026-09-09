@@ -14,37 +14,17 @@ import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { cn } from '@/utilities/ui'
 
+// One file covers every weight the site uses; declaring it once per weight preloaded it five times.
 const globoFont = localFont({
-  src: [
-    {
-      path: '../../assets/fonts/globo.woff2',
-      weight: '400',
-    },
-    {
-      path: '../../assets/fonts/globo.woff2',
-      weight: '500',
-    },
-    {
-      path: '../../assets/fonts/globo.woff2',
-      weight: '600',
-    },
-    {
-      path: '../../assets/fonts/globo.woff2',
-      weight: '700',
-    },
-    {
-      path: '../../assets/fonts/globo.woff2',
-      weight: '800',
-    },
-  ],
-
+  src: '../../assets/fonts/globo.woff2',
+  weight: '400 800',
   display: 'swap',
   variable: '--font-globo',
 })
 
 const openSans = Open_Sans({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
+  weight: ['400', '500', '600', '700', '800'],
   display: 'swap',
   variable: '--font-open-sans',
 })

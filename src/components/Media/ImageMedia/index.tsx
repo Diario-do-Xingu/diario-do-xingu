@@ -1,5 +1,6 @@
 import NextImage, { type StaticImageData } from 'next/image'
 import type React from 'react'
+import { imageVariant } from '@/utilities/imageVariant'
 import { cn } from '@/utilities/ui'
 
 import type { Props as MediaProps } from '../types'
@@ -12,8 +13,10 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     imgClassName,
     priority,
     resource,
+    sizes,
     src: srcFromProps,
     loading: loadingFromProps,
+    variant = 'hero',
   } = props
 
   let width: number | undefined
@@ -22,15 +25,14 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   let src: StaticImageData | string = srcFromProps || ''
 
   if (!src && resource && typeof resource === 'object') {
-    const { alt: altFromResource, height: fullHeight, url, width: fullWidth } = resource
-
-    width = fullWidth!
-    height = fullHeight!
-    alt = altFromResource || ''
+    const picked = imageVariant(resource, variant)
+    width = picked.width
+    height = picked.height
+    alt = altFromProps || resource.alt || ''
 
     const cacheTag = resource.updatedAt
 
-    src = `${url}?${cacheTag}`
+    src = `${picked.src}?${cacheTag}`
   }
 
   const loading = loadingFromProps || (!priority ? 'lazy' : undefined)
@@ -41,12 +43,12 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         alt={alt ?? 'Image'}
         className={cn(imgClassName)}
         fill={fill}
-        height={!fill ? height! : undefined}
+        height={!fill ? height : undefined}
         priority={priority}
-        quality={100}
+        sizes={sizes}
         src={src}
         loading={loading}
-        width={!fill ? width! : undefined}
+        width={!fill ? width : undefined}
       />
     </picture>
   )

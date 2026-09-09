@@ -14,13 +14,13 @@ export async function DigitalEditionsSection() {
     pagination: false,
   })
 
-  const { docs, totalDocs } = digitalEditions
+  const { docs } = digitalEditions
 
   return (
     <Card className="mt-10 bg-tertiary p-4">
       <CardHeader className="rounded-tl-default rounded-tr-default border-b-2 bg-card py-4">
         <Link href={`/${COLLECTION_URL_PATHS.DigitalEditions}`}>
-          <h4 className="font-bold font-globo text-md text-primary underline">Edições Digitais</h4>
+          <h3 className="font-bold font-globo text-md text-primary underline">Edições Digitais</h3>
         </Link>
       </CardHeader>
 
@@ -34,13 +34,18 @@ export async function DigitalEditionsSection() {
                 className="flex items-center gap-5 transition-transform hover:scale-[102%]"
               >
                 <div className="aspect-square size-36">
-                  <ImageMedia resource={item.thumb} imgClassName="h-full object-contain" />
+                  {/* Digital-edition thumbnails have no generated variants; the original is 500px. */}
+                  <ImageMedia
+                    resource={item.thumb}
+                    imgClassName="h-full object-contain"
+                    sizes="144px"
+                  />
                 </div>
 
                 <div className="flex-1 font-bold text-red-700">{item['digital-edition-name']}</div>
               </Link>
 
-              {index < totalDocs - 1 && <div className="divider h-[1px] bg-zinc-300"></div>}
+              {index < docs.length - 1 && <div className="divider h-[1px] bg-zinc-300"></div>}
             </Fragment>
           )
         })}

@@ -25,28 +25,16 @@ export function PageComponent({ news }: PageComponentProps) {
   return (
     <Grid className="container-y-padding container gap-y-10">
       <GridFull>
-        <h2 className="text-primary">Últimas Notícias</h2>
+        <h1 className="font-bold text-2xl text-primary leading-normal">Últimas Notícias</h1>
         <div className="mt-2 h-px bg-foreground"></div>
       </GridFull>
 
       <GridFull className="mb-20 flex flex-col gap-10">
-        <ArticleList
-          news={{
-            ...news,
-            totalDocs: filteredFirstThree.length,
-            docs: filteredFirstThree,
-          }}
-        />
+        <ArticleList news={{ ...news, docs: filteredFirstThree }} />
       </GridFull>
 
       <GridLeft className="space-y-20">
-        <ArticleList
-          news={{
-            ...news,
-            totalDocs: restDocs.length,
-            docs: restDocs,
-          }}
-        />
+        <ArticleList news={{ ...news, docs: restDocs }} />
 
         {news.totalPages > 1 && news.page && (
           <Pagination

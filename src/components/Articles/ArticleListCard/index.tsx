@@ -25,6 +25,8 @@ export function ArticleListCard({ article }: ArticleListCardProps) {
             resource={bannerImage}
             alt={bannerDescription ?? ''}
             imgClassName="object-cover w-full h-full"
+            variant="card"
+            sizes="(min-width: 1024px) 330px, 100vw"
           />
         )}
       </div>
@@ -36,7 +38,7 @@ export function ArticleListCard({ article }: ArticleListCardProps) {
           <h3 className="font-bold font-globo text-xl leading-snug lg:text-2xl">{heading}</h3>
 
           {subheading && (
-            <h6 className="font-semibold text-sm text-zinc-600 leading-snug">{subheading}</h6>
+            <p className="font-semibold text-sm text-zinc-600 leading-snug">{subheading}</p>
           )}
         </div>
 
