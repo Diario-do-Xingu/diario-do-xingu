@@ -64,9 +64,9 @@ export default withSentryConfig(withPayload(nextConfig, { devBundleServerPackage
   org: 'viktor-avelino',
   project: 'diario-do-xingu',
   authToken: process.env.SENTRY_AUTH_TOKEN,
-  // Quiet when a token is present (the upload report is long); without one the plugin's
-  // 'will not upload source maps' warning must stay visible in the deploy log.
-  silent: Boolean(process.env.SENTRY_AUTH_TOKEN),
+  // Never silent: the plugin treats a failed source-map upload as recoverable and only logs it,
+  // so a quiet build can skip the upload without anyone noticing (it happened on Payload Cloud).
+  silent: false,
   telemetry: false,
   widenClientFileUpload: true,
   webpack: { treeshake: { removeDebugLogging: true } },

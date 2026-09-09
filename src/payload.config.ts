@@ -9,6 +9,7 @@ import * as Sentry from '@sentry/nextjs'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 
+import { UPLOAD_LIMIT_BYTES, UPLOAD_LIMIT_MESSAGE } from '@/constants'
 import { env } from '@/env'
 import { Media } from '@/payload/collections/Media'
 import { News } from '@/payload/collections/News'
@@ -91,9 +92,9 @@ const config = buildConfig({
   // One global cap; the largest legitimate upload today is a 58 MB digital-edition PDF. Without
   // abortOnLimit the parser truncates the file instead of rejecting the request.
   upload: {
-    limits: { fileSize: 64 * 1024 * 1024 },
+    limits: { fileSize: UPLOAD_LIMIT_BYTES },
     abortOnLimit: true,
-    responseOnLimit: 'O arquivo excede o limite de 64 MB',
+    responseOnLimit: UPLOAD_LIMIT_MESSAGE,
   },
   cors: {
     origins: [
