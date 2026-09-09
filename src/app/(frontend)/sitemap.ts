@@ -5,8 +5,9 @@ import { getPayload } from '@/lib/payload/getPayload'
 import { getServerSideURL } from '@/utilities/getURL'
 
 // Same window as the list routes. The collection hooks bust the tags on manual publish,
-// unpublish and delete, but scheduled publishes run with revalidation disabled, so the
-// time-based refresh is what guarantees they reach the sitemap.
+// unpublish and delete; scheduled publishes run in the job cron, outside a request, where
+// revalidation is not available, so the route and its cached queries both expire on this
+// window to bring those in.
 export const revalidate = 600
 
 const STATIC_PATHS = [
@@ -19,7 +20,7 @@ const STATIC_PATHS = [
 
 // One cached query per collection, keyed and tagged by the collection's sitemap tag.
 const cachedForSitemap = <T>(tag: string, load: () => Promise<T>) =>
-  unstable_cache(load, [tag], { tags: [tag] })
+  unstable_cache(load, [tag], { tags: [tag], revalidate })
 
 // Published articles only (anonymous access rules apply), with their last edit.
 const getPublishedNews = cachedForSitemap(SITEMAP_TAGS.News, async () => {

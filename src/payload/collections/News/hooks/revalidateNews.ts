@@ -1,35 +1,31 @@
-import { revalidatePath, revalidateTag } from 'next/cache'
-import type { BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
+import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
 import { COLLECTION_URL_PATHS, SITEMAP_TAGS } from '@/constants'
+import { revalidatePathSafely, revalidateTagSafely } from '@/payload/hooks/revalidate'
 import type { News } from '@/payload-types'
+
+const pathFor = (slug: News['slug']) => `/${COLLECTION_URL_PATHS.News}/${slug}`
 
 export const revalidateNews: CollectionAfterChangeHook<News> = async ({
   doc,
   previousDoc,
   req: { payload, context },
 }) => {
-  if (!context.disableRevalidate) {
-    if (doc._status === 'published') {
-      const path = `/${COLLECTION_URL_PATHS.News}/${doc.slug}`
+  if (context.disableRevalidate) return doc
 
-      await revalidatePaths(payload)
+  const wasPublished = previousDoc?._status === 'published'
+  const isPublished = doc._status === 'published'
+  if (!wasPublished && !isPublished) return doc
 
-      payload.logger.info(`Revalidating news at path: ${path}`)
-      revalidatePath(path)
-      revalidateTag(SITEMAP_TAGS.News)
-    }
-
-    // If the news was previously published, we need to revalidate the old path
-    if (previousDoc._status === 'published' && doc._status !== 'published') {
-      const oldPath = `/${COLLECTION_URL_PATHS.News}/${previousDoc.slug}`
-
-      await revalidatePaths(payload)
-
-      payload.logger.info(`Revalidating old news at path: ${oldPath}`)
-      revalidatePath(oldPath)
-      revalidateTag(SITEMAP_TAGS.News)
-    }
+  const paths = new Set(listPaths())
+  if (isPublished) paths.add(pathFor(doc.slug))
+  // Unpublished, or published under a new slug: the old URL must stop serving the cached page.
+  if (wasPublished && (!isPublished || previousDoc.slug !== doc.slug)) {
+    paths.add(pathFor(previousDoc.slug))
   }
+
+  for (const path of paths) revalidatePathSafely(payload, path)
+  revalidateTagSafely(payload, SITEMAP_TAGS.News)
+
   return doc
 }
 
@@ -37,26 +33,15 @@ export const revalidateDelete: CollectionAfterDeleteHook<News> = async ({
   doc,
   req: { context, payload },
 }) => {
-  if (!context.disableRevalidate) {
-    const path = `/${COLLECTION_URL_PATHS.News}/${doc?.slug}`
+  if (context.disableRevalidate) return doc
 
-    await revalidatePaths(payload)
-
-    payload.logger.info(`Revalidating deleted news at path: ${path}`)
-    revalidatePath(path)
-    revalidateTag(SITEMAP_TAGS.News)
-  }
+  for (const path of [...listPaths(), pathFor(doc?.slug)]) revalidatePathSafely(payload, path)
+  revalidateTagSafely(payload, SITEMAP_TAGS.News)
 
   return doc
 }
 
-async function revalidatePaths(payload: BasePayload) {
+const listPaths = () => {
   const rootPath = `/${COLLECTION_URL_PATHS.News}`
-  const firstPage = `${rootPath}/page/1`
-  const paths = ['/', rootPath, firstPage]
-
-  for (const path of paths) {
-    payload.logger.info(`Revalidating path: ${path}`)
-    revalidatePath(path)
-  }
+  return ['/', rootPath, `${rootPath}/page/1`]
 }

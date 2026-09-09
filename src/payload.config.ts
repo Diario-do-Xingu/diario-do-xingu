@@ -18,7 +18,6 @@ import { defaultLexical } from '@/payload/fields/defaultLexical'
 import { Advertisement } from '@/payload/globals/Advertisement'
 import { SiteMetadata } from '@/payload/globals/Metadata'
 import { SiteInfo } from '@/payload/globals/SiteInfo'
-import { schedulePublish } from '@/payload/handlers/schedule-publish'
 import { DigitalEditions } from './payload/collections/DigitalEditions'
 import { DigitalEditionMedia } from './payload/collections/DigitalEditions/media'
 import { ArticleMedia } from './payload/collections/News/ArticleMedia'
@@ -26,7 +25,7 @@ import { ArticleMedia } from './payload/collections/News/ArticleMedia'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-export default buildConfig({
+const config = buildConfig({
   admin: {
     user: Users.slug,
     suppressHydrationWarning: true,
@@ -118,7 +117,8 @@ export default buildConfig({
         return given.length === expected.length && timingSafeEqual(given, expected)
       },
     },
-    tasks: [schedulePublish],
+    // Payload registers its own schedulePublish task (drafts.schedulePublish); no custom tasks.
+    tasks: [],
     autoRun: [
       {
         cron: '* * * * *',
@@ -126,4 +126,13 @@ export default buildConfig({
       },
     ],
   },
+})
+
+// Payload registers its built-in schedulePublish task during sanitisation with no retries,
+// so one transient failure (a database blip at the scheduled minute) would drop a scheduled
+// publish for good. Give it the same retry budget the previous custom task had.
+export default config.then((sanitized) => {
+  const schedulePublish = sanitized.jobs.tasks?.find(({ slug }) => slug === 'schedulePublish')
+  if (schedulePublish) schedulePublish.retries = 5
+  return sanitized
 })
