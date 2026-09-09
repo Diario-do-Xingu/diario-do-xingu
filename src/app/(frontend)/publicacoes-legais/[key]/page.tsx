@@ -96,7 +96,7 @@ export default async function Page({ params: paramsPromise }: Args) {
       </Button>
 
       <div className="flex items-center justify-between">
-        <h2 className="text-primary">{notarialAct.heading}</h2>
+        <h1 className="font-bold text-2xl text-primary leading-normal">{notarialAct.heading}</h1>
       </div>
       <div className="mt-2 mb-4 h-px bg-foreground"></div>
 

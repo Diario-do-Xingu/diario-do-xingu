@@ -22,7 +22,7 @@ module.exports = {
     fontFamily: {
       sans: ['var(--font-open-sans)', 'sans-serif'],
       varela: ['var(--font-varela-round)', 'sans-serif'],
-      globo: ['var(--font-globo)'],
+      globo: ['var(--font-globo)', 'sans-serif'],
     },
     container: {
       center: true,

@@ -38,12 +38,13 @@ export async function ArticleRelatedSection(props: {
   return (
     <Card className="mt-10">
       <CardHeader className="border-b-2 py-4">
-        <h4 className="font-bold font-globo text-md text-primary">Artigos Relacionados</h4>
+        <h3 className="font-bold font-globo text-md text-primary">Artigos Relacionados</h3>
       </CardHeader>
 
       <CardContent className="grid grid-cols-1 gap-7 pt-5 lg:grid-cols-4">
         {docs.map((item) => {
-          const imageAlt = item.heroImage.description || item.heroImage.description || ''
+          // ArticleMedia has no alt field of its own; the caption is the only text available.
+          const imageAlt = item.heroImage.description || ''
 
           return (
             <Fragment key={item.slug!}>
@@ -55,6 +56,8 @@ export async function ArticleRelatedSection(props: {
                   alt={imageAlt}
                   resource={item.heroImage.image}
                   imgClassName="aspect-[3/2] rounded-default object-cover"
+                  variant="card"
+                  sizes="(min-width: 1024px) 180px, 100vw"
                 />
 
                 <div className="font-bold text-red-700">{item.heading}</div>

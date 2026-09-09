@@ -27,6 +27,8 @@ export function MediaBlock(props: Props) {
         resource={media}
         pictureClassName="m-0"
         imgClassName={cn('rounded-lg', imgClassName)}
+        // The article body is a prose column, about 720px wide from md up.
+        sizes="(min-width: 768px) 720px, 100vw"
       />
       {caption && <span className={cn('text-xs text-zinc-600', captionClassName)}>{caption}</span>}
     </div>

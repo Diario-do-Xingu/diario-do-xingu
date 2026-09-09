@@ -25,6 +25,7 @@ export function ArticleShareLinks({ link, text, className }: ArticleShareLinksPr
       <a
         className="group flex flex-1 flex-col items-center justify-center gap-2 rounded-xl bg-card p-3 transition-colors hover:cursor-pointer hover:bg-[#1877F2] hover:brightness-90"
         href={`https://www.facebook.com/sharer/sharer.php?u=${link}`}
+        aria-label="Compartilhar no Facebook"
         target="_blank"
         rel="noopener noreferrer"
         data-umami-event="Compartilhar artigo no facebook"
@@ -38,6 +39,7 @@ export function ArticleShareLinks({ link, text, className }: ArticleShareLinksPr
       <a
         className="group flex flex-1 items-center justify-center rounded-xl bg-card p-3 transition-colors hover:cursor-pointer hover:bg-[#25D366] hover:brightness-90"
         href={`https://api.whatsapp.com/send?text=${link}`}
+        aria-label="Compartilhar no WhatsApp"
         target="_blank"
         rel="noopener noreferrer"
         data-umami-event="Compartilhar artigo no whatsapp"
@@ -51,6 +53,7 @@ export function ArticleShareLinks({ link, text, className }: ArticleShareLinksPr
       {isShareSupported && (
         <button
           type="button"
+          aria-label="Compartilhar"
           data-umami-event="Compartilhar artigo geral"
           data-umami-event-title={text}
           onClick={async () => {

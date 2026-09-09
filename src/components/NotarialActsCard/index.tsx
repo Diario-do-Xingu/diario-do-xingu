@@ -21,7 +21,7 @@ export function NotarialActsCard(props: NotarialActsCardProps) {
     <Card className="bg-[#F8F8F8] transition-all hover:scale-[100.2%] hover:bg-card hover:shadow-xl">
       <Link href={`/${COLLECTION_URL_PATHS.NotarialActs}/${doc.key}`}>
         <CardHeader className="pb-2">
-          <h4 className="font-bold">{heading}</h4>
+          <h2 className="font-bold text-base">{heading}</h2>
         </CardHeader>
         <CardContent className="space-y-3 pb-5">
           <div className="flex items-center gap-5">

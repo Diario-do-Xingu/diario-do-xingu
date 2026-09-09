@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { WeatherWidget } from '@/components/WeatherWidget'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
+import { getSiteMeta } from '@/utilities/getSiteMeta'
 
 // Same 10-minute window as the list routes. Hooks refresh this page on manual publishes;
 // scheduled publishes run in the job cron, outside a request, where revalidation is not
@@ -28,9 +29,11 @@ export default async function HomePage() {
   })
 
   const heroDocs = news.docs.slice(0, 3).filter(Boolean)
+  const { siteName } = await getSiteMeta()
 
   return (
     <div className="container-y-padding">
+      <h1 className="sr-only">{siteName}</h1>
       <HomeHeroArticleGrid docs={heroDocs} />
 
       <Grid className="container mt-20">

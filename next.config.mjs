@@ -35,7 +35,9 @@ const nextConfig = {
     return headers
   },
   images: {
-    qualities: [100],
+    // 75 is the visually safe default; the originals were served at 100 and weighed several times more.
+    // 100 stays allowed for one release so HTML cached before the deploy keeps its images; drop it next.
+    qualities: [75, 100],
     remotePatterns: [
       ...['http://localhost:3000', env.NEXT_PUBLIC_SERVER_URL].map((item) => {
         const url = new URL(item)

@@ -31,7 +31,15 @@ export async function Advertisement(props: AdvertisementProps) {
   const { image, link } = advertisement
 
   const imageComponent = (
-    <ImageMedia resource={image as Media} imgClassName={cn('w-full rounded-lg', imgClassName)} />
+    <ImageMedia
+      resource={image as Media}
+      imgClassName={cn('w-full rounded-lg', imgClassName)}
+      sizes={
+        adType === 'topAdsBanner'
+          ? '(min-width: 1280px) 1216px, 100vw'
+          : '(min-width: 1024px) 400px, 100vw'
+      }
+    />
   )
   const component = link ? <Link href={link}>{imageComponent}</Link> : <div>{imageComponent}</div>
 

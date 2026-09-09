@@ -5,7 +5,8 @@ export function SoccerWidget() {
     <Card className="bg-secondary p-3">
       <iframe
         src="https://api.api-futebol.com.br/v1/widgets/rodadas?client_id=LV2R34S6LAMK"
-        title="API Futebol"
+        title="Rodadas do Campeonato Brasileiro"
+        loading="lazy"
         width="100%"
         style={{
           borderRadius: '10px',

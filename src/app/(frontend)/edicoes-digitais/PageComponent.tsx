@@ -22,7 +22,7 @@ export function DigitalEditionsPageComponent({ digitalEditions }: PageComponentP
   return (
     <Grid className="container-y-padding container gap-10">
       <GridFull>
-        <h2 className="text-primary">Edições Digitais</h2>
+        <h1 className="font-bold text-2xl text-primary leading-normal">Edições Digitais</h1>
         <div className="mt-2 h-px bg-foreground"></div>
       </GridFull>
 
@@ -40,6 +40,7 @@ export function DigitalEditionsPageComponent({ digitalEditions }: PageComponentP
                   <ImageMedia
                     resource={edition.thumb}
                     imgClassName="object-contain h-full w-full"
+                    sizes="(min-width: 1280px) 180px, (min-width: 1024px) 190px, (min-width: 768px) 30vw, 100vw"
                   />
                 </div>
 

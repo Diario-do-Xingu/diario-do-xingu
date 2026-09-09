@@ -49,6 +49,8 @@ export function ArticleHero({ article }: ArticleHero) {
           <ImageMedia
             resource={bannerImage}
             imgClassName="rounded-default w-full max-h-[600px] object-cover"
+            sizes="(min-width: 1024px) 800px, 100vw"
+            priority
           />
 
           {bannerDescription && (

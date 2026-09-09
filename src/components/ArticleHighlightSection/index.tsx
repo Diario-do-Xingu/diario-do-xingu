@@ -3,7 +3,8 @@ import Link from 'next/link'
 import { Fragment } from 'react'
 import { ARCHIVE_LIMIT, COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
-import type { Media } from '@/payload-types'
+import type { ArticleMedia } from '@/payload-types'
+import { imageVariant } from '@/utilities/imageVariant'
 import { Card, CardContent, CardHeader } from '../ui/card'
 
 export async function ArticleHighlightSection() {
@@ -23,18 +24,19 @@ export async function ArticleHighlightSection() {
     },
   })
 
-  const { docs, totalDocs } = mostReadNews
+  const { docs } = mostReadNews
 
   return (
     <Card className="shadow-none">
       <CardHeader className="border-b-2 py-4">
-        <h4 className="font-bold font-globo text-md text-primary text-red-700">Destaques</h4>
+        <h3 className="font-bold font-globo text-md text-primary text-red-700">Destaques</h3>
       </CardHeader>
 
       <CardContent className="space-y-5 pt-4">
         {docs.map((item, i) => {
-          const image = item.heroImage.image as Media
-          const imageAlt = item.heroImage.description || image.alt || ''
+          const image = item.heroImage.image as ArticleMedia
+          const imageAlt = item.heroImage.description || ''
+          const thumb = imageVariant(image, 'card')
 
           return (
             <Fragment key={item.slug!}>
@@ -47,14 +49,14 @@ export async function ArticleHighlightSection() {
                 <Image
                   alt={imageAlt}
                   className="aspect-square size-28 rounded-default object-cover"
-                  height={image.height!}
-                  quality={100}
-                  src={image.url!}
-                  width={image.width!}
+                  height={thumb.height}
+                  src={thumb.src}
+                  width={thumb.width}
+                  sizes="112px"
                 />
               </Link>
 
-              {i < totalDocs - 1 && <div className="divider h-[1px] bg-zinc-300"></div>}
+              {i < docs.length - 1 && <div className="divider h-[1px] bg-zinc-300"></div>}
             </Fragment>
           )
         })}

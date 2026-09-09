@@ -6,6 +6,7 @@ export function writingDate(timestamp: number) {
     day: '2-digit',
     month: 'long',
     year: 'numeric',
+    timeZone: 'America/Sao_Paulo',
   }
 
   return capitalizeWords(new Intl.DateTimeFormat('pt-BR', options).format(timestamp))
