@@ -11,6 +11,8 @@ import { revalidateDelete, revalidateNotarialActs } from './hooks/revalidateNota
 
 export const NotarialActs: CollectionConfig = {
   slug: COLLECTION_SLUGS.NotarialActs,
+  // List pages filter on _status and sort by publishedAt; createdAt is the adapter's tiebreaker.
+  indexes: [{ fields: ['_status', 'publishedAt', 'createdAt'] }],
   labels: {
     singular: 'Ato Notarial',
     plural: 'Atos Notariais',
@@ -75,6 +77,8 @@ export const NotarialActs: CollectionConfig = {
       name: 'key',
       type: 'text',
       label: 'Chave',
+      index: true,
+      unique: true,
       admin: {
         readOnly: true,
         position: 'sidebar',

@@ -88,6 +88,13 @@ const config = buildConfig({
     url: env.DATABASE_URI,
   }),
   sharp,
+  // One global cap; the largest legitimate upload today is a 58 MB digital-edition PDF. Without
+  // abortOnLimit the parser truncates the file instead of rejecting the request.
+  upload: {
+    limits: { fileSize: 64 * 1024 * 1024 },
+    abortOnLimit: true,
+    responseOnLimit: 'O arquivo excede o limite de 64 MB',
+  },
   cors: {
     origins: [
       'http://localhost:3000',
