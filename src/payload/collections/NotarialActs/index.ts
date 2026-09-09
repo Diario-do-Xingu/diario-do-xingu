@@ -1,12 +1,11 @@
 import type { CollectionConfig } from 'payload'
-import { v4 as uuidV4 } from 'uuid'
 import { COLLECTION_GROUP, COLLECTION_SLUGS, NOTARIAL_ACT_MIME_TYPES } from '@/constants'
 import { env } from '@/env'
 import { authenticated } from '@/payload/access/authenticated'
 import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished'
 import { slugField } from '@/payload/fields/slug'
 import { capPublicLimit } from '@/payload/hooks/capPublicLimit'
-import { changeFilename } from './hooks/changeFilename'
+import { assignKeyAndFilename } from './hooks/assignKeyAndFilename'
 import { revalidateDelete, revalidateNotarialActs } from './hooks/revalidateNotarialActs'
 
 export const NotarialActs: CollectionConfig = {
@@ -79,6 +78,8 @@ export const NotarialActs: CollectionConfig = {
       label: 'Chave',
       index: true,
       unique: true,
+      // The key names the file and the public URL, so it never changes after create.
+      access: { update: () => false },
       admin: {
         readOnly: true,
         position: 'sidebar',
@@ -96,18 +97,7 @@ export const NotarialActs: CollectionConfig = {
     }),
   ],
   hooks: {
-    beforeOperation: [
-      capPublicLimit,
-      ({ req, operation }) => {
-        if (operation !== 'create') return
-
-        if (!req.data) return
-        if (req.data.key) return
-        req.data.key = uuidV4().split('-').join('')
-        req.data.slug = req.data.key
-      },
-      changeFilename,
-    ],
+    beforeOperation: [capPublicLimit, assignKeyAndFilename],
     afterChange: [revalidateNotarialActs],
     afterDelete: [revalidateDelete],
   },

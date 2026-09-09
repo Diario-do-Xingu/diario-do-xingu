@@ -1,6 +1,6 @@
 'use client'
 
-import { format } from 'date-fns'
+import { format, isValid, parseISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { CalendarIcon } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -19,16 +19,18 @@ export function SearchForm() {
   const initialDate = searchParams.get('date') || ''
 
   const [key, setKey] = useState(initialKey)
-  const [date, setDate] = useState<Date | undefined>(
-    initialDate ? new Date(initialDate) : undefined,
-  )
+  // The URL carries a plain `yyyy-MM-dd`; parseISO reads it as a local day, `new Date` would not.
+  const [date, setDate] = useState<Date | undefined>(() => {
+    const parsed = parseISO(initialDate)
+    return isValid(parsed) ? parsed : undefined
+  })
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault()
 
     const params = new URLSearchParams()
     if (key) params.set('key', key)
-    if (date) params.set('date', date.toISOString())
+    if (date) params.set('date', format(date, 'yyyy-MM-dd'))
 
     router.push(`/publicacoes-legais?${params.toString()}`)
   }
