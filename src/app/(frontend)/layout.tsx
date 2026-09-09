@@ -56,7 +56,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       <body className="grid min-h-screen grid-cols-1 grid-rows-[max-content_1fr_max-content] bg-zinc-100 has-[.topAdsBanner]:grid-rows-[max-content_min-content_1fr_max-content]">
         <Header />
 
-        <div className="container mx-auto mt-8 hidden w-max max-w-[100vw] has-[.topAdsBanner]:block">
+        <div className="container mx-auto mt-8 hidden justify-center has-[.topAdsBanner]:flex">
           <Advertisement
             adType="topAdsBanner"
             containerClassName="p-1 rounded-sm"

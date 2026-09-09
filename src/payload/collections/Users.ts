@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { COLLECTION_GROUP } from '@/constants'
+import { env } from '@/env'
 import { admins } from '../access/admins'
 import { authenticated } from '../access/authenticated'
 import { checkRole } from './Users/checkRole'
@@ -33,7 +34,14 @@ export const Users: CollectionConfig = {
       }
     },
   },
-  auth: true,
+  auth: {
+    cookies: {
+      // Payload defaults to a non-secure cookie; only local http development needs that.
+      secure: env.NEXT_PUBLIC_SERVER_URL.startsWith('https://'),
+      // Already Payload's default; pinned because it is what blocks cross-site POSTs with the cookie.
+      sameSite: 'Lax',
+    },
+  },
   fields: [
     // Email added by default
     // Add more fields as needed

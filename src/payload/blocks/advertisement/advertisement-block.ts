@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { validateUrl } from '@/payload/fields/validateUrl'
 
 export const AdvertisementBlock: Block = {
   slug: 'advertisementBlock',
@@ -18,6 +19,7 @@ export const AdvertisementBlock: Block = {
       name: 'link',
       label: 'Link',
       type: 'text',
+      validate: validateUrl,
     },
   ],
 }

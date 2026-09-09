@@ -4,6 +4,7 @@ import { COLLECTION_SLUGS } from '@/constants'
 import { AdType as AdTypes } from '@/payload/globals/Advertisement'
 import type { Advertisement as AdvertisementType, Media } from '@/payload-types'
 import { getCachedGlobal } from '@/utilities/getGlobals'
+import { imageVariant } from '@/utilities/imageVariant'
 import { cn } from '@/utilities/ui'
 import { ImageMedia } from '../Media/ImageMedia'
 import { Card } from '../ui/card'
@@ -29,6 +30,12 @@ export async function Advertisement(props: AdvertisementProps) {
   if (!advertisement?.image) return null
 
   const { image, link } = advertisement
+  // The top banner is laid out at the width of the variant actually served: the old max-content
+  // wrapper sized it from the srcset candidate's density and shrank it to a third once `sizes` was set.
+  const bannerWidth =
+    adType === 'topAdsBanner' && typeof image === 'object'
+      ? imageVariant(image, 'hero').width
+      : undefined
 
   const imageComponent = (
     <ImageMedia
@@ -36,7 +43,9 @@ export async function Advertisement(props: AdvertisementProps) {
       imgClassName={cn('w-full rounded-lg', imgClassName)}
       sizes={
         adType === 'topAdsBanner'
-          ? '(min-width: 1280px) 1216px, 100vw'
+          ? bannerWidth
+            ? `(min-width: ${bannerWidth}px) ${bannerWidth}px, 100vw`
+            : '(min-width: 1280px) 1216px, 100vw'
           : '(min-width: 1024px) 400px, 100vw'
       }
     />
@@ -46,8 +55,10 @@ export async function Advertisement(props: AdvertisementProps) {
   return (
     <Card
       className={cn('bg-[#F8F8F8] p-3', containerClassName, {
-        topAdsBanner: adType === 'topAdsBanner',
+        'topAdsBanner w-full': adType === 'topAdsBanner',
       })}
+      // 10px = the p-1 frame the layout passes for the top banner plus the card border, both sides.
+      style={bannerWidth ? { maxWidth: bannerWidth + 10 } : undefined}
     >
       {component}
     </Card>
