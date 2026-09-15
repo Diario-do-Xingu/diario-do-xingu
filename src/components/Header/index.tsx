@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import defaultLogo from '@/assets/images/default-logo.png'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
-import type { Media, SiteInfo } from '@/payload-types'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { getSocialIcon } from '@/utilities/getSocialIcon'
 import { cn } from '@/utilities/ui'
@@ -36,10 +35,11 @@ const links: { label: string; link: string; color?: string }[] = [
 ]
 
 export async function Header() {
-  const siteInfo = (await getCachedGlobal(COLLECTION_SLUGS.SiteInfo, 1)()) as SiteInfo
+  const siteInfo = await getCachedGlobal(COLLECTION_SLUGS.SiteInfo, 1)()
 
   const hasLogo = 'logo' in siteInfo
-  const logo = siteInfo.logo as Media | undefined
+  // An unpopulated logo (a bare ID) falls back to the default logo
+  const logo = typeof siteInfo.logo === 'object' ? siteInfo.logo : undefined
   const logoAlt = hasLogo ? logo?.alt || 'Logo Diário do Xingu' : ''
 
   return (

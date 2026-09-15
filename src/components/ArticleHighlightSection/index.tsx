@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { Fragment } from 'react'
 import { ARCHIVE_LIMIT, COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
-import type { ArticleMedia } from '@/payload-types'
 import { imageVariant } from '@/utilities/imageVariant'
 import { Card, CardContent, CardHeader } from '../ui/card'
 
@@ -34,9 +33,9 @@ export async function ArticleHighlightSection() {
 
       <CardContent className="space-y-5 pt-4">
         {docs.map((item, i) => {
-          const image = item.heroImage.image as ArticleMedia
-          const imageAlt = item.heroImage.description || ''
-          const thumb = imageVariant(image, 'card')
+          const { image, description } = item.heroImage
+          // An unpopulated image (a bare ID) leaves the card without a thumbnail
+          const thumb = typeof image === 'object' ? imageVariant(image, 'card') : undefined
 
           return (
             <Fragment key={item.slug!}>
@@ -46,14 +45,16 @@ export async function ArticleHighlightSection() {
               >
                 <div className="font-bold text-red-700">{item.heading}</div>
 
-                <Image
-                  alt={imageAlt}
-                  className="aspect-square size-28 rounded-default object-cover"
-                  height={thumb.height}
-                  src={thumb.src}
-                  width={thumb.width}
-                  sizes="112px"
-                />
+                {thumb && (
+                  <Image
+                    alt={description || ''}
+                    className="aspect-square size-28 rounded-default object-cover"
+                    height={thumb.height}
+                    src={thumb.src}
+                    width={thumb.width}
+                    sizes="112px"
+                  />
+                )}
               </Link>
 
               {i < docs.length - 1 && <div className="divider h-[1px] bg-zinc-300"></div>}

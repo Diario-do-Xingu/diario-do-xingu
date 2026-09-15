@@ -2,24 +2,19 @@ import { unstable_cache } from 'next/cache'
 import { getPayload } from '@/lib/payload/getPayload'
 import type { Config } from '@/payload-types'
 
-type Global = keyof Config['globals']
-
-export async function getGlobal(slug: Global, depth = 0) {
-  const payload = await getPayload()
-
-  const global = await payload.findGlobal({
-    slug,
-    depth,
-  })
-
-  return global
-}
+type GlobalSlug = keyof Config['globals']
 
 /**
- * Returns a unstable_cache function mapped with the cache tag for the slug
+ * Returns an `unstable_cache` reader for a global, tagged `global_<slug>` for revalidation.
+ * The result is typed by the slug. `depth` is part of the cache key: a shallower read returns
+ * relationships as bare IDs and must not share an entry with a deeper one.
  */
-export const getCachedGlobal = (slug: Global, depth = 0) => {
-  return unstable_cache(async () => getGlobal(slug, depth), [slug], {
-    tags: [`global_${slug}`],
-  })
-}
+export const getCachedGlobal = <TSlug extends GlobalSlug>(slug: TSlug, depth = 0) =>
+  unstable_cache(
+    async (): Promise<Config['globals'][TSlug]> => {
+      const payload = await getPayload()
+      return payload.findGlobal({ slug, depth })
+    },
+    [slug, `depth:${depth}`],
+    { tags: [`global_${slug}`] },
+  )

@@ -2,7 +2,6 @@ import Link from 'next/link'
 import { COLLECTION_SLUGS } from '@/constants'
 // biome-ignore lint/style/useImportType: AdType is a runtime const; `typeof AdTypes` below needs the value binding.
 import { AdType as AdTypes } from '@/payload/globals/Advertisement'
-import type { Advertisement as AdvertisementType, Media } from '@/payload-types'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { imageVariant } from '@/utilities/imageVariant'
 import { cn } from '@/utilities/ui'
@@ -20,26 +19,22 @@ type AdvertisementProps = {
 export async function Advertisement(props: AdvertisementProps) {
   const { adType, containerClassName, imgClassName } = props
 
-  const advertisementGlobal = (await getCachedGlobal(
-    COLLECTION_SLUGS.Advertisement,
-    2,
-  )()) as AdvertisementType
+  const advertisementGlobal = await getCachedGlobal(COLLECTION_SLUGS.Advertisement, 2)()
 
   const advertisement = advertisementGlobal[adType]?.[0]
+  const image = advertisement?.image
+  const link = advertisement?.link
 
-  if (!advertisement?.image) return null
+  // An unpopulated upload (a bare ID) has nothing to render, same as an empty slot
+  if (!image || typeof image !== 'object') return null
 
-  const { image, link } = advertisement
   // The top banner is laid out at the width of the variant actually served: the old max-content
   // wrapper sized it from the srcset candidate's density and shrank it to a third once `sizes` was set.
-  const bannerWidth =
-    adType === 'topAdsBanner' && typeof image === 'object'
-      ? imageVariant(image, 'hero').width
-      : undefined
+  const bannerWidth = adType === 'topAdsBanner' ? imageVariant(image, 'hero').width : undefined
 
   const imageComponent = (
     <ImageMedia
-      resource={image as Media}
+      resource={image}
       imgClassName={cn('w-full rounded-lg', imgClassName)}
       sizes={
         adType === 'topAdsBanner'

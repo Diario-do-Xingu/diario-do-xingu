@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { COLLECTION_GROUP } from '@/constants'
 import { env } from '@/env'
-import { admins } from '../access/admins'
+import { admins, adminsField } from '../access/admins'
 import { authenticated } from '../access/authenticated'
 import { checkRole } from './Users/checkRole'
 
@@ -54,9 +54,9 @@ export const Users: CollectionConfig = {
       name: 'roles',
       label: 'Função',
       access: {
-        create: admins,
-        read: admins,
-        update: admins,
+        create: adminsField,
+        read: adminsField,
+        update: adminsField,
       },
       required: true,
       defaultValue: ['editor'],
