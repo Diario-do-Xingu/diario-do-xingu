@@ -12,7 +12,8 @@ export const revalidateAdvertisement: GlobalAfterChangeHook = ({
 }) => {
   if (!context.disableRevalidate) {
     payload.logger.info(`Revalidating ${tag}`)
-    revalidateTag(tag)
+    // Immediate expiry, as before Next 16; see revalidateTagSafely in src/payload/hooks/revalidate.ts
+    revalidateTag(tag, { expire: 0 })
 
     for (const path of paths) {
       payload.logger.info(`Revalidating ${path}`)
