@@ -14,6 +14,16 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   poweredByHeader: false,
+  // Page 1 of a list is the list root; `/page/1` would only duplicate it. The query string carries over.
+  async redirects() {
+    return [
+      {
+        source: '/:list(noticias|edicoes-digitais|publicacoes-legais)/page/1',
+        destination: '/:list',
+        permanent: true,
+      },
+    ]
+  },
   async headers() {
     const headers = [
       {
