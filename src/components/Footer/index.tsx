@@ -5,16 +5,16 @@ import Link from 'next/link'
 import defaultLogo from '@/assets/images/default-logo.png'
 import { COLLECTION_SLUGS } from '@/constants'
 import { env } from '@/env'
-import type { Media, SiteInfo } from '@/payload-types'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { getSocialIcon } from '@/utilities/getSocialIcon'
 import { ImageMedia } from '../Media/ImageMedia'
 
 export async function Footer() {
-  const siteInfo = (await getCachedGlobal(COLLECTION_SLUGS.SiteInfo, 1)()) as SiteInfo
+  const siteInfo = await getCachedGlobal(COLLECTION_SLUGS.SiteInfo, 1)()
 
   const hasLogo = 'logo' in siteInfo
-  const logo = siteInfo.logo as Media | undefined
+  // An unpopulated logo (a bare ID) falls back to the default logo
+  const logo = typeof siteInfo.logo === 'object' ? siteInfo.logo : undefined
   const logoAlt = hasLogo ? logo?.alt || 'Logo Diário do Xingu' : ''
   const commit = env.NEXT_PUBLIC_APP_COMMIT
   // The build commit is usually a git SHA, but a custom SENTRY_RELEASE can be any name; only a SHA gets a link

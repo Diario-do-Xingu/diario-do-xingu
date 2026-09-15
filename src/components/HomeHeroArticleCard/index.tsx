@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { COLLECTION_URL_PATHS } from '@/constants'
-import type { ArticleMedia, News } from '@/payload-types'
+import type { News } from '@/payload-types'
 import { imageVariant } from '@/utilities/imageVariant'
 import { cn } from '@/utilities/ui'
 import { Badge } from '../ui/badge'
@@ -18,9 +18,8 @@ const colors = ['secondary', 'accent', 'tertiary'] as const
 export function HomeHeroArticleCard(props: HomeHeroArticleCardProps) {
   const { size, doc, index } = props
 
-  const image = doc.heroImage.image as ArticleMedia
-  const imageAlt = doc.heroImage.description || ''
-  const hero = imageVariant(image, 'hero')
+  const { image, description } = doc.heroImage
+  const hero = typeof image === 'object' ? imageVariant(image, 'hero') : undefined
 
   return (
     <Link
@@ -31,19 +30,27 @@ export function HomeHeroArticleCard(props: HomeHeroArticleCardProps) {
       )}
     >
       <Card
-        className={cn('group relative', 'h-full', 'overflow-hidden bg-transparent shadow-none')}
+        className={cn(
+          'group relative',
+          'h-full',
+          'overflow-hidden shadow-none',
+          // Without a populated image (a bare ID) the white text needs a dark background
+          hero ? 'bg-transparent' : 'bg-primary',
+        )}
       >
-        <Image
-          alt={imageAlt}
-          className="absolute h-full w-full object-cover brightness-[40%] transition-transform duration-300 group-hover:scale-[105%]"
-          height={hero.height}
-          src={hero.src}
-          width={hero.width}
-          // The grid is one column up to lg and two columns (max 80rem) above it.
-          sizes="(min-width: 1024px) 640px, 100vw"
-          // The first card is the largest thing above the fold: fetch it first.
-          priority={index === 0}
-        />
+        {hero && (
+          <Image
+            alt={description || ''}
+            className="absolute h-full w-full object-cover brightness-[40%] transition-transform duration-300 group-hover:scale-[105%]"
+            height={hero.height}
+            src={hero.src}
+            width={hero.width}
+            // The grid is one column up to lg and two columns (max 80rem) above it.
+            sizes="(min-width: 1024px) 640px, 100vw"
+            // The first card is the largest thing above the fold: fetch it first.
+            priority={index === 0}
+          />
+        )}
 
         <CardContent className={cn('h-full p-5 pb-10', 'flex flex-col gap-16')}>
           {doc.highligh && (
