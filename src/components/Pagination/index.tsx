@@ -1,5 +1,3 @@
-'use client'
-import { useRouter } from 'next/navigation'
 import type React from 'react'
 import {
   Pagination as PaginationComponent,
@@ -13,8 +11,9 @@ import {
 import { cn } from '@/utilities/ui'
 
 /**
- * Page buttons for a list route. Pages go to the static `/${path}/page/N`, unless `query`
- * (a serialized filter, without `page`) is set: then they go to `/${path}?${query}&page=N`.
+ * Page links for a list route. Page 1 is the list root; later pages go to the static
+ * `/${path}/page/N`, unless `query` (a serialized filter, without `page`) is set: then they go
+ * to `/${path}?${query}&page=N`.
  */
 export const Pagination: React.FC<{
   className?: string
@@ -23,8 +22,6 @@ export const Pagination: React.FC<{
   path: string
   query?: string
 }> = (props) => {
-  const router = useRouter()
-
   const { className, page, totalPages, path, query } = props
   const hasNextPage = page < totalPages
   const hasPrevPage = page > 1
@@ -32,19 +29,17 @@ export const Pagination: React.FC<{
   const hasExtraPrevPages = page - 1 > 1
   const hasExtraNextPages = page + 1 < totalPages
 
-  const hrefFor = (n: number) => (query ? `/${path}?${query}&page=${n}` : `/${path}/page/${n}`)
+  const hrefFor = (n: number) => {
+    if (n === 1) return query ? `/${path}?${query}` : `/${path}`
+    return query ? `/${path}?${query}&page=${n}` : `/${path}/page/${n}`
+  }
 
   return (
     <div className={cn('my-12', className)}>
       <PaginationComponent className="justify-start">
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious
-              disabled={!hasPrevPage}
-              onClick={() => {
-                router.push(hrefFor(page - 1))
-              }}
-            />
+            <PaginationPrevious href={hasPrevPage ? hrefFor(page - 1) : undefined} />
           </PaginationItem>
 
           {hasExtraPrevPages && (
@@ -55,36 +50,19 @@ export const Pagination: React.FC<{
 
           {hasPrevPage && (
             <PaginationItem>
-              <PaginationLink
-                onClick={() => {
-                  router.push(hrefFor(page - 1))
-                }}
-              >
-                {page - 1}
-              </PaginationLink>
+              <PaginationLink href={hrefFor(page - 1)}>{page - 1}</PaginationLink>
             </PaginationItem>
           )}
 
           <PaginationItem>
-            <PaginationLink
-              isActive
-              onClick={() => {
-                router.push(hrefFor(page))
-              }}
-            >
+            <PaginationLink isActive href={hrefFor(page)}>
               {page}
             </PaginationLink>
           </PaginationItem>
 
           {hasNextPage && (
             <PaginationItem>
-              <PaginationLink
-                onClick={() => {
-                  router.push(hrefFor(page + 1))
-                }}
-              >
-                {page + 1}
-              </PaginationLink>
+              <PaginationLink href={hrefFor(page + 1)}>{page + 1}</PaginationLink>
             </PaginationItem>
           )}
 
@@ -95,12 +73,7 @@ export const Pagination: React.FC<{
           )}
 
           <PaginationItem>
-            <PaginationNext
-              disabled={!hasNextPage}
-              onClick={() => {
-                router.push(hrefFor(page + 1))
-              }}
-            />
+            <PaginationNext href={hasNextPage ? hrefFor(page + 1) : undefined} />
           </PaginationItem>
         </PaginationContent>
       </PaginationComponent>

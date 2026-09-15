@@ -37,10 +37,11 @@ async function revalidatePaths(payload: BasePayload) {
 
   const totalPages = Math.ceil(totalDocs / PAGINATED_LIMIT.DigitalEditions)
 
+  // Page 1 redirects to the list root (next.config.mjs), so its path is skipped.
   const pagePaths = Array.from(
     { length: totalPages },
     (_, i) => `/${COLLECTION_URL_PATHS.DigitalEditions}/page/${i + 1}`,
-  )
+  ).slice(1)
 
   const rootPath = `/${COLLECTION_URL_PATHS.DigitalEditions}`
   const paths = ['/', rootPath, ...pagePaths]

@@ -42,7 +42,8 @@ export async function generateStaticParams() {
 
   const pages: { pageNumber: string }[] = []
 
-  for (let i = 1; i <= totalPages; i++) {
+  // Page 1 redirects to the list root (next.config.mjs).
+  for (let i = 2; i <= totalPages; i++) {
     pages.push({ pageNumber: String(i) })
   }
 

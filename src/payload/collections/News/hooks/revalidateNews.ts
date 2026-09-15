@@ -41,7 +41,5 @@ export const revalidateDelete: CollectionAfterDeleteHook<News> = async ({
   return doc
 }
 
-const listPaths = () => {
-  const rootPath = `/${COLLECTION_URL_PATHS.News}`
-  return ['/', rootPath, `${rootPath}/page/1`]
-}
+// `/page/1` redirects to the list root (next.config.mjs), so the root covers page 1.
+const listPaths = () => ['/', `/${COLLECTION_URL_PATHS.News}`]
