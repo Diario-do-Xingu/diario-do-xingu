@@ -19,7 +19,7 @@ To spin up this template locally, follow these steps:
 ### Development
 
 1. First clone the repo if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `DATABASE_URI`.
+2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to fill in the required `DATABASE_URI`, `PAYLOAD_SECRET`, `CRON_SECRET`, `NEXT_SERVER_ACTIONS_ENCRYPTION_KEY` and `NEXT_PUBLIC_SERVER_URL` (see [Create secrets](#create-secrets)).
 
 3. `pnpm install && pnpm dev` to install dependencies and start the dev server
 4. open `http://localhost:3000` to open the app in your browser
