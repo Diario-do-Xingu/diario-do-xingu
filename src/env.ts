@@ -30,9 +30,15 @@ export const env = createEnv({
       .refine((s) => s === 'true' || s === 'false')
       .transform((s) => s === 'true')
       .default('true'),
+
+    // Set by next.config.mjs at build time (not by .env), so optional when the config itself loads this file
+    NEXT_PUBLIC_APP_VERSION: z.string().min(1).optional(),
+    NEXT_PUBLIC_APP_COMMIT: z.string().min(1).optional(),
   },
   // You need to destructure client variables:
   experimental__runtimeEnv: {
+    NEXT_PUBLIC_APP_VERSION: process.env.NEXT_PUBLIC_APP_VERSION,
+    NEXT_PUBLIC_APP_COMMIT: process.env.NEXT_PUBLIC_APP_COMMIT,
     NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
     NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
     NEXT_PUBLIC_IS_LIVE: process.env.NEXT_PUBLIC_IS_LIVE,

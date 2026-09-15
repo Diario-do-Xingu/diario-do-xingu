@@ -1,10 +1,31 @@
+import { execSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import { withPayload } from '@payloadcms/next/withPayload'
+import sentry from '@sentry/nextjs'
 import { withSentryConfig } from '@sentry/nextjs/config'
 import { createJiti } from 'jiti'
+import packageJson from './package.json' with { type: 'json' }
 
 const jiti = createJiti(fileURLToPath(import.meta.url))
 const { env } = await jiti.import('./src/env')
+
+/**
+ * The commit being built, found the way the Sentry plugin finds a release name: a build env var
+ * (SENTRY_RELEASE, SOURCE_VERSION on buildpacks, GITHUB_SHA, ...), then git. Undefined when neither
+ * exists, and the footer then shows `dev`. It is also passed to Sentry as the release, so the
+ * footer and Sentry name a deploy the same way.
+ */
+const commitSha = sentry.getSentryRelease() ?? gitRevision()
+
+function gitRevision() {
+  try {
+    return execSync('git rev-parse HEAD', { stdio: ['ignore', 'pipe', 'ignore'] })
+      .toString()
+      .trim()
+  } catch {
+    return undefined
+  }
+}
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -14,6 +35,11 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   poweredByHeader: false,
+  // Inlined at build time; read through `env` in src/env.ts.
+  env: {
+    NEXT_PUBLIC_APP_VERSION: packageJson.version,
+    ...(commitSha && { NEXT_PUBLIC_APP_COMMIT: commitSha }),
+  },
   // Page 1 of a list is the list root; `/page/1` would only duplicate it. The query string carries over.
   async redirects() {
     return [
@@ -91,6 +117,7 @@ export default withSentryConfig(withPayload(nextConfig, { devBundleServerPackage
   org: 'viktor-avelino',
   project: 'diario-do-xingu',
   authToken: process.env.SENTRY_AUTH_TOKEN,
+  release: { name: commitSha },
   // Never silent: the plugin treats a failed source-map upload as recoverable and only logs it,
   // so a quiet build can skip the upload without anyone noticing (it happened on Payload Cloud).
   silent: false,

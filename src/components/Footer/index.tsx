@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import defaultLogo from '@/assets/images/default-logo.png'
 import { COLLECTION_SLUGS } from '@/constants'
+import { env } from '@/env'
 import type { Media, SiteInfo } from '@/payload-types'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { getSocialIcon } from '@/utilities/getSocialIcon'
@@ -15,6 +16,9 @@ export async function Footer() {
   const hasLogo = 'logo' in siteInfo
   const logo = siteInfo.logo as Media | undefined
   const logoAlt = hasLogo ? logo?.alt || 'Logo Diário do Xingu' : ''
+  const commit = env.NEXT_PUBLIC_APP_COMMIT
+  // The build commit is usually a git SHA, but a custom SENTRY_RELEASE can be any name; only a SHA gets a link
+  const isSha = commit !== undefined && /^[0-9a-f]{7,40}$/i.test(commit)
 
   return (
     <footer className="border-t-4 border-t-tertiary bg-primary py-3 pb-4 font-varela text-primary-foreground">
@@ -77,6 +81,22 @@ export async function Footer() {
           <span className="text-xs tracking-wide">
             Developed with <FontAwesomeIcon icon={faCoffee} className="inline size-4" /> by{' '}
             <b className="font-globo">vkav labs</b>
+          </span>
+          <span className="text-xs tracking-wide">
+            v{env.NEXT_PUBLIC_APP_VERSION} ·{' '}
+            {isSha ? (
+              <a
+                href={`https://github.com/Diario-do-Xingu/diario-do-xingu/commit/${commit}`}
+                target="_blank"
+                rel="noopener"
+                title="Ver esta versão no GitHub"
+                className="hover:underline"
+              >
+                {commit.slice(0, 7)}
+              </a>
+            ) : (
+              (commit ?? 'dev')
+            )}
           </span>
         </div>
       </div>
