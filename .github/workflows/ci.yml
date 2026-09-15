@@ -23,6 +23,29 @@ env:
   NEXT_TELEMETRY_DISABLED: '1'
 
 jobs:
+  # Every PR to main bumps package.json (patch for fixes, minor for features), so each deploy's
+  # footer version and release tag are new. Nothing to compare against on a push to main.
+  version:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: package.json version is greater than the base branch's
+        run: |
+          git fetch --depth=1 origin "$GITHUB_BASE_REF"
+          BASE=$(git show FETCH_HEAD:package.json | node -p 'JSON.parse(require("fs").readFileSync(0)).version')
+          HEAD=$(node -p 'require("./package.json").version')
+          if ! node -e '
+            const [base, head] = process.argv.slice(1).map((v) => v.split(".").map(Number))
+            const i = head.findIndex((n, j) => n !== base[j])
+            process.exit(i >= 0 && head[i] > base[i] ? 0 : 1)
+          ' "$BASE" "$HEAD"; then
+            echo "::error file=package.json::Version $HEAD is not greater than $GITHUB_BASE_REF's $BASE. Bump \"version\" in package.json (patch for fixes, minor for features)."
+            exit 1
+          fi
+          echo "Version bump: $BASE -> $HEAD"
+
   lint:
     runs-on: ubuntu-latest
     timeout-minutes: 10
