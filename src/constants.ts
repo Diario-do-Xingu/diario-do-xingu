@@ -2,7 +2,6 @@ export const WEBSITE_TITLE = 'Diário do Xingu' as const
 
 export const ARCHIVE_LIMIT = {
   News: 10,
-  NotarialActs: 10,
   Highlights: 4,
   MostRead: 4,
 } as const

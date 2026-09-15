@@ -6,13 +6,20 @@ import { Pagination } from '@/components/Pagination'
 import { Badge } from '@/components/ui/badge'
 import { COLLECTION_URL_PATHS } from '@/constants'
 import type { NotarialAct } from '@/payload-types'
+import type { NotarialActsFilter } from './findNotarialActs'
 import { SearchForm } from './SearchForm'
 
 type PageComponentProps = {
   notarialActs: PaginatedDocs<NotarialAct>
+  filter?: NotarialActsFilter
 }
 
-export function PageComponent({ notarialActs }: PageComponentProps) {
+export function PageComponent({ notarialActs, filter = {} }: PageComponentProps) {
+  // An active filter keeps its query on the page links, so page N stays filtered.
+  const query = new URLSearchParams()
+  if (filter.date) query.set('date', filter.date)
+  if (filter.key) query.set('key', filter.key)
+
   return (
     <GridLeft>
       <div className="flex items-center justify-between">
@@ -45,6 +52,7 @@ export function PageComponent({ notarialActs }: PageComponentProps) {
           path={COLLECTION_URL_PATHS.NotarialActs}
           page={notarialActs.page}
           totalPages={notarialActs.totalPages}
+          query={query.size ? query.toString() : undefined}
           className="my-10"
         />
       )}

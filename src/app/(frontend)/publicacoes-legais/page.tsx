@@ -1,65 +1,23 @@
-import { z } from 'zod'
-import { ARCHIVE_LIMIT, COLLECTION_SLUGS } from '@/constants'
-import { getPayload } from '@/lib/payload/getPayload'
-import { saoPauloDayRange } from '@/utilities/formatDate'
+import { notFound } from 'next/navigation'
+import { findNotarialActs, searchParamsSchema } from './findNotarialActs'
 import { PageComponent } from './PageComponent'
 
-// export const dynamic = 'force-static'
-// export const revalidate = 600
-
-// A repeated query param arrives as an array; the first value wins so one bad param does not drop the other filter.
-const singleParam = z
-  .union([z.string(), z.array(z.string())])
-  .optional()
-  .transform((value) => (Array.isArray(value) ? value[0] : value))
-
-const searchParamsSchema = z.object({
-  date: singleParam,
-  key: singleParam,
-})
-
+// Dynamic because it reads the query (never `force-static`, which empties searchParams): the
+// filtered list and its pages (`?page=N`) render here, while the unfiltered archive pages stay
+// static under `/page/N`.
 export default async function Page({
   searchParams,
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
-  const payload = await getPayload()
+  const { data } = searchParamsSchema.safeParse(await searchParams)
+  const filter = { date: data?.date, key: data?.key }
 
-  const parsedSearchParams = searchParamsSchema.safeParse(await searchParams)
+  const pageNumber = Number(data?.page ?? 1)
 
-  // biome-ignore lint/complexity/noBannedTypes: Payload's `where` clause is built incrementally; `{}` is the empty-filter shape.
-  let where: {} | undefined = {}
+  if (!Number.isInteger(pageNumber)) notFound()
 
-  if (parsedSearchParams.success) {
-    const { date, key } = parsedSearchParams.data
-    // The day the reader picks is a São Paulo day; an unparseable date simply does not filter.
-    const range = date ? saoPauloDayRange(date) : undefined
+  const notarialActs = await findNotarialActs(filter, pageNumber)
 
-    where = {
-      and: [
-        range
-          ? {
-              publishedAt: range,
-            }
-          : {},
-        key
-          ? {
-              key: {
-                equals: key,
-              },
-            }
-          : {},
-      ],
-    }
-  }
-
-  const notarialActs = await payload.find({
-    collection: COLLECTION_SLUGS.NotarialActs,
-    limit: ARCHIVE_LIMIT.NotarialActs,
-    overrideAccess: false,
-    sort: '-publishedAt',
-    where: where,
-  })
-
-  return <PageComponent notarialActs={notarialActs} />
+  return <PageComponent notarialActs={notarialActs} filter={filter} />
 }
