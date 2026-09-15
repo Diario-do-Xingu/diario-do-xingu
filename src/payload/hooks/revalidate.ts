@@ -14,8 +14,13 @@ export function revalidatePathSafely(payload: BasePayload, path: string) {
   attempt(payload, `path ${path}`, () => revalidatePath(path))
 }
 
+/**
+ * `{ expire: 0 }` keeps the pre-Next 16 semantics (the tag expires at once and the next request
+ * regenerates before responding). The documented `'max'` profile would serve one more stale
+ * response and refresh in the background, which is not what an editor saving a fix expects.
+ */
 export function revalidateTagSafely(payload: BasePayload, tag: string) {
-  attempt(payload, `tag ${tag}`, () => revalidateTag(tag))
+  attempt(payload, `tag ${tag}`, () => revalidateTag(tag, { expire: 0 }))
 }
 
 function attempt(payload: BasePayload, what: string, revalidate: () => void) {

@@ -29,11 +29,6 @@ function gitRevision() {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Biome replaces ESLint in this project; keep Next from picking up any stray
-  // ESLint install/config during builds.
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   poweredByHeader: false,
   // Inlined at build time; read through `env` in src/env.ts.
   env: {
@@ -86,6 +81,12 @@ const nextConfig = {
     return headers
   },
   images: {
+    // Payload serves uploads through NEXT_PUBLIC_SERVER_URL, so the optimizer fetches them as
+    // remote images. Next 16 refuses upstreams that resolve to a private IP (SSRF guard), which
+    // is every image in local development; production resolves to a public address.
+    dangerouslyAllowLocalIP: ['localhost', '127.0.0.1', '::1'].includes(
+      new URL(env.NEXT_PUBLIC_SERVER_URL).hostname,
+    ),
     // 75 is the visually safe default; the originals were served at 100 and weighed several times more.
     // 100 stays allowed for one release so HTML cached before the deploy keeps its images; drop it next.
     qualities: [75, 100],
@@ -99,14 +100,6 @@ const nextConfig = {
         }
       }),
     ],
-  },
-  webpack: (config, { webpack }) => {
-    config.plugins.push(
-      new webpack.IgnorePlugin({
-        resourceRegExp: /^pg-native$|^cloudflare:sockets$/,
-      }),
-    )
-    return config
   },
   transpilePackages: ['@t3-oss/env-nextjs', '@t3-oss/env-core'],
 }
@@ -123,6 +116,8 @@ export default withSentryConfig(withPayload(nextConfig, { devBundleServerPackage
   silent: false,
   telemetry: false,
   widenClientFileUpload: true,
-  webpack: { treeshake: { removeDebugLogging: true } },
+  // Builds run on Turbopack now; Sentry's `webpack.treeshake` options only apply to webpack builds
+  // and have no Turbopack equivalent in this SDK version. Build-time instrumentation is also
+  // webpack-only: server errors reach Sentry through `onRequestError` in src/instrumentation.ts.
   sourcemaps: { deleteSourcemapsAfterUpload: true },
 })

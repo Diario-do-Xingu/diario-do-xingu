@@ -7,7 +7,8 @@ const tag = `global_${COLLECTION_SLUGS.SiteInfo}`
 export const revalidateSiteInfo: GlobalAfterChangeHook = ({ doc, req: { payload, context } }) => {
   if (!context.disableRevalidate) {
     payload.logger.info(`Revalidating ${tag}`)
-    revalidateTag(tag)
+    // Immediate expiry, as before Next 16; see revalidateTagSafely in src/payload/hooks/revalidate.ts
+    revalidateTag(tag, { expire: 0 })
   }
 
   return doc
