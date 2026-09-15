@@ -1,0 +1,32 @@
+name: Release
+
+# Every PR to main bumps package.json (the `version` job in ci.yml enforces it), so each merge gets
+# a tag and a GitHub release named after that version, with notes generated from the merged PRs.
+# A push that does not change the version (a re-run, a manual bump already released) does nothing.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: Tag and release the package.json version
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="v$(node -p 'require("./package.json").version')"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "$TAG is already released"
+            exit 0
+          fi
+          gh release create "$TAG" --target "$GITHUB_SHA" --title "$TAG" --generate-notes
