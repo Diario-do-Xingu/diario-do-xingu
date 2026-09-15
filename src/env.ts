@@ -44,4 +44,6 @@ export const env = createEnv({
     NEXT_PUBLIC_IS_LIVE: process.env.NEXT_PUBLIC_IS_LIVE,
     NEXT_PUBLIC_USE_PAYLOAD_CLOUD: process.env.NEXT_PUBLIC_USE_PAYLOAD_CLOUD,
   },
+  // dotenv loads `KEY=` as "", so the blank optionals in .env.example must count as unset
+  emptyStringAsUndefined: true,
 })

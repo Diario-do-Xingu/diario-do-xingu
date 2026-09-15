@@ -76,11 +76,12 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
-      - name: Generated Payload types are committed
+      - name: Generated Payload types and import map are committed
         run: |
           pnpm generate:types
-          if ! git diff --exit-code -- src/payload-types.ts; then
-            echo "::error file=src/payload-types.ts::Stale generated types. Run 'pnpm generate:types' and commit the result."
+          pnpm generate:importmap
+          if ! git diff --exit-code -- src/payload-types.ts 'src/app/(payload)/admin/importMap.js'; then
+            echo "::error::Stale generated Payload files. Run 'pnpm generate:types && pnpm generate:importmap' and commit the result."
             exit 1
           fi
 

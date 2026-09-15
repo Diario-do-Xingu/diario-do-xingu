@@ -4,7 +4,8 @@ export const checkRole = (allRoles: User['roles'] = [], user?: User | null): boo
   if (!user) return false
 
   const hasPermission = allRoles.some((role) =>
-    user.roles.some((individualRole) => individualRole === role),
+    // Legacy user documents can lack a roles array; deny instead of throwing
+    (user.roles ?? []).some((individualRole) => individualRole === role),
   )
 
   return hasPermission
