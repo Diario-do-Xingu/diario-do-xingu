@@ -1,9 +1,10 @@
-import configPromise from '@payload-config'
 import { notFound } from 'next/navigation'
-import { getPayload } from 'payload'
 import { COLLECTION_SLUGS, PAGINATED_LIMIT } from '@/constants'
+import { getPayload } from '@/lib/payload/getPayload'
+import { findNotarialActs } from '../../findNotarialActs'
 import { PageComponent } from '../../PageComponent'
 
+// Unfiltered archive only; filtered pages render on the dynamic root route (`?page=N`).
 export const revalidate = 600
 
 type Args = {
@@ -13,26 +14,19 @@ type Args = {
 }
 
 export default async function Page({ params: paramsPromise }: Args) {
-  const payload = await getPayload({ config: configPromise })
   const { pageNumber } = await paramsPromise
 
   const sanitizedPageNumber = Number(pageNumber)
 
   if (!Number.isInteger(sanitizedPageNumber)) notFound()
 
-  const notarialActs = await payload.find({
-    collection: COLLECTION_SLUGS.NotarialActs,
-    limit: PAGINATED_LIMIT.NotarialActs,
-    page: sanitizedPageNumber,
-    overrideAccess: false,
-    sort: '-publishedAt',
-  })
+  const notarialActs = await findNotarialActs({}, sanitizedPageNumber)
 
   return <PageComponent notarialActs={notarialActs} />
 }
 
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
+  const payload = await getPayload()
   const { totalDocs } = await payload.count({
     collection: COLLECTION_SLUGS.NotarialActs,
     overrideAccess: false,
