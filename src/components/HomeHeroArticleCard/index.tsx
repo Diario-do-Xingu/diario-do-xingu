@@ -9,7 +9,7 @@ import { Card, CardContent } from '../ui/card'
 
 type HomeHeroArticleCardProps = {
   size: 'lg' | 'sm'
-  doc: Pick<News, 'heading' | 'subheading' | 'heroImage' | 'highligh' | 'slug'>
+  doc: Pick<News, 'heading' | 'subheading' | 'heroImage' | 'highlight' | 'slug'>
   index: number
 }
 
@@ -53,12 +53,12 @@ export function HomeHeroArticleCard(props: HomeHeroArticleCardProps) {
         )}
 
         <CardContent className={cn('h-full p-5 pb-10', 'flex flex-col gap-16')}>
-          {doc.highligh && (
+          {doc.highlight && (
             <Badge
               className={cn('relative w-max font-bold text-sm')}
               variant={colors[index % colors.length]}
             >
-              {doc.highligh}
+              {doc.highlight}
             </Badge>
           )}
 

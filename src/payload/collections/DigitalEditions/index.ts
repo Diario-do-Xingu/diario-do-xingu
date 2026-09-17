@@ -19,8 +19,8 @@ export const DigitalEditions: CollectionConfig = {
     delete: authenticated,
   },
   admin: {
-    defaultColumns: ['digital-edition-name'],
-    useAsTitle: 'digital-edition-name',
+    defaultColumns: ['name'],
+    useAsTitle: 'name',
     group: 'Edições Digitais',
   },
   upload: {
@@ -39,12 +39,12 @@ export const DigitalEditions: CollectionConfig = {
       required: true,
     },
     {
-      name: 'digital-edition-name',
+      name: 'name',
       type: 'text',
       label: 'Nome da Edição',
       required: true,
     },
-    ...slugField('digital-edition-name'),
+    ...slugField('name'),
   ],
 
   hooks: {

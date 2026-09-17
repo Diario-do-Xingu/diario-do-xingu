@@ -20,7 +20,7 @@ const getFeedArticles = unstable_cache(
       depth: 0,
       limit: FEED_LIMIT,
       sort: '-publishedAt',
-      select: { slug: true, heading: true, subheading: true, highligh: true, publishedAt: true },
+      select: { slug: true, heading: true, subheading: true, highlight: true, publishedAt: true },
     })
     return docs
   },
@@ -39,10 +39,10 @@ export async function GET() {
     description: siteDescription,
     siteUrl: env.NEXT_PUBLIC_SERVER_URL,
     feedUrl: `${env.NEXT_PUBLIC_SERVER_URL}/feed.xml`,
-    items: docs.map(({ heading, subheading, highligh, slug, publishedAt }) => ({
+    items: docs.map(({ heading, subheading, highlight, slug, publishedAt }) => ({
       title: heading,
       link: `${env.NEXT_PUBLIC_SERVER_URL}/${COLLECTION_URL_PATHS.News}/${slug}`,
-      description: subheading || highligh,
+      description: subheading || highlight,
       publishedAt,
     })),
   })

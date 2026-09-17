@@ -55,7 +55,7 @@ const heroImageOf = (article: News) => {
   return { url: hero.url, width: hero.width ?? undefined, height: hero.height ?? undefined }
 }
 const describe = (article: News, fallback: string) =>
-  excerpt(article.subheading || article.highligh || fallback)
+  excerpt(article.subheading || article.highlight || fallback)
 
 export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const { slug = '' } = await params

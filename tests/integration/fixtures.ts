@@ -43,7 +43,7 @@ export const newsBody = (
   over: Record<string, unknown> = {},
 ) => ({
   heading: 'Matéria de integração',
-  highligh: 'Chamada',
+  highlight: 'Chamada',
   category: categoryId,
   heroImage: { image: imageId, description: 'Capa' },
   content: {

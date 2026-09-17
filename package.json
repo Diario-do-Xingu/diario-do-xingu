@@ -1,6 +1,6 @@
 {
   "name": "diario-do-xingu",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "description": "News site of the Di\u00e1rio do Xingu, a newspaper in Altamira, Par\u00e1",
   "license": "UNLICENSED",
   "type": "module",
@@ -14,6 +14,10 @@
     "generate:types": "payload generate:types",
     "lint": "biome check --error-on-warnings .",
     "lint:fix": "biome check --write .",
+    "migrate": "payload migrate",
+    "migrate:create": "payload migrate:create",
+    "migrate:down": "payload migrate:down",
+    "migrate:status": "payload migrate:status",
     "payload": "payload",
     "reinstall": "rm -rf node_modules && pnpm install",
     "start": "next start",
