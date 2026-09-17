@@ -119,12 +119,13 @@ describe('saoPauloDayRange', () => {
 })
 
 describe('longDate', () => {
-  it('writes the long pt-BR date in São Paulo time', () => {
-    expect(longDate(new Date('2026-01-15T15:00:00.000Z'))).toBe('15 de janeiro de 2026')
+  it('writes the long pt-BR date for a calendar day', () => {
+    expect(longDate(new Date(2026, 0, 15))).toBe('15 de janeiro de 2026')
   })
 
-  it('uses the São Paulo day, not the UTC one', () => {
-    expect(longDate(new Date('2026-01-15T00:30:00.000Z'))).toBe('14 de janeiro de 2026')
+  it('round-trips with parseLocalDay, so a picked day survives a reload', () => {
+    // The server runs on UTC and the reader may not; both must render the day that was picked.
+    expect(longDate(parseLocalDay('2026-09-15') as Date)).toBe('15 de setembro de 2026')
   })
 })
 

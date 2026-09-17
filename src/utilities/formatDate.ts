@@ -13,14 +13,18 @@ export function writingDate(timestamp: number) {
 }
 
 /**
- * `15 de janeiro de 2026` in São Paulo time, for date pickers and labels.
+ * `15 de janeiro de 2026` for a calendar day, the pair to `parseLocalDay`.
+ *
+ * Deliberately not pinned to São Paulo, unlike `writingDate`: this renders a day the reader
+ * picked, not an instant. Pinning the formatter while `parseLocalDay` builds the date from
+ * local parts makes the two disagree wherever the runtime is not on São Paulo time - on a UTC
+ * server that is three hours, enough to render the previous day and mismatch on hydration.
  */
 export function longDate(date: Date) {
   return new Intl.DateTimeFormat('pt-BR', {
     day: '2-digit',
     month: 'long',
     year: 'numeric',
-    timeZone: 'America/Sao_Paulo',
   }).format(date)
 }
 
