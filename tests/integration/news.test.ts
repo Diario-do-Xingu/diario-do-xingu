@@ -82,6 +82,11 @@ describe('revalidation', () => {
 
   it('moves the page when the slug changes, and drops the old URL', async () => {
     const article = await createNews({ _status: 'published', slug: `${slug}-antigo` })
+
+    // Fetch it first so the old URL is genuinely cached: without this the 404 below would
+    // only mean "never rendered", which would pass even with revalidation switched off.
+    expect((await page(`/noticias/${slug}-antigo`)).status).toBe(200)
+
     await patchNews(article.id, { slug: `${slug}-novo` })
 
     expect((await page(`/noticias/${slug}-novo`)).status).toBe(200)

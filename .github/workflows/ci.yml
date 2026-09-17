@@ -111,3 +111,21 @@ jobs:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
       - run: pnpm build
+
+      # The integration suite needs a real build, and this job already has one plus a database,
+      # so it runs here rather than paying for a second build in a job of its own.
+      - name: Start the production server
+        run: |
+          pnpm start > /tmp/app.log 2>&1 &
+          echo "$!" > /tmp/app.pid
+
+      # vitest's globalSetup waits for the server, so there is nothing to poll for here.
+      - run: pnpm test:integration
+
+      - name: Server log
+        if: failure()
+        run: tail -n 100 /tmp/app.log
+
+      - name: Stop the production server
+        if: always()
+        run: kill "$(cat /tmp/app.pid)" || true
