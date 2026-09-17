@@ -2,7 +2,6 @@
 // can live inside the (frontend) group, this file cannot.
 import type { MetadataRoute } from 'next'
 import { env } from '@/env'
-import { getServerSideURL } from '@/utilities/getURL'
 
 export default function robots(): MetadataRoute.Robots {
   // Staging and previews must stay out of search engines entirely.
@@ -16,6 +15,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: ['/', '/api/*/file/'],
       disallow: ['/admin', '/api/'],
     },
-    sitemap: `${getServerSideURL()}/sitemap.xml`,
+    sitemap: `${env.NEXT_PUBLIC_SERVER_URL}/sitemap.xml`,
   }
 }

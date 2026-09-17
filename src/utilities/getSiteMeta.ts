@@ -1,7 +1,7 @@
 import { cache } from 'react'
 import { COLLECTION_SLUGS } from '@/constants'
+import { env } from '@/env'
 import { getCachedGlobal } from './getGlobals'
-import { getServerSideURL } from './getURL'
 
 /**
  * Site-wide metadata from the SiteMetadata global with fallbacks applied, and the
@@ -20,7 +20,7 @@ export const getSiteMeta = cache(async () => {
   const images = shareImage
     ? [
         {
-          url: shareImage.url || `${getServerSideURL()}/media/${shareImage.filename}`,
+          url: shareImage.url || `${env.NEXT_PUBLIC_SERVER_URL}/media/${shareImage.filename}`,
           alt: shareImage.alt || undefined,
         },
       ]
@@ -39,5 +39,5 @@ export const getSiteMeta = cache(async () => {
 /** Upload URLs are relative on local storage and absolute on Payload Cloud. */
 export function absoluteUrl(url?: string | null) {
   if (!url) return undefined
-  return url.startsWith('/') ? `${getServerSideURL()}${url}` : url
+  return url.startsWith('/') ? `${env.NEXT_PUBLIC_SERVER_URL}${url}` : url
 }

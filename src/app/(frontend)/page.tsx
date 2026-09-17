@@ -1,14 +1,9 @@
 import Link from 'next/link'
-import { Advertisement } from '@/components/Advertisement'
-import { ArticleHighlightSection } from '@/components/ArticleHighlightSection'
-import { ArticleMostReadSection } from '@/components/ArticleMostReadSection'
 import { ArticleList } from '@/components/Articles/ArticleList'
-import { DigitalEditionsSection } from '@/components/DigitalEditions/DigitalEditionsSection'
-import { Grid, GridLeft, GridRight } from '@/components/Grid'
+import { Grid, GridLeft } from '@/components/Grid'
 import { HomeHeroArticleGrid } from '@/components/HomeHeroArticleGrid'
-import { SoccerWidget } from '@/components/SoccerWidget'
+import { Sidebar } from '@/components/Sidebar'
 import { Button } from '@/components/ui/button'
-import { WeatherWidget } from '@/components/WeatherWidget'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
 import { getSiteMeta } from '@/utilities/getSiteMeta'
@@ -52,16 +47,7 @@ export default async function HomePage() {
             <Link href={`/${COLLECTION_URL_PATHS.News}`}>Ver todas</Link>
           </Button>
         </GridLeft>
-
-        <GridRight className="mt-10 space-y-5 lg:mt-0">
-          <ArticleHighlightSection />
-          <WeatherWidget />
-          <ArticleMostReadSection />
-          <DigitalEditionsSection />
-          <Advertisement adType="firstSideAdsBanner" />
-          <SoccerWidget />
-          <Advertisement adType="secondSideAdsBanner" />
-        </GridRight>
+        <Sidebar className="mt-10 lg:mt-0" />
       </Grid>
     </div>
   )

@@ -1,12 +1,25 @@
 import type { CollectionConfig } from 'payload'
-import { COLLECTION_GROUP, COLLECTION_SLUGS, NOTARIAL_ACT_MIME_TYPES } from '@/constants'
+import {
+  COLLECTION_GROUP,
+  COLLECTION_SLUGS,
+  COLLECTION_URL_PATHS,
+  NOTARIAL_ACT_MIME_TYPES,
+  SITEMAP_TAGS,
+} from '@/constants'
 import { env } from '@/env'
 import { authenticated } from '@/payload/access/authenticated'
 import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished'
 import { slugField } from '@/payload/fields/slug'
 import { capPublicLimit } from '@/payload/hooks/capPublicLimit'
+import { createRevalidateHooks } from '@/payload/hooks/createRevalidateHooks'
+import { populatePublishedAt } from '@/payload/hooks/populatePublishedAt'
+import type { NotarialAct } from '@/payload-types'
 import { assignKeyAndFilename } from './hooks/assignKeyAndFilename'
-import { revalidateDelete, revalidateNotarialActs } from './hooks/revalidateNotarialActs'
+
+const revalidateNotarialActs = createRevalidateHooks<NotarialAct>({
+  urlPath: COLLECTION_URL_PATHS.NotarialActs,
+  sitemapTag: SITEMAP_TAGS.NotarialActs,
+})
 
 export const NotarialActs: CollectionConfig = {
   slug: COLLECTION_SLUGS.NotarialActs,
@@ -62,14 +75,7 @@ export const NotarialActs: CollectionConfig = {
         position: 'sidebar',
       },
       hooks: {
-        beforeChange: [
-          ({ siblingData, value }) => {
-            if (siblingData._status === 'published' && !value) {
-              return new Date()
-            }
-            return value
-          },
-        ],
+        beforeChange: [populatePublishedAt],
       },
     },
     {
@@ -98,8 +104,8 @@ export const NotarialActs: CollectionConfig = {
   ],
   hooks: {
     beforeOperation: [capPublicLimit, assignKeyAndFilename],
-    afterChange: [revalidateNotarialActs],
-    afterDelete: [revalidateDelete],
+    afterChange: [revalidateNotarialActs.afterChange],
+    afterDelete: [revalidateNotarialActs.afterDelete],
   },
   versions: {
     drafts: {

@@ -2,9 +2,9 @@ import { ArticleShareLinks } from '@/components/ArticleShareLinks'
 import { ImageMedia } from '@/components/Media/ImageMedia'
 import { RelativePublishedAtClient } from '@/components/RelativePublishedAtClient'
 import { COLLECTION_URL_PATHS } from '@/constants'
+import { env } from '@/env'
 import type { News } from '@/payload-types'
 import { joinWithAnd } from '@/utilities/formatString'
-import { getClientSideURL } from '@/utilities/getURL'
 
 type ArticleHero = {
   article: News
@@ -41,7 +41,7 @@ export function ArticleHero({ article }: ArticleHero) {
       <ArticleShareLinks
         text={heading}
         className="w-full"
-        link={`${getClientSideURL()}/${COLLECTION_URL_PATHS.News}/${slug}`}
+        link={`${env.NEXT_PUBLIC_SERVER_URL}/${COLLECTION_URL_PATHS.News}/${slug}`}
       />
 
       {bannerImage && typeof bannerImage !== 'string' && (

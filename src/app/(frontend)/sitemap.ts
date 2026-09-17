@@ -1,8 +1,8 @@
 import type { MetadataRoute } from 'next'
 import { unstable_cache } from 'next/cache'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS, SITEMAP_TAGS } from '@/constants'
+import { env } from '@/env'
 import { getPayload } from '@/lib/payload/getPayload'
-import { getServerSideURL } from '@/utilities/getURL'
 
 // Same window as the list routes. The collection hooks bust the tags on manual publish,
 // unpublish and delete; scheduled publishes run in the job cron, outside a request, where
@@ -51,7 +51,7 @@ const getPublishedNotarialActs = cachedForSitemap(SITEMAP_TAGS.NotarialActs, asy
 })
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = getServerSideURL()
+  const base = env.NEXT_PUBLIC_SERVER_URL
   const [news, notarialActs] = await Promise.all([getPublishedNews(), getPublishedNotarialActs()])
 
   return [
