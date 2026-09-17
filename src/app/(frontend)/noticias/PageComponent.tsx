@@ -41,7 +41,6 @@ export function PageComponent({ news }: PageComponentProps) {
             path={COLLECTION_URL_PATHS.News}
             page={news.page}
             totalPages={news.totalPages}
-            className="my-5"
           />
         )}
       </GridLeft>

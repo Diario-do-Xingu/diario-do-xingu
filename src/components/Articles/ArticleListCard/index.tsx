@@ -19,7 +19,7 @@ export function ArticleListCard({ article }: ArticleListCardProps) {
       href={`/${COLLECTION_URL_PATHS.News}/${slug}`}
       className="grid gap-3 transition-transform lg:grid-cols-12 lg:gap-5 lg:hover:scale-[103%]"
     >
-      <div className="aspect-[3/2] overflow-hidden rounded-xl shadow-md shadow-zinc-400 lg:col-span-5">
+      <div className="aspect-3/2 overflow-hidden rounded-xl shadow-md shadow-zinc-400 lg:col-span-5">
         {bannerImage && typeof bannerImage !== 'string' && (
           <ImageMedia
             resource={bannerImage}

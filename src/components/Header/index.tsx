@@ -61,7 +61,7 @@ export async function Header() {
           ))}
         </nav>
 
-        <div className="pointer-events-none absolute top-0 right-0 h-full w-10 bg-gradient-to-l from-white to-transparent"></div>
+        <div className="pointer-events-none absolute top-0 right-0 h-full w-10 bg-linear-to-l from-white to-transparent"></div>
       </div>
 
       <div className="border-b-4 border-b-secondary">

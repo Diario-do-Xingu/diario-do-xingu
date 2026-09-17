@@ -19,7 +19,9 @@ const globoFont = localFont({
   src: '../../assets/fonts/globo.woff2',
   weight: '400 800',
   display: 'swap',
-  variable: '--font-globo',
+  // Not --font-globo: that is the Tailwind theme key, and `--font-globo:
+  // var(--font-globo)` would be a self-referential custom property.
+  variable: '--font-globo-family',
 })
 
 const openSans = Open_Sans({

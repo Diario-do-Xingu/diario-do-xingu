@@ -17,7 +17,7 @@ export async function DigitalEditionsSection() {
   const { docs } = digitalEditions
 
   return (
-    <Card className="mt-10 bg-tertiary p-4">
+    <Card className="bg-tertiary p-4">
       <CardHeader className="rounded-tl-default rounded-tr-default border-b-2 bg-card py-4">
         <Link href={`/${COLLECTION_URL_PATHS.DigitalEditions}`}>
           <h3 className="font-bold font-globo text-md text-primary underline">Edições Digitais</h3>
@@ -45,7 +45,7 @@ export async function DigitalEditionsSection() {
                 <div className="flex-1 font-bold text-red-700">{item['digital-edition-name']}</div>
               </Link>
 
-              {index < docs.length - 1 && <div className="divider h-[1px] bg-zinc-300"></div>}
+              {index < docs.length - 1 && <div className="divider h-px bg-zinc-300"></div>}
             </Fragment>
           )
         })}

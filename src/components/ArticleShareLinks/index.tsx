@@ -4,6 +4,10 @@ import { faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import { faShareNodes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
+// This is the only client component that draws Font Awesome icons, so it is the only place
+// that puts the library in the browser bundle -- and the only place that can stop it from
+// injecting its unlayered stylesheet there. See the module for why that matters.
+import '@/lib/fontawesome'
 import { cn } from '@/utilities/ui'
 
 type ArticleShareLinksProps = {

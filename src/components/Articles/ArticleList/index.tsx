@@ -21,7 +21,7 @@ export function ArticleList(props: ArticleListProps) {
           <Fragment key={article.slug}>
             <ArticleListCard article={article} />
 
-            {showDivider && <div className="divider h-[1px] bg-zinc-300"></div>}
+            {showDivider && <div className="divider h-px bg-zinc-300"></div>}
           </Fragment>
         )
       })}

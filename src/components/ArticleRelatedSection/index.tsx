@@ -55,7 +55,7 @@ export async function ArticleRelatedSection(props: {
                 <ImageMedia
                   alt={imageAlt}
                   resource={item.heroImage.image}
-                  imgClassName="aspect-[3/2] rounded-default object-cover"
+                  imgClassName="aspect-3/2 rounded-default object-cover"
                   variant="card"
                   sizes="(min-width: 1024px) 180px, 100vw"
                 />

@@ -26,7 +26,7 @@ export function HomeHeroArticleCard(props: HomeHeroArticleCardProps) {
       href={`/${COLLECTION_URL_PATHS.News}/${doc.slug}`}
       className={cn(
         `col-span-1 row-span-${size === 'lg' ? '2' : '1'}`,
-        'min-h-[300px] max-w-4xl lg:min-h-[auto]',
+        'min-h-[300px] max-w-4xl lg:min-h-auto',
       )}
     >
       <Card
@@ -41,7 +41,7 @@ export function HomeHeroArticleCard(props: HomeHeroArticleCardProps) {
         {hero && (
           <Image
             alt={description || ''}
-            className="absolute h-full w-full object-cover brightness-[40%] transition-transform duration-300 group-hover:scale-[105%]"
+            className="absolute h-full w-full object-cover brightness-40 transition-transform duration-300 group-hover:scale-[105%]"
             height={hero.height}
             src={hero.src}
             width={hero.width}
