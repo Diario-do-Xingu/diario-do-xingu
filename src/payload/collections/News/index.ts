@@ -12,6 +12,7 @@ import {
   COLLECTION_GROUP,
   COLLECTION_SLUGS,
   COLLECTION_URL_PATHS,
+  FEED_TAG,
   SITEMAP_TAGS,
 } from '@/constants'
 import { authenticated } from '@/payload/access/authenticated'
@@ -25,7 +26,7 @@ import type { News as NewsDoc } from '@/payload-types'
 
 const revalidateNews = createRevalidateHooks<NewsDoc>({
   urlPath: COLLECTION_URL_PATHS.News,
-  sitemapTag: SITEMAP_TAGS.News,
+  tags: [SITEMAP_TAGS.News, FEED_TAG],
 })
 
 export const News: CollectionConfig = {

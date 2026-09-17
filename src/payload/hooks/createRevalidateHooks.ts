@@ -8,17 +8,18 @@ type Publishable = TypeWithID & {
 
 /**
  * Builds the `afterChange`/`afterDelete` pair that keeps a collection's public pages fresh:
- * its list routes, the document's own URL, and the sitemap tag.
+ * its list routes, the document's own URL, and any cache tags that list it.
  *
  * News and notarial acts are addressed the same way (`/<urlPath>/<slug>`) and differ only in
  * where they live, so they share this instead of one copy each.
  */
 export const createRevalidateHooks = <T extends Publishable>({
   urlPath,
-  sitemapTag,
+  tags,
 }: {
   urlPath: string
-  sitemapTag: string
+  /** Cache tags to expire alongside the pages, e.g. the sitemap and the feed. */
+  tags: string[]
 }) => {
   const pathFor = (slug: T['slug']) => `/${urlPath}/${slug}`
   // `/page/1` redirects to the list root (next.config.mjs), so the root covers page 1.
@@ -43,7 +44,7 @@ export const createRevalidateHooks = <T extends Publishable>({
     }
 
     for (const path of paths) revalidatePathSafely(payload, path)
-    revalidateTagSafely(payload, sitemapTag)
+    for (const tag of tags) revalidateTagSafely(payload, tag)
 
     return doc
   }
@@ -52,7 +53,7 @@ export const createRevalidateHooks = <T extends Publishable>({
     if (context.disableRevalidate) return doc
 
     for (const path of [...listPaths(), pathFor(doc?.slug)]) revalidatePathSafely(payload, path)
-    revalidateTagSafely(payload, sitemapTag)
+    for (const tag of tags) revalidateTagSafely(payload, tag)
 
     return doc
   }
