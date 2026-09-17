@@ -42,7 +42,7 @@ export async function DigitalEditionsSection() {
                   />
                 </div>
 
-                <div className="flex-1 font-bold text-red-700">{item['digital-edition-name']}</div>
+                <div className="flex-1 font-bold text-red-700">{item.name}</div>
               </Link>
 
               {index < docs.length - 1 && <div className="divider h-px bg-zinc-300"></div>}

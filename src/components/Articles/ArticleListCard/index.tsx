@@ -10,7 +10,7 @@ type ArticleListCardProps = {
 }
 
 export function ArticleListCard({ article }: ArticleListCardProps) {
-  const { subheading, category, heading, heroImage, slug, highligh, publishedAt } = article
+  const { subheading, category, heading, heroImage, slug, highlight, publishedAt } = article
 
   const { image: bannerImage, description: bannerDescription } = heroImage
 
@@ -32,7 +32,7 @@ export function ArticleListCard({ article }: ArticleListCardProps) {
       </div>
 
       <div className="flex flex-col gap-2.5 lg:col-span-7 lg:pt-1">
-        <span className="font-bold font-globo text-primary text-sm">{highligh}</span>
+        <span className="font-bold font-globo text-primary text-sm">{highlight}</span>
 
         <div className="flex flex-col gap-1">
           <h3 className="font-bold font-globo text-xl leading-snug lg:text-2xl">{heading}</h3>

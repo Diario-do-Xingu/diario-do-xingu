@@ -40,9 +40,7 @@ export function DigitalEditionsPageComponent({ digitalEditions }: PageComponentP
                 </div>
 
                 <div className="mt-auto px-2 pb-2">
-                  <span className="font-bold font-globo text-red-500 text-xl">
-                    {edition['digital-edition-name']}
-                  </span>
+                  <span className="font-bold font-globo text-red-500 text-xl">{edition.name}</span>
                 </div>
               </Link>
             )

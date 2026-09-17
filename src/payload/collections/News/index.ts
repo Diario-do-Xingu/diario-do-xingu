@@ -65,7 +65,7 @@ export const News: CollectionConfig = {
       type: 'text',
     },
     {
-      name: 'highligh',
+      name: 'highlight',
       type: 'text',
       label: 'Chamada',
       required: true,

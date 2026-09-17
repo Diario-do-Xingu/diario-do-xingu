@@ -158,7 +158,7 @@ export interface News {
   /**
    * Tag de chamada da notícia
    */
-  highligh: string;
+  highlight: string;
   heroImage: {
     /**
      * Image do card da notícia
@@ -300,7 +300,7 @@ export interface NotarialAct {
 export interface DigitalEdition {
   id: string;
   thumb: string | DigitalEditionThumb;
-  'digital-edition-name': string;
+  name: string;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -612,7 +612,7 @@ export interface PayloadMigration {
 export interface NewsSelect<T extends boolean = true> {
   heading?: T;
   subheading?: T;
-  highligh?: T;
+  highlight?: T;
   heroImage?:
     | T
     | {
@@ -728,7 +728,7 @@ export interface NotarialActsSelect<T extends boolean = true> {
  */
 export interface DigitalEditionsSelect<T extends boolean = true> {
   thumb?: T;
-  'digital-edition-name'?: T;
+  name?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
