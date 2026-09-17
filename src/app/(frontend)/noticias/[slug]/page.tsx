@@ -1,16 +1,11 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
-import { Advertisement } from '@/components/Advertisement'
-import { ArticleHighlightSection } from '@/components/ArticleHighlightSection'
-import { ArticleMostReadSection } from '@/components/ArticleMostReadSection'
 import { ArticleRelatedSection } from '@/components/ArticleRelatedSection'
 import { ArticleHero } from '@/components/Articles/ArticleHero'
-import { DigitalEditionsSection } from '@/components/DigitalEditions/DigitalEditionsSection'
-import { Grid, GridLeft, GridRight } from '@/components/Grid'
+import { Grid, GridLeft } from '@/components/Grid'
 import RichText from '@/components/RichText'
-import { SoccerWidget } from '@/components/SoccerWidget'
-import { WeatherWidget } from '@/components/WeatherWidget'
+import { Sidebar } from '@/components/Sidebar'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 import { env } from '@/env'
 import { getPayload } from '@/lib/payload/getPayload'
@@ -137,16 +132,7 @@ export default async function Page({ params: paramsPromise }: Args) {
             currentArticleSlug={article.slug!}
           />
         </GridLeft>
-
-        <GridRight className="mt-10 space-y-5 lg:mt-0">
-          <ArticleHighlightSection />
-          <WeatherWidget />
-          <ArticleMostReadSection />
-          <DigitalEditionsSection />
-          <Advertisement adType="firstSideAdsBanner" />
-          <SoccerWidget />
-          <Advertisement adType="secondSideAdsBanner" />
-        </GridRight>
+        <Sidebar className="mt-10 lg:mt-0" />
       </Grid>
     </div>
   )

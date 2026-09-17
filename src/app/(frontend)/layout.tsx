@@ -1,7 +1,7 @@
 import type React from 'react'
+import { buildPageMetadata } from '@/utilities/buildPageMetadata'
 import './globals.css'
 
-import type { Metadata } from 'next'
 import { Open_Sans, Varela_Round } from 'next/font/google'
 import localFont from 'next/font/local'
 import { Advertisement } from '@/components/Advertisement'
@@ -9,8 +9,6 @@ import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { env } from '@/env'
 import { Umami } from '@/lib/umami'
-import { getSiteMeta } from '@/utilities/getSiteMeta'
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { cn } from '@/utilities/ui'
 
 // One file covers every weight the site uses; declaring it once per weight preloaded it five times.
@@ -72,27 +70,4 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   )
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const { siteName, siteTitle, siteDescription, images } = await getSiteMeta()
-
-  return {
-    metadataBase: new URL(env.NEXT_PUBLIC_SERVER_URL),
-    description: siteDescription,
-    title: {
-      default: siteTitle,
-      template: `%s | ${siteName}`,
-    },
-    openGraph: mergeOpenGraph({
-      description: siteDescription,
-      siteName,
-      title: siteTitle,
-      images,
-    }),
-    twitter: {
-      card: 'summary_large_image',
-      title: siteTitle,
-      description: siteDescription,
-      images,
-    },
-  }
-}
+export const generateMetadata = () => buildPageMetadata()

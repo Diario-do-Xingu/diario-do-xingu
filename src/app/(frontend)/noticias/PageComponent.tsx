@@ -1,13 +1,8 @@
 import type { PaginatedDocs } from 'payload'
-import { Advertisement } from '@/components/Advertisement'
-import { ArticleHighlightSection } from '@/components/ArticleHighlightSection'
-import { ArticleMostReadSection } from '@/components/ArticleMostReadSection'
 import { ArticleList } from '@/components/Articles/ArticleList'
-import { DigitalEditionsSection } from '@/components/DigitalEditions/DigitalEditionsSection'
-import { Grid, GridFull, GridLeft, GridRight } from '@/components/Grid'
+import { Grid, GridFull, GridLeft } from '@/components/Grid'
 import { Pagination } from '@/components/Pagination'
-import { SoccerWidget } from '@/components/SoccerWidget'
-import { WeatherWidget } from '@/components/WeatherWidget'
+import { Sidebar } from '@/components/Sidebar'
 import { COLLECTION_URL_PATHS } from '@/constants'
 import type { News } from '@/payload-types'
 
@@ -44,16 +39,7 @@ export function PageComponent({ news }: PageComponentProps) {
           />
         )}
       </GridLeft>
-
-      <GridRight className="space-y-5">
-        <ArticleHighlightSection />
-        <WeatherWidget />
-        <ArticleMostReadSection />
-        <DigitalEditionsSection />
-        <Advertisement adType="firstSideAdsBanner" />
-        <SoccerWidget />
-        <Advertisement adType="secondSideAdsBanner" />
-      </GridRight>
+      <Sidebar />
     </Grid>
   )
 }

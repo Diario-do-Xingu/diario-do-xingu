@@ -1,29 +1,38 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import type { Where } from 'payload'
 import { Fragment } from 'react'
-import { ARCHIVE_LIMIT, COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
+import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
 import { imageVariant } from '@/utilities/imageVariant'
 import { Card, CardContent, CardHeader } from '../ui/card'
 
-export async function ArticleMostReadSection() {
+type NewsSidebarCardProps = {
+  title: string
+  limit: number
+  /** A `payload.find` sort expression, e.g. `-publishedAt`. */
+  sort: string
+  where?: Where
+}
+
+/** A titled list of article links for the sidebar; the query decides which articles. */
+export async function NewsSidebarCard({ title, limit, sort, where }: NewsSidebarCardProps) {
   const payload = await getPayload()
 
-  const mostReadNews = await payload.find({
+  const { docs } = await payload.find({
     collection: COLLECTION_SLUGS.News,
     draft: false,
     overrideAccess: false,
-    limit: ARCHIVE_LIMIT.MostRead,
-    sort: '-readCount',
     pagination: false,
+    limit,
+    sort,
+    where,
   })
-
-  const { docs } = mostReadNews
 
   return (
     <Card className="shadow-none">
       <CardHeader className="border-b-2 py-4">
-        <h3 className="font-bold font-globo text-md text-red-700">Mais Lidas</h3>
+        <h3 className="font-bold font-globo text-md text-red-700">{title}</h3>
       </CardHeader>
 
       <CardContent className="space-y-5 pt-4">
