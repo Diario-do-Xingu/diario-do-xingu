@@ -95,8 +95,13 @@ jobs:
             exit 1
           fi
 
-  # Visible but never required: the remaining advisory (GHSA-jg8r-5jh2-v2xj, Payload's default
-  # account unlock) has no patched release and is already mitigated in the Users collection.
+  # Visible but never required, because both current findings are unfixable from here:
+  #   - GHSA-jg8r-5jh2-v2xj (Payload's default account unlock) has no patched release and is
+  #     already mitigated in the Users collection (#97).
+  #   - GHSA-qjx8-664m-686j (js-cookie) arrives through payload-cloud's cognito client, which
+  #     is written against js-cookie 2.x. The fix only exists in 3.0.7+, and forcing it with an
+  #     override breaks the build: cognito's CookieStorage imports names 3.x does not export.
+  # Keep the job green-by-default so a *new* finding is the thing that stands out in the log.
   audit:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -140,7 +145,7 @@ jobs:
 
       - name: Server log
         if: failure()
-        run: tail -n 100 /tmp/app.log
+        run: tail -n 100 /tmp/app.log || true
 
       - name: Stop the production server
         if: always()
