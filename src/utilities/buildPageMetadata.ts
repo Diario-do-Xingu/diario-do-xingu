@@ -26,6 +26,13 @@ export async function buildPageMetadata(section?: Section): Promise<Metadata> {
   return {
     metadataBase: new URL(env.NEXT_PUBLIC_SERVER_URL),
     description,
+    alternates: {
+      types: {
+        'application/rss+xml': [
+          { url: `${env.NEXT_PUBLIC_SERVER_URL}/feed.xml`, title: `${siteName} - Notícias` },
+        ],
+      },
+    },
     title: {
       default: title,
       template: `%s | ${siteName}`,

@@ -9,7 +9,7 @@ type Doc = { id: string; slug?: string | null; _status?: 'draft' | 'published' |
 
 const { afterChange, afterDelete } = createRevalidateHooks<Doc>({
   urlPath: 'noticias',
-  sitemapTag: 'sitemap-news',
+  tags: ['sitemap-news', 'feed-news'],
 })
 
 const payload = { logger: { info: vi.fn(), warn: vi.fn() } }
@@ -40,6 +40,7 @@ describe('afterChange', () => {
 
     expect(revalidated()).toEqual(['/', '/noticias', '/noticias/chuva-no-xingu'])
     expect(revalidateTag).toHaveBeenCalledWith('sitemap-news', { expire: 0 })
+    expect(revalidateTag).toHaveBeenCalledWith('feed-news', { expire: 0 })
   })
 
   it('also revalidates the old URL when a published document changes slug', async () => {

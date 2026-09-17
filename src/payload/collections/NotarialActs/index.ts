@@ -18,7 +18,7 @@ import { assignKeyAndFilename } from './hooks/assignKeyAndFilename'
 
 const revalidateNotarialActs = createRevalidateHooks<NotarialAct>({
   urlPath: COLLECTION_URL_PATHS.NotarialActs,
-  sitemapTag: SITEMAP_TAGS.NotarialActs,
+  tags: [SITEMAP_TAGS.NotarialActs],
 })
 
 export const NotarialActs: CollectionConfig = {
