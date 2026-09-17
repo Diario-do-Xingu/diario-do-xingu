@@ -7,13 +7,26 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
-import { ARCHIVE_LIMIT, COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
+import {
+  ARCHIVE_LIMIT,
+  COLLECTION_GROUP,
+  COLLECTION_SLUGS,
+  COLLECTION_URL_PATHS,
+  SITEMAP_TAGS,
+} from '@/constants'
 import { authenticated } from '@/payload/access/authenticated'
 import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished'
 import { MediaBlock } from '@/payload/blocks/MediaBlock'
 import { slugField } from '@/payload/fields/slug'
 import { capPublicLimit } from '@/payload/hooks/capPublicLimit'
-import { revalidateDelete, revalidateNews } from './hooks/revalidateNews'
+import { createRevalidateHooks } from '@/payload/hooks/createRevalidateHooks'
+import { populatePublishedAt } from '@/payload/hooks/populatePublishedAt'
+import type { News as NewsDoc } from '@/payload-types'
+
+const revalidateNews = createRevalidateHooks<NewsDoc>({
+  urlPath: COLLECTION_URL_PATHS.News,
+  sitemapTag: SITEMAP_TAGS.News,
+})
 
 export const News: CollectionConfig = {
   slug: COLLECTION_SLUGS.News,
@@ -157,14 +170,7 @@ export const News: CollectionConfig = {
         position: 'sidebar',
       },
       hooks: {
-        beforeChange: [
-          ({ siblingData, value }) => {
-            if (siblingData._status === 'published' && !value) {
-              return new Date()
-            }
-            return value
-          },
-        ],
+        beforeChange: [populatePublishedAt],
       },
     },
     {
@@ -193,8 +199,8 @@ export const News: CollectionConfig = {
   ],
   hooks: {
     beforeOperation: [capPublicLimit],
-    afterChange: [revalidateNews],
-    afterDelete: [revalidateDelete],
+    afterChange: [revalidateNews.afterChange],
+    afterDelete: [revalidateNews.afterDelete],
   },
   versions: {
     drafts: {
