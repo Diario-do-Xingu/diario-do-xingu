@@ -95,21 +95,26 @@ jobs:
             exit 1
           fi
 
-  # Visible but never required, because both current findings are unfixable from here:
-  #   - GHSA-jg8r-5jh2-v2xj (Payload's default account unlock) has no patched release and is
-  #     already mitigated in the Users collection (#97).
-  #   - GHSA-qjx8-664m-686j (js-cookie) arrives through payload-cloud's cognito client, which
-  #     is written against js-cookie 2.x. The fix only exists in 3.0.7+, and forcing it with an
+  # Fails only on findings someone here can act on, so a red audit always means work to do.
+  # Two advisories are open today and neither can be fixed from this repo:
+  #   - GHSA-jg8r-5jh2-v2xj (Payload's default account unlock) has no patched release at all, so
+  #     it is baselined in package.json's pnpm.auditConfig.ignoreCves and mitigated in the Users
+  #     collection (#97). Drop that entry when Payload ships a fix.
+  #   - GHSA-qjx8-664m-686j (js-cookie) arrives through payload-cloud's cognito client, which is
+  #     written against js-cookie 2.x. The fix exists only in 3.0.7+, and forcing it with an
   #     override breaks the build: cognito's CookieStorage imports names 3.x does not export.
-  # Keep the job green-by-default so a *new* finding is the thing that stands out in the log.
+  #     --ignore-unfixable is what skips it: the patched version is outside the allowed range.
   audit:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
-      - run: pnpm audit --prod --audit-level=high
+      - run: pnpm audit --prod --audit-level=high --ignore-unfixable
+      # The full picture, skipped entries included, so they stay visible rather than forgotten.
+      - name: Every advisory, including the ones above
+        if: always()
+        run: pnpm audit --prod || true
       - name: No duplicate majors left for pnpm to collapse
         if: always()
         run: pnpm dedupe --check
