@@ -49,7 +49,7 @@ export async function Header() {
           {links.map((link, i) => (
             <Link
               href={link.link}
-              key={i}
+              key={link.link}
               className={cn(
                 'whitespace-nowrap border-transparent border-y-4 border-b-transparent px-1 py-1 font-bold font-globo text-lg transition-colors hover:border-b-red-400',
                 link.color ? link.color : colors[i % colors.length],
@@ -92,9 +92,9 @@ export async function Header() {
           </Link>
 
           <div className="flex gap-2 justify-self-end">
-            {siteInfo.socials?.map((social, i) => (
+            {siteInfo.socials?.map((social) => (
               <a
-                key={i}
+                key={social.id ?? social.link}
                 href={social.link}
                 target="_blank"
                 aria-label={`Abrir ${social.label}`}

@@ -12,7 +12,7 @@ export async function HomeHeroArticleGrid({ docs }: { docs: News[] }) {
     >
       {docs.map((doc, i) => (
         <HomeHeroArticleCard
-          key={i}
+          key={doc.id}
           index={i}
           size={docs.length < 3 ? 'lg' : i === 0 ? 'lg' : 'sm'}
           doc={doc}
