@@ -73,7 +73,8 @@ export function formatDateAndRelative(dateStr: string): string {
   } else if (diffDays < 30) {
     relative = `Há ${diffDays} dia${diffDays > 1 ? 's' : ''}`
   } else if (diffDays < 365) {
-    relative = `Há ${diffMonths} mês${diffMonths > 1 ? 'es' : ''}`
+    // "mês" loses its circumflex in the plural, so it cannot take a suffix like the others
+    relative = `Há ${diffMonths} ${diffMonths > 1 ? 'meses' : 'mês'}`
   } else {
     relative = `Há ${diffYears} ano${diffYears > 1 ? 's' : ''}`
   }
