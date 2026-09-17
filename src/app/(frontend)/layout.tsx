@@ -46,15 +46,6 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       className={cn(openSans.variable, varelaRound.variable, globoFont.variable, 'antialiased')}
       suppressHydrationWarning
     >
-      {!!env.UMAMI_WEBSITE_ID && !!env.UMAMI_URI && (
-        <Umami
-          umamiWebsiteId={env.UMAMI_WEBSITE_ID}
-          umamiAutoTrack={true}
-          umamiExcludeSearch
-          trackOutboundLinks
-        />
-      )}
-
       <body className="grid min-h-screen grid-cols-1 grid-rows-[max-content_1fr_max-content] bg-zinc-100 has-[.topAdsBanner]:grid-rows-[max-content_min-content_1fr_max-content]">
         <Header />
 
@@ -68,6 +59,15 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
         <main>{children}</main>
         <Footer />
+
+        {!!env.UMAMI_WEBSITE_ID && !!env.UMAMI_URI && (
+          <Umami
+            umamiWebsiteId={env.UMAMI_WEBSITE_ID}
+            umamiAutoTrack={true}
+            umamiExcludeSearch
+            trackOutboundLinks
+          />
+        )}
       </body>
     </html>
   )

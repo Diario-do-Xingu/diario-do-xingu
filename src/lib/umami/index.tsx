@@ -2,6 +2,7 @@
 
 import Script from 'next/script'
 import { env } from '@/env'
+import { UmamiOutboundLinks } from './UmamiOutboundLinks'
 
 /**
  * Props for the Umami component.
@@ -67,32 +68,8 @@ export function Umami({ trackOutboundLinks, ...props }: UmamiProps) {
 
   return (
     <>
-      {/* <Script async defer src="/script.js" {...dataAttributes} /> */}
-      {/* <Script async defer src="/script.js" {...dataAttributes} /> */}
-      <Script
-        async
-        defer
-        src={`${env.UMAMI_URI}/script.js`}
-        {...dataAttributes}
-        // data-host-url="https://dev-diariodoxingu-analytics.vkav.net"
-      />
-
-      {/* track outbound links */}
-      {trackOutboundLinks && (
-        <Script id="umami-outbound-tracking">
-          {`
-            (() => {
-              const name = 'Click link externo';
-              document.querySelectorAll('a').forEach(a => {
-                if (a.host !== window.location.host && !a.getAttribute('data-umami-event')) {
-                  a.setAttribute('data-umami-event', name);
-                  a.setAttribute('data-umami-event-url', a.href);
-                }
-              });
-            })();
-          `}
-        </Script>
-      )}
+      <Script async defer src={`${env.UMAMI_URI}/script.js`} {...dataAttributes} />
+      {trackOutboundLinks && <UmamiOutboundLinks />}
     </>
   )
 }
