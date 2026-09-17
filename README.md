@@ -41,6 +41,18 @@ curl -X POST http://localhost:3000/api/users/first-register \
 That endpoint only works while the collection is empty. A user with no roles at all is denied
 everything.
 
+To work against real data — rehearsing a migration, reproducing something an editor reported —
+clone production into your local database:
+
+```bash
+pnpm db:clone-prod
+```
+
+It reads `PROD_DATABASE_URI`, only ever reads from it, refuses to restore into anything that is
+not a local host, and keeps the dump as a dated archive. The integration suite can then run
+against that copy by pointing `INTEGRATION_ADMIN_EMAIL` and `INTEGRATION_ADMIN_PASSWORD` at an
+existing admin, since `first-register` only works on an empty database.
+
 ### Environment
 
 `src/env.ts` validates these at boot, so a missing one fails the build rather than surfacing
@@ -96,6 +108,8 @@ a 600-second window to bring those in.
 | `pnpm lint` / `pnpm lint:fix` | Biome. `lint` fails on warnings |
 | `pnpm typecheck` | `tsc --noEmit` |
 | `pnpm generate:types` / `pnpm generate:importmap` | Regenerate the committed Payload files |
+| `pnpm migrate` / `migrate:status` / `migrate:down` | Payload migrations |
+| `pnpm db:clone-prod` | Copy production into the local database (read-only on production) |
 
 ## Committed generated files
 

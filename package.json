@@ -1,11 +1,12 @@
 {
   "name": "diario-do-xingu",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "News site of the Di\u00e1rio do Xingu, a newspaper in Altamira, Par\u00e1",
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {
     "build": "next build",
+    "db:clone-prod": "bash scripts/clone-prod-db.sh",
     "dev": "next dev",
     "dev:prod": "rm -rf .next && pnpm build && pnpm start",
     "dev:safe": "rm -rf .next && next dev",

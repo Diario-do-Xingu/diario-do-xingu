@@ -1,7 +1,9 @@
 export const BASE_URL = process.env.INTEGRATION_BASE_URL ?? 'http://localhost:3000'
 
+// On an empty database the suite creates this account itself. Against a database that already
+// has users - a clone of production, say - point these at an existing admin instead.
 const ADMIN = {
-  email: 'integration@example.com',
+  email: process.env.INTEGRATION_ADMIN_EMAIL ?? 'integration@example.com',
   password: process.env.INTEGRATION_ADMIN_PASSWORD ?? 'integration-only-password',
 }
 
@@ -41,7 +43,7 @@ const token = () => {
 }
 
 async function logIn() {
-  // Succeeds once, on an empty database; afterwards the user is already there.
+  // Only works while the collection is empty; a database that already has users just 403s here.
   await fetch(`${BASE_URL}/api/users/first-register`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -55,6 +57,12 @@ async function logIn() {
   })
   const { token } = (await res.json()) as { token?: string }
 
-  if (!token) throw new Error(`Could not log in at ${BASE_URL} (status ${res.status})`)
+  if (!token) {
+    throw new Error(
+      `Could not log in at ${BASE_URL} as ${ADMIN.email} (status ${res.status}). On a database ` +
+        'that already has users, set INTEGRATION_ADMIN_EMAIL and INTEGRATION_ADMIN_PASSWORD to ' +
+        'an existing admin.',
+    )
+  }
   return token
 }
