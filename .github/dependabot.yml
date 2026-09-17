@@ -1,0 +1,56 @@
+# Security alerts already open PRs on their own; this adds routine updates, grouped so a month
+# of bumps arrives as a few reviewable PRs rather than twenty.
+#
+# Two things every Dependabot PR here needs from a human:
+#
+#   1. A version bump. `ci.yml`'s `version` job is skipped for Dependabot (it cannot bump
+#      package.json itself), so the merge inherits whatever version is already on the branch.
+#      Bump it yourself if you want the merge tagged.
+#   2. Regenerated Payload files, for anything in the `payload` group. Dependabot cannot run
+#      the generators, so `payload-types` fails until someone does:
+#
+#        gh pr checkout <pr>
+#        pnpm generate:types && pnpm generate:importmap
+#        git commit -am "chore: regenerate payload types" && git push
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
+    groups:
+      # Payload's packages are released in lockstep and share a peer range; splitting them
+      # produces PRs that cannot install.
+      payload:
+        patterns:
+          - payload
+          - '@payloadcms/*'
+      next:
+        patterns:
+          - next
+          - '@next/*'
+          - eslint-config-next
+      react:
+        patterns:
+          - react
+          - react-dom
+          - '@types/react'
+          - '@types/react-dom'
+      # Everything else, minor and patch only; majors still arrive as their own PR.
+      minor-and-patch:
+        patterns:
+          - '*'
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns:
+          - '*'

@@ -26,7 +26,9 @@ jobs:
   # Every PR to main bumps package.json (patch for fixes, minor for features), so each deploy's
   # footer version and release tag are new. Nothing to compare against on a push to main.
   version:
-    if: github.event_name == 'pull_request'
+    # Dependabot cannot bump package.json's version, so the gate would fail every one of its
+    # PRs; bump it by hand on the branch if that merge should be tagged.
+    if: github.event_name == 'pull_request' && github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -93,6 +95,30 @@ jobs:
             exit 1
           fi
 
+  # Fails only on findings someone here can act on, so a red audit always means work to do.
+  # Two advisories are open today and neither can be fixed from this repo:
+  #   - GHSA-jg8r-5jh2-v2xj (Payload's default account unlock) has no patched release at all, so
+  #     it is baselined in package.json's pnpm.auditConfig.ignoreCves and mitigated in the Users
+  #     collection (#97). Drop that entry when Payload ships a fix.
+  #   - GHSA-qjx8-664m-686j (js-cookie) arrives through payload-cloud's cognito client, which is
+  #     written against js-cookie 2.x. The fix exists only in 3.0.7+, and forcing it with an
+  #     override breaks the build: cognito's CookieStorage imports names 3.x does not export.
+  #     --ignore-unfixable is what skips it: the patched version is outside the allowed range.
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - run: pnpm audit --prod --audit-level=high --ignore-unfixable
+      # The full picture, skipped entries included, so they stay visible rather than forgotten.
+      - name: Every advisory, including the ones above
+        if: always()
+        run: pnpm audit --prod || true
+      - name: No duplicate majors left for pnpm to collapse
+        if: always()
+        run: pnpm dedupe --check
+
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -124,7 +150,7 @@ jobs:
 
       - name: Server log
         if: failure()
-        run: tail -n 100 /tmp/app.log
+        run: tail -n 100 /tmp/app.log || true
 
       - name: Stop the production server
         if: always()
