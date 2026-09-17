@@ -35,24 +35,27 @@ fi
 
 SOURCE_DB="$(printf '%s' "$SOURCE_URI" | sed -E 's|\?.*$||; s|.*/||')"
 TARGET_DB="$(printf '%s' "$TARGET_URI" | sed -E 's|\?.*$||; s|.*/||')"
+# mongorestore treats a database in the URI as --db, which silently overrides --nsFrom/--nsTo and
+# restores nothing. The target database comes from the namespace mapping instead.
+TARGET_BASE_URI="$(printf '%s' "$TARGET_URI" | sed -E 's|(://[^/]+)/[^?]*|\1|')"
 ARCHIVE="${CLONE_ARCHIVE_DIR:-$HOME/backups}/$(date +%Y%m%d-%H%M%S)-prod.archive.gz"
 mkdir -p "$(dirname "$ARCHIVE")"
 
 # Prefer the local database tools; fall back to the mongo image, which bundles them.
 if command -v mongodump >/dev/null 2>&1 && command -v mongorestore >/dev/null 2>&1; then
   run_dump()    { mongodump --uri="$SOURCE_URI" --archive="$ARCHIVE" --gzip; }
-  run_restore() { mongorestore --uri="$TARGET_URI" --archive="$ARCHIVE" --gzip --drop \
+  run_restore() { mongorestore --uri="$TARGET_BASE_URI" --archive="$ARCHIVE" --gzip --drop \
                     --nsFrom="$SOURCE_DB.*" --nsTo="$TARGET_DB.*"; }
 else
   command -v docker >/dev/null 2>&1 || {
     echo "Needs either the MongoDB database tools or docker on PATH." >&2; exit 1; }
-  MONGO_IMAGE="${MONGO_IMAGE:-mongo:8}"
+  MONGO_IMAGE="${MONGO_IMAGE:-mongo:8.0}"
   run_dump() {
     docker run --rm --network host -e URI="$SOURCE_URI" -v "$(dirname "$ARCHIVE")":/backup \
       "$MONGO_IMAGE" sh -c "mongodump --uri=\"\$URI\" --archive=/backup/$(basename "$ARCHIVE") --gzip"
   }
   run_restore() {
-    docker run --rm --network host -e URI="$TARGET_URI" -v "$(dirname "$ARCHIVE")":/backup \
+    docker run --rm --network host -e URI="$TARGET_BASE_URI" -v "$(dirname "$ARCHIVE")":/backup \
       "$MONGO_IMAGE" sh -c "mongorestore --uri=\"\$URI\" --archive=/backup/$(basename "$ARCHIVE") \
         --gzip --drop --nsFrom='$SOURCE_DB.*' --nsTo='$TARGET_DB.*'"
   }
@@ -63,6 +66,6 @@ run_dump >/dev/null 2>&1 || { echo "mongodump failed" >&2; exit 1; }
 echo "Archive kept at $ARCHIVE"
 
 echo "Restoring into local '$TARGET_DB' (dropping what is there)..."
-run_restore 2>&1 | tail -1
+run_restore 2>&1 | grep -viE 'index:|^\s*$' | tail -4
 
 echo "Done. The archive above doubles as a backup; delete it when you no longer need it."
