@@ -1,6 +1,5 @@
 import path from 'node:path'
 import { APIError, type CollectionBeforeOperationHook } from 'payload'
-import { v4 as uuidV4 } from 'uuid'
 import { COLLECTION_SLUGS } from '@/constants'
 
 /**
@@ -19,7 +18,7 @@ export const assignKeyAndFilename: CollectionBeforeOperationHook = async ({
   const data = args.data as { key?: string; slug?: string } | undefined
 
   if (operation === 'create' && data && !data.key) {
-    data.key = uuidV4().replaceAll('-', '')
+    data.key = crypto.randomUUID().replaceAll('-', '')
     data.slug = data.key
   }
 

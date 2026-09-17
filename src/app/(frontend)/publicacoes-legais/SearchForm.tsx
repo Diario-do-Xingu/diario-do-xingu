@@ -1,14 +1,14 @@
 'use client'
 
-import { format, isValid, parseISO } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
 import { CalendarIcon } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
+import { ptBR } from 'react-day-picker/locale'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { longDate, parseLocalDay, toLocalDayString } from '@/utilities/formatDate'
 import { cn } from '@/utilities/ui'
 
 export function SearchForm() {
@@ -19,18 +19,15 @@ export function SearchForm() {
   const initialDate = searchParams.get('date') || ''
 
   const [key, setKey] = useState(initialKey)
-  // The URL carries a plain `yyyy-MM-dd`; parseISO reads it as a local day, `new Date` would not.
-  const [date, setDate] = useState<Date | undefined>(() => {
-    const parsed = parseISO(initialDate)
-    return isValid(parsed) ? parsed : undefined
-  })
+  // The URL carries a plain `yyyy-MM-dd`, which means that day where the reader is.
+  const [date, setDate] = useState<Date | undefined>(() => parseLocalDay(initialDate))
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault()
 
     const params = new URLSearchParams()
     if (key) params.set('key', key)
-    if (date) params.set('date', format(date, 'yyyy-MM-dd'))
+    if (date) params.set('date', toLocalDayString(date))
 
     router.push(`/publicacoes-legais?${params.toString()}`)
   }
@@ -56,13 +53,7 @@ export function SearchForm() {
         <Popover>
           <PopoverTrigger asChild>
             <Button variant={'outline'} className={cn('w-full', !date && 'text-muted-foreground')}>
-              {date ? (
-                format(date, 'PPP', {
-                  locale: ptBR,
-                })
-              ) : (
-                <span>Selecione uma data</span>
-              )}
+              {date ? longDate(date) : <span>Selecione uma data</span>}
               <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
             </Button>
           </PopoverTrigger>
@@ -75,7 +66,7 @@ export function SearchForm() {
                 setDate(e)
               }}
               disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
-              initialFocus
+              autoFocus
             />
           </PopoverContent>
         </Popover>
