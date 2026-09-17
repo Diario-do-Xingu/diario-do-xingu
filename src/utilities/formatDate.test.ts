@@ -2,7 +2,10 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   formatDateAndRelative,
   formatDateWithTime,
+  longDate,
+  parseLocalDay,
   saoPauloDayRange,
+  toLocalDayString,
   writingDate,
 } from './formatDate'
 
@@ -112,5 +115,50 @@ describe('saoPauloDayRange', () => {
     expect(saoPauloDayRange('15/01/2026')).toBeUndefined()
     expect(saoPauloDayRange('2026-1-5')).toBeUndefined()
     expect(saoPauloDayRange('2026-01-15T00:00:00Z')).toBeUndefined()
+  })
+})
+
+describe('longDate', () => {
+  it('writes the long pt-BR date for a calendar day', () => {
+    expect(longDate(new Date(2026, 0, 15))).toBe('15 de janeiro de 2026')
+  })
+
+  it('round-trips with parseLocalDay, so a picked day survives a reload', () => {
+    // The server runs on UTC and the reader may not; both must render the day that was picked.
+    expect(longDate(parseLocalDay('2026-09-15') as Date)).toBe('15 de setembro de 2026')
+  })
+})
+
+describe('parseLocalDay', () => {
+  it('reads the day in the local timezone, not as UTC midnight', () => {
+    const parsed = parseLocalDay('2026-01-15')
+
+    expect(parsed?.getFullYear()).toBe(2026)
+    expect(parsed?.getMonth()).toBe(0)
+    expect(parsed?.getDate()).toBe(15)
+    expect(parsed?.getHours()).toBe(0)
+  })
+
+  it('accepts a leap day', () => {
+    expect(parseLocalDay('2024-02-29')?.getDate()).toBe(29)
+  })
+
+  it('rejects dates that only look valid', () => {
+    expect(parseLocalDay('2026-02-30')).toBeUndefined()
+    expect(parseLocalDay('2025-02-29')).toBeUndefined()
+    expect(parseLocalDay('2026-13-01')).toBeUndefined()
+  })
+
+  it('rejects anything that is not yyyy-MM-dd', () => {
+    expect(parseLocalDay('')).toBeUndefined()
+    expect(parseLocalDay('15/01/2026')).toBeUndefined()
+    expect(parseLocalDay('2026-1-5')).toBeUndefined()
+  })
+})
+
+describe('toLocalDayString', () => {
+  it('pads the month and day, and round-trips through parseLocalDay', () => {
+    expect(toLocalDayString(new Date(2026, 0, 5))).toBe('2026-01-05')
+    expect(toLocalDayString(parseLocalDay('2026-11-30') as Date)).toBe('2026-11-30')
   })
 })
