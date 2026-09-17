@@ -78,5 +78,7 @@ describe('buildRssFeed', () => {
 
     expect(xml).toContain('<channel>')
     expect(xml).not.toContain('<item>')
+    // no stray blank line where the items would have been
+    expect(xml).toContain('type="application/rss+xml" />\n  </channel>')
   })
 })

@@ -20,6 +20,7 @@ type FeedChannel = {
  */
 export function buildRssFeed({ title, description, siteUrl, feedUrl, items }: FeedChannel) {
   const lastBuildDate = rfc822(items[0]?.publishedAt) ?? new Date().toUTCString()
+  const entries = items.map(item).join('\n')
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -29,8 +30,7 @@ export function buildRssFeed({ title, description, siteUrl, feedUrl, items }: Fe
     <description>${escapeXml(description)}</description>
     <language>pt-BR</language>
     <lastBuildDate>${lastBuildDate}</lastBuildDate>
-    <atom:link href="${escapeXml(feedUrl)}" rel="self" type="application/rss+xml" />
-${items.map(item).join('\n')}
+    <atom:link href="${escapeXml(feedUrl)}" rel="self" type="application/rss+xml" />${entries ? `\n${entries}` : ''}
   </channel>
 </rss>
 `
