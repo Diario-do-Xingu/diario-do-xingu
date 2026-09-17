@@ -57,7 +57,7 @@ export async function ArticleHighlightSection() {
                 )}
               </Link>
 
-              {i < docs.length - 1 && <div className="divider h-[1px] bg-zinc-300"></div>}
+              {i < docs.length - 1 && <div className="divider h-px bg-zinc-300"></div>}
             </Fragment>
           )
         })}
