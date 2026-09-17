@@ -5,8 +5,8 @@ import { Grid, GridRight } from '@/components/Grid'
 import { SoccerWidget } from '@/components/SoccerWidget'
 import { WeatherWidget } from '@/components/WeatherWidget'
 import { COLLECTION_URL_PATHS } from '@/constants'
+import { env } from '@/env'
 import { getSiteMeta } from '@/utilities/getSiteMeta'
-import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
 export default async function PageLayout(props: { children: React.ReactNode }) {
@@ -43,7 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       siteName,
       title,
-      url: `${getServerSideURL()}/${COLLECTION_URL_PATHS.NotarialActs}`,
+      url: `${env.NEXT_PUBLIC_SERVER_URL}/${COLLECTION_URL_PATHS.NotarialActs}`,
       images,
     }),
     twitter: {

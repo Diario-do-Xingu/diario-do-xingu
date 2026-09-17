@@ -10,7 +10,6 @@ import { Header } from '@/components/Header'
 import { env } from '@/env'
 import { Umami } from '@/lib/umami'
 import { getSiteMeta } from '@/utilities/getSiteMeta'
-import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { cn } from '@/utilities/ui'
 
@@ -77,7 +76,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const { siteName, siteTitle, siteDescription, images } = await getSiteMeta()
 
   return {
-    metadataBase: new URL(getServerSideURL()),
+    metadataBase: new URL(env.NEXT_PUBLIC_SERVER_URL),
     description: siteDescription,
     title: {
       default: siteTitle,

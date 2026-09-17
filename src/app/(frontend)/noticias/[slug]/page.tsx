@@ -12,11 +12,11 @@ import RichText from '@/components/RichText'
 import { SoccerWidget } from '@/components/SoccerWidget'
 import { WeatherWidget } from '@/components/WeatherWidget'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
+import { env } from '@/env'
 import { getPayload } from '@/lib/payload/getPayload'
 import type { News } from '@/payload-types'
 import { excerpt } from '@/utilities/formatString'
 import { absoluteUrl, getSiteMeta } from '@/utilities/getSiteMeta'
-import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { buildNewsArticleJsonLd, serializeJsonLd } from '@/utilities/newsArticleJsonLd'
 import { CountRead } from './CountRead'
@@ -110,7 +110,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   const hero = heroImageOf(article)
   const jsonLd = buildNewsArticleJsonLd({
     article,
-    url: `${getServerSideURL()}/${COLLECTION_URL_PATHS.News}/${article.slug}`,
+    url: `${env.NEXT_PUBLIC_SERVER_URL}/${COLLECTION_URL_PATHS.News}/${article.slug}`,
     image: hero && { ...hero, url: absoluteUrl(hero.url) ?? hero.url },
     publisher: { name: siteName, logoUrl },
     description: describe(article, siteDescription),

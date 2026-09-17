@@ -17,8 +17,6 @@ export const MediaBlock: Block = {
     {
       name: 'caption',
       type: 'text',
-      // relationTo: 'media',
-      // required: true,
     },
   ],
 }
