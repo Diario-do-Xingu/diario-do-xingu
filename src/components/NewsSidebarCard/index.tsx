@@ -1,8 +1,9 @@
+import { unstable_cache } from 'next/cache'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Where } from 'payload'
 import { Fragment } from 'react'
-import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
+import { COLLECTION_SLUGS, COLLECTION_URL_PATHS, SIDEBAR_TAGS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
 import { imageVariant } from '@/utilities/imageVariant'
 import { Card, CardContent, CardHeader } from '../ui/card'
@@ -15,19 +16,33 @@ type NewsSidebarCardProps = {
   where?: Where
 }
 
+/**
+ * The same handful of articles on every page, so the read is cached per configuration rather
+ * than repeated for each of the ~2000 articles as they re-prerender on their own windows.
+ * The News hooks bust `sidebar-news`, so a publish is still visible at once.
+ */
+const loadArticles = ({ limit, sort, where }: Omit<NewsSidebarCardProps, 'title'>) =>
+  unstable_cache(
+    async () => {
+      const payload = await getPayload()
+      const { docs } = await payload.find({
+        collection: COLLECTION_SLUGS.News,
+        draft: false,
+        overrideAccess: false,
+        pagination: false,
+        limit,
+        sort,
+        where,
+      })
+      return docs
+    },
+    ['news-sidebar', sort, `${limit}`, JSON.stringify(where ?? {})],
+    { tags: [SIDEBAR_TAGS.News], revalidate: 600 },
+  )()
+
 /** A titled list of article links for the sidebar; the query decides which articles. */
 export async function NewsSidebarCard({ title, limit, sort, where }: NewsSidebarCardProps) {
-  const payload = await getPayload()
-
-  const { docs } = await payload.find({
-    collection: COLLECTION_SLUGS.News,
-    draft: false,
-    overrideAccess: false,
-    pagination: false,
-    limit,
-    sort,
-    where,
-  })
+  const docs = await loadArticles({ limit, sort, where })
 
   return (
     <Card className="shadow-none">

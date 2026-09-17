@@ -1,20 +1,31 @@
+import { unstable_cache } from 'next/cache'
 import Link from 'next/link'
 import { Fragment } from 'react'
 import { ImageMedia } from '@/components/Media/ImageMedia'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
+import { COLLECTION_SLUGS, COLLECTION_URL_PATHS, SIDEBAR_TAGS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
 
+/**
+ * The latest editions are the same on every page that renders the sidebar, so the read is
+ * cached and busted by the collection's own revalidate hook.
+ */
+const loadEditions = unstable_cache(
+  async () => {
+    const payload = await getPayload()
+    const { docs } = await payload.find({
+      collection: COLLECTION_SLUGS.DigitalEditions,
+      limit: 4,
+      pagination: false,
+    })
+    return docs
+  },
+  ['digital-editions-sidebar'],
+  { tags: [SIDEBAR_TAGS.DigitalEditions], revalidate: 600 },
+)
+
 export async function DigitalEditionsSection() {
-  const payload = await getPayload()
-
-  const digitalEditions = await payload.find({
-    collection: COLLECTION_SLUGS.DigitalEditions,
-    limit: 4,
-    pagination: false,
-  })
-
-  const { docs } = digitalEditions
+  const docs = await loadEditions()
 
   return (
     <Card className="bg-tertiary p-4">
