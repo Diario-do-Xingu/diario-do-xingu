@@ -59,9 +59,9 @@ export async function Footer() {
           </div>
 
           <div className="flex gap-2 justify-self-center lg:justify-self-end">
-            {siteInfo.socials?.map((social, i) => (
+            {siteInfo.socials?.map((social) => (
               <a
-                key={i}
+                key={social.id ?? social.link}
                 href={social.link}
                 target="_blank"
                 aria-label={`Abrir ${social.label}`}
