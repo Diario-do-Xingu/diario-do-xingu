@@ -91,3 +91,26 @@ export const SITEMAP_TAGS = {
 /** Upload size cap and the message returned when it is exceeded; both are also used by error reporting. */
 export const UPLOAD_LIMIT_BYTES = 64 * 1024 * 1024
 export const UPLOAD_LIMIT_MESSAGE = 'O arquivo excede o limite de 64 MB'
+
+/**
+ * Embed URLs and account ids for the third-party widgets. All of them are public by design — they
+ * end up in the page source — but they are what changes when an account or a season does, so they
+ * are named here instead of being buried in JSX.
+ */
+export const API_FUTEBOL_WIDGETS = {
+  /** Fixtures block in the news sidebar. */
+  Rounds: 'https://api.api-futebol.com.br/v1/widgets/rodadas?client_id=LV2R34S6LAMK',
+  /** Standings on /tabela-brasileirao; each division is a separate embed. */
+  SerieA: 'https://api.api-futebol.com.br/v1/widgets/tabela?client_id=LMUN57AVY9XJ',
+  SerieB: 'https://api.api-futebol.com.br/v1/widgets/tabela?client_id=7KDJD7KWHXPS',
+} as const
+
+/** Tomorrow.io weather widget: the SDK it injects and the station it reports, Altamira. */
+export const TOMORROW_WIDGET = {
+  SdkUrl: 'https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js',
+  LocationId: '010153',
+} as const
+
+/** TradingView ticker tape in the header. */
+export const TRADINGVIEW_TICKER_SRC =
+  'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js'

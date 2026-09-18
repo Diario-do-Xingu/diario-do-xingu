@@ -2,7 +2,6 @@
 
 import { Button, FieldLabel, TextInput, useField, useForm, useFormFields } from '@payloadcms/ui'
 import type { TextFieldClientProps } from 'payload'
-import type React from 'react'
 import { useCallback, useEffect } from 'react'
 
 import { formatSlug } from './formatSlug'
@@ -13,13 +12,13 @@ type SlugComponentProps = {
   checkboxFieldPath: string
 } & TextFieldClientProps
 
-export const SlugComponent: React.FC<SlugComponentProps> = ({
+export function SlugComponent({
   field,
   fieldToUse,
   checkboxFieldPath: checkboxFieldPathFromProps,
   path,
   readOnly: readOnlyFromProps,
-}) => {
+}: SlugComponentProps) {
   const { label } = field
 
   const checkboxFieldPath = path?.includes('.')

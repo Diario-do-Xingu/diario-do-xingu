@@ -1,8 +1,8 @@
 import type { CollectionConfig } from 'payload'
 import { COLLECTION_GROUP, IMAGE_UPLOAD_MIME_TYPES } from '@/constants'
+import { anyone } from '@/payload/access/anyone'
+import { authenticated } from '@/payload/access/authenticated'
 import { capPublicLimit } from '@/payload/hooks/capPublicLimit'
-import { anyone } from '../access/anyone'
-import { authenticated } from '../access/authenticated'
 
 export const Media: CollectionConfig = {
   slug: 'media',

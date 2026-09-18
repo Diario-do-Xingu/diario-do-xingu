@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import defaultLogo from '@/assets/images/default-logo.png'
+import { ImageMedia } from '@/components/Media/ImageMedia'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { getSocialIcon } from '@/utilities/getSocialIcon'
 import { cn } from '@/utilities/ui'
-import { ImageMedia } from '../Media/ImageMedia'
 import { DisplayDate } from './DisplayDate'
 import { Stocks } from './Stocks'
 

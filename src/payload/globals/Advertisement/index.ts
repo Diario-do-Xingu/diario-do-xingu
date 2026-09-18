@@ -1,7 +1,7 @@
 import type { GlobalConfig } from 'payload'
 import { COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
-import { AdvertisementBlock } from '@/payload/blocks/advertisement/advertisement-block'
+import { AdvertisementBlock } from '@/payload/blocks/Advertisement'
 import { validateUrl } from '@/payload/fields/validateUrl'
 import { revalidateAdvertisement } from './hooks/revalidateAdvertisement'
 

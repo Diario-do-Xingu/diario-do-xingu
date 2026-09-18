@@ -1,11 +1,11 @@
 import { unstable_cache } from 'next/cache'
 import Link from 'next/link'
 import { Fragment } from 'react'
+import { ImageMedia } from '@/components/Media/ImageMedia'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS, SIDEBAR_TAGS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
 import { formatDateWithTime } from '@/utilities/formatDate'
-import { ImageMedia } from '../Media/ImageMedia'
-import { Card, CardContent, CardHeader } from '../ui/card'
 
 const RELATED_COUNT = 4
 

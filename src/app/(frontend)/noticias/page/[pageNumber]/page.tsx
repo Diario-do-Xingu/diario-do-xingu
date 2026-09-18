@@ -1,9 +1,7 @@
-import configPromise from '@payload-config'
 import { notFound } from 'next/navigation'
-import { getPayload } from 'payload'
+import { PageComponent } from '@/app/(frontend)/noticias/PageComponent'
 import { COLLECTION_SLUGS, PAGINATED_LIMIT } from '@/constants'
-
-import { PageComponent } from '../../PageComponent'
+import { getPayload } from '@/lib/payload/getPayload'
 
 export const revalidate = 600
 
@@ -14,7 +12,7 @@ type Args = {
 }
 
 export default async function Page({ params: paramsPromise }: Args) {
-  const payload = await getPayload({ config: configPromise })
+  const payload = await getPayload()
   const { pageNumber } = await paramsPromise
 
   const sanitizedPageNumber = Number(pageNumber)
@@ -33,7 +31,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 }
 
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
+  const payload = await getPayload()
   const { totalDocs } = await payload.count({
     collection: COLLECTION_SLUGS.News,
     overrideAccess: false,

@@ -3,10 +3,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Where } from 'payload'
 import { Fragment } from 'react'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS, SIDEBAR_TAGS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
 import { imageVariant } from '@/utilities/imageVariant'
-import { Card, CardContent, CardHeader } from '../ui/card'
 
 type NewsSidebarCardProps = {
   title: string

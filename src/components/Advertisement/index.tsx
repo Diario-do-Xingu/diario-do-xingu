@@ -1,12 +1,12 @@
 import Link from 'next/link'
+import { ImageMedia } from '@/components/Media/ImageMedia'
+import { Card } from '@/components/ui/card'
 import { COLLECTION_SLUGS } from '@/constants'
 // biome-ignore lint/style/useImportType: AdType is a runtime const; `typeof AdTypes` below needs the value binding.
 import { AdType as AdTypes } from '@/payload/globals/Advertisement'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { imageVariant } from '@/utilities/imageVariant'
 import { cn } from '@/utilities/ui'
-import { ImageMedia } from '../Media/ImageMedia'
-import { Card } from '../ui/card'
 
 type AdType = (typeof AdTypes)[keyof typeof AdTypes]
 

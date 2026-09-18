@@ -9,8 +9,11 @@ import sharp from 'sharp'
 
 import { SITE_ORIGINS, UPLOAD_LIMIT_BYTES, UPLOAD_LIMIT_MESSAGE } from '@/constants'
 import { env } from '@/env'
+import { DigitalEditions } from '@/payload/collections/DigitalEditions'
+import { DigitalEditionMedia } from '@/payload/collections/DigitalEditions/media'
 import { Media } from '@/payload/collections/Media'
 import { News } from '@/payload/collections/News'
+import { ArticleMedia } from '@/payload/collections/News/ArticleMedia'
 import { NewsCategories } from '@/payload/collections/News/categories'
 import { NotarialActs } from '@/payload/collections/NotarialActs'
 import { Users } from '@/payload/collections/Users'
@@ -22,9 +25,6 @@ import { SiteInfo } from '@/payload/globals/SiteInfo'
 import { reportWhenRetriesExhausted } from '@/payload/hooks/reportExhaustedJob'
 import { reportPayloadError } from '@/payload/hooks/reportPayloadError'
 import { reportScheduledPublish } from '@/payload/hooks/reportScheduledPublish'
-import { DigitalEditions } from './payload/collections/DigitalEditions'
-import { DigitalEditionMedia } from './payload/collections/DigitalEditions/media'
-import { ArticleMedia } from './payload/collections/News/ArticleMedia'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)

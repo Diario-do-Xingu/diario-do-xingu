@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent } from '@/components/ui/card'
 import { COLLECTION_URL_PATHS } from '@/constants'
 import type { News } from '@/payload-types'
 import { imageVariant } from '@/utilities/imageVariant'
 import { cn } from '@/utilities/ui'
-import { Badge } from '../ui/badge'
-import { Card, CardContent } from '../ui/card'
 
 type HomeHeroArticleCardProps = {
   size: 'lg' | 'sm'

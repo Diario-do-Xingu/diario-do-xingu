@@ -5,6 +5,9 @@ Read this before changing anything; the rest is in [README.md](./README.md).
 - **Regenerate the committed Payload files** when a collection, global or admin component changes:
   `pnpm generate:types && pnpm generate:importmap`. CI fails on a stale `payload-types.ts` or
   `importMap.js`, and Dependabot cannot do it for you.
+- **Do not hand-edit a file that opens with `GENERATED AUTOMATICALLY BY PAYLOAD`** — the routes and
+  layout under `src/app/(payload)/`. Payload rewrites them, so edits are lost, and repo conventions
+  (import style, file layout) do not apply to them.
 - **Bump `version` in `package.json` in every PR.** Merging tags a release from it. Patch for
   fixes, minor for features.
 - **Never delete `pnpm-lock.yaml`.** Deleting it silently re-resolves every dependency; use
