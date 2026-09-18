@@ -82,9 +82,22 @@ async function flush(payload: BasePayload, paths: string[], tags: string[]) {
     if (!response.ok) throw new Error(`responded ${response.status}`)
     payload.logger.info(`Revalidated ${what} out of band (job cron)`)
   } catch (error) {
-    // Pages still heal on their own windows, so this is a delay rather than a failure.
+    // Pages still heal on their own windows, so this is a delay rather than a failure - but a
+    // silent one: a scheduled article goes back to being invisible for up to ten minutes, and
+    // a log line in the platform console is where the original bug hid for months.
     payload.logger.warn(
       `Could not revalidate ${what} out of band: ${error instanceof Error ? error.message : error}`,
     )
+
+    const { captureMessage } = await import('@sentry/nextjs')
+    captureMessage('Out-of-band revalidation failed', {
+      level: 'warning',
+      tags: { phase: 'revalidate', trigger: 'job-cron' },
+      extra: {
+        paths,
+        tags,
+        cause: error instanceof Error ? error.message : String(error),
+      },
+    })
   }
 }
