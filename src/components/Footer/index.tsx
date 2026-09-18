@@ -1,8 +1,6 @@
-import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
-import { faCoffee, faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import defaultLogo from '@/assets/images/default-logo.png'
+import { CoffeeIcon, EnvelopeIcon, WhatsappIcon } from '@/components/icons'
 import { COLLECTION_SLUGS } from '@/constants'
 import { env } from '@/env'
 import { getCachedGlobal } from '@/utilities/getGlobals'
@@ -46,31 +44,35 @@ export async function Footer() {
           <div className="flex flex-col items-center justify-self-center tracking-wide lg:items-start lg:justify-self-center">
             {siteInfo.contacts?.email && (
               <span className="flex items-center">
-                <FontAwesomeIcon icon={faEnvelope} className="mr-2 size-5" />
+                <EnvelopeIcon className="mr-2 size-5" />
                 {siteInfo.contacts.email}
               </span>
             )}
             {siteInfo.contacts?.phone?.value && (
               <span className="flex items-center">
-                <FontAwesomeIcon icon={faWhatsapp} className="mr-2 size-5" />
+                <WhatsappIcon className="mr-2 size-5" />
                 {siteInfo.contacts.phone.value}
               </span>
             )}
           </div>
 
           <div className="flex gap-2 justify-self-center lg:justify-self-end">
-            {siteInfo.socials?.map((social) => (
-              <a
-                key={social.id ?? social.link}
-                href={social.link}
-                target="_blank"
-                aria-label={`Abrir ${social.label}`}
-                className="grid place-items-center rounded-full bg-white/20 p-2 transition-transform hover:scale-[110%]"
-                rel="noopener"
-              >
-                <FontAwesomeIcon icon={getSocialIcon(social.type)} className="size-7" />
-              </a>
-            ))}
+            {siteInfo.socials?.map((social) => {
+              const SocialIcon = getSocialIcon(social.type)
+
+              return (
+                <a
+                  key={social.id ?? social.link}
+                  href={social.link}
+                  target="_blank"
+                  aria-label={`Abrir ${social.label}`}
+                  className="grid place-items-center rounded-full bg-white/20 p-2 transition-transform hover:scale-[110%]"
+                  rel="noopener"
+                >
+                  <SocialIcon className="size-7" />
+                </a>
+              )
+            })}
           </div>
         </div>
 
@@ -79,7 +81,7 @@ export async function Footer() {
             © {new Date().getFullYear()} Diário do Xingu - Todos os direitos reservados
           </span>
           <span className="text-xs tracking-wide">
-            Developed with <FontAwesomeIcon icon={faCoffee} className="inline size-4" /> by{' '}
+            Developed with <CoffeeIcon className="inline size-4" /> by{' '}
             <b className="font-globo">vkav labs</b>
           </span>
           <span className="text-xs tracking-wide">

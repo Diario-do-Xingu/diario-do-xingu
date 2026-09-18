@@ -4,18 +4,6 @@
    stays above the other at-rules: Lightning CSS, which Turbopack runs, follows the spec
    rule that @import must come first. */
 @import "tw-animate-css";
-/* Font Awesome ships this stylesheet and injects it at runtime, unlayered. Tailwind 4 puts
-   its utilities in `@layer utilities`, and unlayered CSS outranks every layer, so
-   `.svg-inline--fa { height: 1em }` beat every `size-*` class and collapsed every icon to
-   16px on hydration. Importing it into `base` puts `size-*` back on top; the pair to this is
-   `config.autoAddCss = false` in @/lib/fontawesome, which stops the unlayered copy.
-
-   Font Awesome still wins `vertical-align: -0.125em` over preflight's `svg { middle }` --
-   that is specificity (a class beats a type selector), not layer order, so where this import
-   sits makes no difference. Under v3 that only happened on pages carrying a client-side icon,
-   and it shifted the layout after hydration; now it is the same everywhere from first paint.
-   It makes the footer's one inline icon sit ~3px lower. */
-@import "@fortawesome/fontawesome-svg-core/styles.css" layer(base);
 
 @plugin "@tailwindcss/typography";
 

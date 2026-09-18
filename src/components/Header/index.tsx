@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import defaultLogo from '@/assets/images/default-logo.png'
 import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
@@ -92,19 +91,23 @@ export async function Header() {
           </Link>
 
           <div className="flex gap-2 justify-self-end">
-            {siteInfo.socials?.map((social) => (
-              <a
-                key={social.id ?? social.link}
-                href={social.link}
-                target="_blank"
-                aria-label={`Abrir ${social.label}`}
-                className="grid place-items-center rounded-full bg-white/20 p-2 transition-transform hover:scale-[110%]"
-                data-umami-event={`Abrir ${social.type} Diário do Xingu`}
-                rel="noopener"
-              >
-                <FontAwesomeIcon icon={getSocialIcon(social.type)} className="size-7" />
-              </a>
-            ))}
+            {siteInfo.socials?.map((social) => {
+              const SocialIcon = getSocialIcon(social.type)
+
+              return (
+                <a
+                  key={social.id ?? social.link}
+                  href={social.link}
+                  target="_blank"
+                  aria-label={`Abrir ${social.label}`}
+                  className="grid place-items-center rounded-full bg-white/20 p-2 transition-transform hover:scale-[110%]"
+                  data-umami-event={`Abrir ${social.type} Diário do Xingu`}
+                  rel="noopener"
+                >
+                  <SocialIcon className="size-7" />
+                </a>
+              )
+            })}
           </div>
         </div>
       </div>
