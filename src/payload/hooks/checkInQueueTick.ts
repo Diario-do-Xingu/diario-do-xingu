@@ -11,13 +11,19 @@ const DEPTH_EVERY_MINUTES = 5
 
 const notDone: Where = { completedAt: { exists: false }, hasError: { not_equals: true } }
 
-/** Jobs whose slot has passed and are still not done. Zero on a healthy tick; anything else for a few ticks means the runner is stuck. */
-const dueJobs = (now: string): Where => ({
-  and: [
-    notDone,
-    { or: [{ waitUntil: { less_than_equal: now } }, { waitUntil: { exists: false } }] },
-  ],
-})
+/** A job due on this very tick is about to be picked up by it; only one that has already missed a tick is backlog. */
+const ONE_TICK_MS = 60_000
+
+/** Jobs that missed at least one tick and are still not done. Zero on a healthy tick; anything else for a few readings means the runner is stuck. */
+const dueJobs = (now: Date): Where => {
+  const lastTick = new Date(now.getTime() - ONE_TICK_MS).toISOString()
+  return {
+    and: [
+      notDone,
+      { or: [{ waitUntil: { less_than_equal: lastTick } }, { waitUntil: { exists: false } }] },
+    ],
+  }
+}
 
 /** Jobs waiting for a future slot: the editors' publishing agenda. */
 const scheduledJobs = (now: string): Where => ({
@@ -57,10 +63,9 @@ export const checkInQueueTick: NonNullable<JobsConfig['shouldAutoRun']> = async 
   const now = new Date()
   if (now.getUTCMinutes() % DEPTH_EVERY_MINUTES === 0) {
     try {
-      const iso = now.toISOString()
       const [due, scheduled] = await Promise.all([
-        countJobs(payload, dueJobs(iso)),
-        countJobs(payload, scheduledJobs(iso)),
+        countJobs(payload, dueJobs(now)),
+        countJobs(payload, scheduledJobs(now.toISOString())),
       ])
       Sentry.startSpan(
         {

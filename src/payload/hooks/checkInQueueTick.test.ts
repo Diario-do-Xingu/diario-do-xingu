@@ -42,6 +42,18 @@ describe('checkInQueueTick', () => {
     await tickAt(15)
 
     expect(count).toHaveBeenCalledTimes(2)
+    // Due means "missed a tick": a job whose slot is this minute belongs to this tick, not to the backlog.
+    expect(count.mock.calls[0][0].where).toEqual({
+      and: [
+        { completedAt: { exists: false }, hasError: { not_equals: true } },
+        {
+          or: [
+            { waitUntil: { less_than_equal: '2026-09-18T12:14:00.000Z' } },
+            { waitUntil: { exists: false } },
+          ],
+        },
+      ],
+    })
     expect(startSpan).toHaveBeenCalledWith(
       expect.objectContaining({
         name: QUEUE_DEPTH_SPAN,
