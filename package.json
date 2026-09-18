@@ -1,7 +1,7 @@
 {
   "name": "diario-do-xingu",
   "version": "1.12.2",
-  "description": "News site of the Di\u00e1rio do Xingu, a newspaper in Altamira, Par\u00e1",
+  "description": "News site of the Diário do Xingu, a newspaper in Altamira, Pará",
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {
@@ -42,7 +42,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "graphql": "^16.12.0",
-    "lucide-react": "^0.503.0",
+    "lucide-react": "^1.47.0",
     "next": "16.3.5",
     "payload": "3.90.0",
     "react": "^19.2.3",

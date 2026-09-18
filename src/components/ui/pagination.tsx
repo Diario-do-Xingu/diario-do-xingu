@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Ellipsis } from 'lucide-react'
 import Link from 'next/link'
 import * as React from 'react'
 import { type ButtonProps, buttonVariants } from '@/components/ui/button'
@@ -86,7 +86,7 @@ const PaginationEllipsis = ({ className, ...props }: React.ComponentProps<'span'
     className={cn('flex h-9 w-9 items-center justify-center', className)}
     {...props}
   >
-    <MoreHorizontal className="h-4 w-4" />
+    <Ellipsis className="h-4 w-4" />
     <span className="sr-only">Mais páginas</span>
   </span>
 )
