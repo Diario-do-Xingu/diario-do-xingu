@@ -11,55 +11,86 @@ vi.mock('@sentry/nextjs', () => ({
 
 type Args = Parameters<NonNullable<TaskConfig['onSuccess']>>[0]
 
-const ranAt = (secondsLate: number, waitUntil: string | null = null) => {
-  const scheduled = waitUntil ?? new Date(Date.now() - secondsLate * 1000).toISOString()
-  return reportScheduledPublish({
-    job: { waitUntil: scheduled },
-    input: { doc: { relationTo: 'news', value: '1' } },
-  } as unknown as Args)
-}
+const findByID = vi.fn()
 
-const spanAttributes = () => startSpan.mock.calls[0]?.[0]?.attributes
+const ran = ({
+  secondsLate = 0,
+  waitUntil,
+  doc = { relationTo: 'news', value: 'abc123' },
+}: {
+  secondsLate?: number
+  waitUntil?: string | null
+  doc?: unknown
+} = {}) =>
+  reportScheduledPublish({
+    job: { waitUntil: waitUntil ?? new Date(Date.now() - secondsLate * 1000).toISOString() },
+    input: { doc },
+    req: { payload: { findByID } },
+  } as unknown as Args)
+
+const attributes = () => startSpan.mock.calls[0]?.[0]?.attributes
 
 beforeEach(() => {
   vi.clearAllMocks()
+  findByID.mockResolvedValue({ slug: 'chuva-no-xingu' })
 })
 
 describe('reportScheduledPublish', () => {
-  it('records how late the publish ran, tagged with the collection', () => {
-    ranAt(42)
+  it('records which document went out, when it was due and how late it was', async () => {
+    const due = new Date(Date.now() - 42_000).toISOString()
+    await ran({ waitUntil: due })
 
-    expect(spanAttributes()).toMatchObject({ lag_seconds: 42, collection: 'news' })
+    expect(attributes()).toMatchObject({
+      lag_seconds: 42,
+      collection: 'news',
+      doc_slug: 'chuva-no-xingu',
+      scheduled_for: due,
+      on_time: true,
+    })
   })
 
-  it('stays quiet when the publish was on time', () => {
-    ranAt(30)
+  it('marks a publish past the threshold as not on time', async () => {
+    await ran({ secondsLate: 11 * 60 })
 
-    expect(captureMessage).not.toHaveBeenCalled()
+    expect(attributes()).toMatchObject({ on_time: false })
   })
 
-  it('raises a warning once the delay is one an editor would notice', () => {
-    ranAt(11 * 60)
+  it('keeps the warning message constant so late publishes group into one issue', async () => {
+    await ran({ secondsLate: 11 * 60 })
 
     expect(captureMessage).toHaveBeenCalledWith(
-      expect.stringContaining('late'),
-      expect.objectContaining({ level: 'warning' }),
+      'Scheduled publish ran late',
+      expect.objectContaining({
+        level: 'warning',
+        tags: expect.objectContaining({ doc_slug: 'chuva-no-xingu', collection: 'news' }),
+      }),
     )
   })
 
-  it('does nothing for a job with no scheduled time to compare against', () => {
-    ranAt(0, 'not a date')
+  it('stays quiet when the publish was on time', async () => {
+    await ran({ secondsLate: 30 })
 
-    expect(startSpan).not.toHaveBeenCalled()
     expect(captureMessage).not.toHaveBeenCalled()
   })
 
-  it('falls back to a placeholder when the input carries no collection', () => {
-    reportScheduledPublish({
-      job: { waitUntil: new Date().toISOString() },
-      input: {},
-    } as unknown as Args)
+  it('falls back to the id when the document cannot be read', async () => {
+    findByID.mockResolvedValue(null)
+    await ran()
 
-    expect(spanAttributes()).toMatchObject({ collection: 'unknown' })
+    expect(attributes()).toMatchObject({ doc_slug: 'abc123' })
+  })
+
+  it('does not read the database when the input has no document', async () => {
+    await ran({ doc: null })
+
+    expect(findByID).not.toHaveBeenCalled()
+    expect(attributes()).toMatchObject({ collection: 'unknown', doc_slug: 'unknown' })
+  })
+
+  it('does nothing for a job with no scheduled time to compare against', async () => {
+    await ran({ waitUntil: 'not a date' })
+
+    expect(startSpan).not.toHaveBeenCalled()
+    expect(captureMessage).not.toHaveBeenCalled()
   })
 })
