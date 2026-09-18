@@ -1,9 +1,9 @@
 import type { CollectionConfig } from 'payload'
 import { COLLECTION_GROUP } from '@/constants'
 import { env } from '@/env'
-import { admins, adminsField } from '../access/admins'
-import { authenticated } from '../access/authenticated'
-import { checkRole } from './Users/checkRole'
+import { admins, adminsField } from '@/payload/access/admins'
+import { authenticated } from '@/payload/access/authenticated'
+import { checkRole } from './checkRole'
 
 export const Users: CollectionConfig = {
   slug: 'users',

@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import defaultLogo from '@/assets/images/default-logo.png'
 import { CoffeeIcon, EnvelopeIcon, WhatsappIcon } from '@/components/icons'
+import { ImageMedia } from '@/components/Media/ImageMedia'
 import { COLLECTION_SLUGS } from '@/constants'
 import { env } from '@/env'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { getSocialIcon } from '@/utilities/getSocialIcon'
-import { ImageMedia } from '../Media/ImageMedia'
 
 export async function Footer() {
   const siteInfo = await getCachedGlobal(COLLECTION_SLUGS.SiteInfo, 1)()

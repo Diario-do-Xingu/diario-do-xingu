@@ -1,9 +1,9 @@
 import Link from 'next/link'
+import { ImageMedia } from '@/components/Media/ImageMedia'
+import { RelativePublishedAt } from '@/components/RelativePublishedAt'
+import { Badge } from '@/components/ui/badge'
 import { COLLECTION_URL_PATHS } from '@/constants'
 import type { News } from '@/payload-types'
-import { ImageMedia } from '../../Media/ImageMedia'
-import { RelativePublishedAtClient } from '../../RelativePublishedAtClient'
-import { Badge } from '../../ui/badge'
 
 type ArticleListCardProps = {
   article: News
@@ -50,7 +50,7 @@ export function ArticleListCard({ article }: ArticleListCardProps) {
 
         {publishedAt && (
           <div className="font-bold text-red-600 text-xs tracking-wide">
-            <RelativePublishedAtClient publishedAt={publishedAt} />
+            <RelativePublishedAt publishedAt={publishedAt} />
           </div>
         )}
       </div>

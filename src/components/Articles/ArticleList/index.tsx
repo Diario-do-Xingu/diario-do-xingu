@@ -1,7 +1,7 @@
 import type { PaginatedDocs } from 'payload'
 import { Fragment } from 'react'
+import { ArticleListCard } from '@/components/Articles/ArticleListCard'
 import type { News } from '@/payload-types'
-import { ArticleListCard } from '../ArticleListCard'
 
 type ArticleListProps = {
   news: PaginatedDocs<News>

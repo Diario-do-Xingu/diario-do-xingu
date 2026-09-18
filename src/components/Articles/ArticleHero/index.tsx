@@ -1,6 +1,6 @@
 import { ArticleShareLinks } from '@/components/ArticleShareLinks'
 import { ImageMedia } from '@/components/Media/ImageMedia'
-import { RelativePublishedAtClient } from '@/components/RelativePublishedAtClient'
+import { RelativePublishedAt } from '@/components/RelativePublishedAt'
 import { COLLECTION_URL_PATHS } from '@/constants'
 import { env } from '@/env'
 import type { News } from '@/payload-types'
@@ -33,7 +33,7 @@ export function ArticleHero({ article }: ArticleHero) {
 
         {publishedAt && (
           <div className="font-medium text-xs text-zinc-500">
-            <RelativePublishedAtClient publishedAt={publishedAt} />
+            <RelativePublishedAt publishedAt={publishedAt} />
           </div>
         )}
       </div>

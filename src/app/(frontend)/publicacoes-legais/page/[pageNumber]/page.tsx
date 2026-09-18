@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation'
+import { findNotarialActs } from '@/app/(frontend)/publicacoes-legais/findNotarialActs'
+import { PageComponent } from '@/app/(frontend)/publicacoes-legais/PageComponent'
 import { COLLECTION_SLUGS, PAGINATED_LIMIT } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
-import { findNotarialActs } from '../../findNotarialActs'
-import { PageComponent } from '../../PageComponent'
 
 // Unfiltered archive only; filtered pages render on the dynamic root route (`?page=N`).
 export const revalidate = 600
