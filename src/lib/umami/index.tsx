@@ -1,74 +1,38 @@
-// biome-ignore-all lint/suspicious/noExplicitAny: Umami accepts arbitrary `data-*` script attributes.
-
 import Script from 'next/script'
 import { env } from '@/env'
 import { UmamiOutboundLinks } from './UmamiOutboundLinks'
 
-/**
- * Props for the Umami component.
- */
-export interface UmamiProps {
-  trackOutboundLinks?: boolean
+type UmamiProps = {
   /** The unique Umami website ID. */
   umamiWebsiteId: string
-  /** The Umami host URL. */
-  umamiHostUrl?: string
-  /** Tag to identify the script. */
-  umamiTag?: string
-  /** Enable or disable automatic tracking. Defaults to true. */
+  /** Enable or disable automatic pageview tracking. Defaults to true. */
   umamiAutoTrack?: boolean
   /** Exclude URL query parameters from tracking. Defaults to false. */
   umamiExcludeSearch?: boolean
-  /** A comma-separated list of domains to limit tracking to. */
-  umamiDomains?: string
-  /** Source URL for the Umami script. Defaults to the official CDN. */
-  src?: string
-  /** Additional data attributes for the script tag. */
-  [key: `data${string}`]: any
+  /** Also report clicks on links that leave the site; see UmamiOutboundLinks. */
+  trackOutboundLinks?: boolean
 }
 
-const propToDataAttributeMap = {
-  umamiWebsiteId: 'data-website-id',
-  umamiHostUrl: 'data-host-url',
-  umamiTag: 'data-tag',
-  umamiAutoTrack: 'data-auto-track',
-  umamiExcludeSearch: 'data-exclude-search',
-  umamiDomains: 'data-domains',
-} as const
-
-type UmamiPropKeys = keyof typeof propToDataAttributeMap
-
 /**
- * A React component that integrates Umami analytics via a script tag.
- *
- * @param props - The props for the Umami component.
- * @returns A Script element with the Umami analytics script and dynamic data attributes.
+ * Loads the Umami tracker. Its options are read from `data-*` attributes on the script tag, and
+ * every one of them is a string, including the booleans.
  */
-export function Umami({ trackOutboundLinks, ...props }: UmamiProps) {
-  const dataAttributes: Record<string, any> = {}
-
-  // Map known Umami props to data attributes
-  Object.entries(props).forEach(([propName, propValue]) => {
-    if (!(propName in propToDataAttributeMap)) return
-
-    // Umami props only accept string
-    if (typeof propValue === 'boolean') {
-      propValue = propValue === true ? 'true' : 'false'
-    }
-
-    dataAttributes[propToDataAttributeMap[propName as UmamiPropKeys]] = propValue
-  })
-
-  // Include additional data attributes passed via props
-  Object.entries(props).forEach(([key, value]) => {
-    if (!key.startsWith('data') || !value || key in propToDataAttributeMap) return
-    const attributeName = key.replace(/([A-Z])/g, '-$1').toLowerCase()
-    dataAttributes[attributeName] = value
-  })
-
+export function Umami({
+  umamiWebsiteId,
+  umamiAutoTrack,
+  umamiExcludeSearch,
+  trackOutboundLinks,
+}: UmamiProps) {
   return (
     <>
-      <Script async defer src={`${env.UMAMI_URI}/script.js`} {...dataAttributes} />
+      <Script
+        async
+        defer
+        src={`${env.UMAMI_URI}/script.js`}
+        data-website-id={umamiWebsiteId}
+        data-auto-track={String(umamiAutoTrack ?? true)}
+        data-exclude-search={String(umamiExcludeSearch ?? false)}
+      />
       {trackOutboundLinks && <UmamiOutboundLinks />}
     </>
   )
