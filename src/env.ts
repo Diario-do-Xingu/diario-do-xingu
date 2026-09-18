@@ -1,12 +1,29 @@
 import { createEnv } from '@t3-oss/env-nextjs'
 import { z } from 'zod'
 
+/**
+ * Next encrypts the arguments bound to a server action with this key, and takes exactly 32 bytes.
+ * Anything else throws on every page that renders one - the admin, in practice - instead of at
+ * boot, so it is worth checking here. `atob` is the one base64 decoder node, the edge and the
+ * browser all have.
+ */
+const isEncryptionKey = (value: string) => {
+  try {
+    return atob(value).length === 32
+  } catch {
+    return false
+  }
+}
+
 export const env = createEnv({
   server: {
     DATABASE_URI: z.string().url(),
     PAYLOAD_SECRET: z.string().min(1),
     CRON_SECRET: z.string().min(1),
-    NEXT_SERVER_ACTIONS_ENCRYPTION_KEY: z.string().min(1),
+    NEXT_SERVER_ACTIONS_ENCRYPTION_KEY: z.string().refine(isEncryptionKey, {
+      message:
+        "must be 32 bytes of base64: node -e \"console.log(require('crypto').randomBytes(32).toString('base64'))\"",
+    }),
 
     // Optionals
     /** Set by Payload Cloud itself; absent locally and in CI. */
