@@ -1,6 +1,6 @@
 import type { StaticImageData } from 'next/image'
 
-import type { Media as MediaType } from '@/payload-types'
+import type { ArticleMedia, DigitalEditionThumb, Media } from '@/payload-types'
 import type { ImageVariant } from '@/utilities/imageVariant'
 
 export interface Props {
@@ -10,7 +10,7 @@ export interface Props {
   imgClassName?: string
   loading?: 'lazy' | 'eager' // for NextImage only
   priority?: boolean // for NextImage only
-  resource?: MediaType | string | number | null // for Payload media
+  resource?: Media | ArticleMedia | DigitalEditionThumb | string | number | null
   /** Generated variant to serve instead of the original upload. */
   variant?: ImageVariant
   /** The `sizes` attribute, so the browser picks a fitting srcset entry instead of the largest. */

@@ -25,6 +25,7 @@ export function MediaBlock(props: Props) {
     >
       <ImageMedia
         resource={media}
+        alt={caption ?? ''}
         pictureClassName="m-0"
         imgClassName={cn('rounded-lg', imgClassName)}
         // The article body is a prose column, about 720px wide from md up.

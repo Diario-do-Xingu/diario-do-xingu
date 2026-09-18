@@ -34,6 +34,7 @@ export function DigitalEditionsPageComponent({ digitalEditions }: PageComponentP
                 <div className="flex-1 overflow-hidden md:max-h-64">
                   <ImageMedia
                     resource={edition.thumb}
+                    alt={edition.name}
                     imgClassName="object-contain h-full w-full"
                     sizes="(min-width: 1280px) 180px, (min-width: 1024px) 190px, (min-width: 768px) 30vw, 100vw"
                   />
