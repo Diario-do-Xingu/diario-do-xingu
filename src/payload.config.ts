@@ -144,7 +144,7 @@ const config = buildConfig({
         queue: 'default',
       },
     ],
-    // Every tick checks in with Sentry Crons; a queue that stops running becomes an alert.
+    // Every tick checks in with Sentry Crons, and every fifth one measures the queue depth.
     shouldAutoRun: checkInQueueTick,
   },
 })
