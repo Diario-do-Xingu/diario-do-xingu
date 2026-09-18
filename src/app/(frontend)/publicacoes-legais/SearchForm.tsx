@@ -1,6 +1,6 @@
 'use client'
 
-import { CalendarIcon } from 'lucide-react'
+import { Calendar as CalendarIcon } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { ptBR } from 'react-day-picker/locale'
