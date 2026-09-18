@@ -21,6 +21,7 @@ import { SiteMetadata } from '@/payload/globals/Metadata'
 import { SiteInfo } from '@/payload/globals/SiteInfo'
 import { reportWhenRetriesExhausted } from '@/payload/hooks/reportExhaustedJob'
 import { reportPayloadError } from '@/payload/hooks/reportPayloadError'
+import { reportScheduledPublish } from '@/payload/hooks/reportScheduledPublish'
 import { DigitalEditions } from './payload/collections/DigitalEditions'
 import { DigitalEditionMedia } from './payload/collections/DigitalEditions/media'
 import { ArticleMedia } from './payload/collections/News/ArticleMedia'
@@ -148,6 +149,7 @@ export default config.then((sanitized) => {
   if (schedulePublish) {
     schedulePublish.retries = SCHEDULE_PUBLISH_RETRIES
     schedulePublish.onFail = reportWhenRetriesExhausted(SCHEDULE_PUBLISH_RETRIES)
+    schedulePublish.onSuccess = reportScheduledPublish
   }
 
   return sanitized
