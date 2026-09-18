@@ -22,6 +22,7 @@ import { defaultLexical } from '@/payload/fields/defaultLexical'
 import { Advertisement } from '@/payload/globals/Advertisement'
 import { SiteMetadata } from '@/payload/globals/Metadata'
 import { SiteInfo } from '@/payload/globals/SiteInfo'
+import { checkInQueueTick } from '@/payload/hooks/checkInQueueTick'
 import { reportWhenRetriesExhausted } from '@/payload/hooks/reportExhaustedJob'
 import { reportPayloadError } from '@/payload/hooks/reportPayloadError'
 import { reportScheduledPublish } from '@/payload/hooks/reportScheduledPublish'
@@ -143,6 +144,8 @@ const config = buildConfig({
         queue: 'default',
       },
     ],
+    // Every tick checks in with Sentry Crons; a queue that stops running becomes an alert.
+    shouldAutoRun: checkInQueueTick,
   },
 })
 
