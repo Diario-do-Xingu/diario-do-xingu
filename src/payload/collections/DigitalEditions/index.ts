@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { COLLECTION_SLUGS } from '@/constants'
+import { COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
 import { authenticated } from '@/payload/access/authenticated'
 import { slugField } from '@/payload/fields/slug'
@@ -21,7 +21,7 @@ export const DigitalEditions: CollectionConfig = {
   admin: {
     defaultColumns: ['name'],
     useAsTitle: 'name',
-    group: 'Edições Digitais',
+    group: COLLECTION_GROUP.DigitalEditions,
   },
   upload: {
     bulkUpload: false,

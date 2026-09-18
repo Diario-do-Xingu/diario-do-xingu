@@ -1,12 +1,12 @@
 import type { CollectionConfig } from 'payload'
-import { COLLECTION_SLUGS, IMAGE_UPLOAD_MIME_TYPES } from '@/constants'
+import { COLLECTION_GROUP, COLLECTION_SLUGS, IMAGE_UPLOAD_MIME_TYPES } from '@/constants'
 import { anyone } from '@/payload/access/anyone'
 import { authenticated } from '@/payload/access/authenticated'
 import { capPublicLimit } from '@/payload/hooks/capPublicLimit'
 
 export const DigitalEditionMedia: CollectionConfig = {
   admin: {
-    group: 'Edições Digitais',
+    group: COLLECTION_GROUP.DigitalEditions,
   },
   slug: COLLECTION_SLUGS.DigitalEditionThumbs,
   labels: {

@@ -63,11 +63,11 @@ export const Users: CollectionConfig = {
       hasMany: true,
       options: [
         {
-          label: 'admin',
+          label: 'Administrador',
           value: 'admin',
         },
         {
-          label: 'editor',
+          label: 'Editor',
           value: 'editor',
         },
       ],

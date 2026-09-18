@@ -10,12 +10,14 @@ export const MediaBlock: Block = {
   fields: [
     {
       name: 'media',
+      label: 'Arquivo',
       type: 'upload',
       relationTo: 'article-media',
       required: true,
     },
     {
       name: 'caption',
+      label: 'Legenda',
       type: 'text',
     },
   ],

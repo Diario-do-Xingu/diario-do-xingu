@@ -5,7 +5,7 @@ import { revalidateMetadata } from './hooks/revalidateMetadata'
 
 export const SiteMetadata: GlobalConfig = {
   slug: COLLECTION_SLUGS.SiteMetadata,
-  label: 'Site Metadata',
+  label: 'Metadados do Site',
   access: {
     read: anyone,
   },
