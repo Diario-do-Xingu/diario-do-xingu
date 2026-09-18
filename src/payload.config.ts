@@ -90,9 +90,12 @@ const config = buildConfig({
   }),
   sharp,
   // One global cap; the largest legitimate upload today is a 58 MB digital-edition PDF. Without
-  // abortOnLimit the parser truncates the file instead of rejecting the request.
+  // abortOnLimit the parser truncates the file instead of rejecting the request. Since 3.90 the
+  // whole multipart request is capped separately at 50 MB by default; a file at the limit plus
+  // the document's JSON fields has to fit in it, hence the headroom.
   upload: {
     limits: { fileSize: UPLOAD_LIMIT_BYTES },
+    requestSizeLimit: UPLOAD_LIMIT_BYTES + 1024 * 1024,
     abortOnLimit: true,
     responseOnLimit: UPLOAD_LIMIT_MESSAGE,
   },
