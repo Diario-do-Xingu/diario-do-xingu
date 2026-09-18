@@ -1,6 +1,7 @@
 import { revalidatePath } from 'next/cache'
 import type { BasePayload, CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
-import { COLLECTION_SLUGS, COLLECTION_URL_PATHS, PAGINATED_LIMIT } from '@/constants'
+import { COLLECTION_SLUGS, COLLECTION_URL_PATHS, PAGINATED_LIMIT, SIDEBAR_TAGS } from '@/constants'
+import { revalidateTagSafely } from '@/payload/hooks/revalidate'
 import type { DigitalEdition } from '@/payload-types'
 
 export const revalidateDigitalEditions: CollectionAfterChangeHook<DigitalEdition> = async ({
@@ -50,4 +51,6 @@ async function revalidatePaths(payload: BasePayload) {
     payload.logger.info(`Revalidating path: ${path}`)
     revalidatePath(path)
   }
+
+  revalidateTagSafely(payload, SIDEBAR_TAGS.DigitalEditions)
 }

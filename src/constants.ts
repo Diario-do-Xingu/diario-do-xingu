@@ -72,6 +72,15 @@ export const PAGINATED_LIMIT = {
 export const FEED_TAG = 'feed-news'
 export const FEED_LIMIT = 20
 
+/**
+ * Cache tags for the queries the sidebar repeats on every page. The collections' revalidate
+ * hooks bust these, so an editor's publish still shows up immediately.
+ */
+export const SIDEBAR_TAGS = {
+  News: 'sidebar-news',
+  DigitalEditions: 'sidebar-digital-editions',
+} as const
+
 export const SITEMAP_TAGS = {
   News: 'sitemap-news',
   NotarialActs: 'sitemap-notarial-acts',
