@@ -1,10 +1,11 @@
-import { Card } from '../ui/card'
+import { Card } from '@/components/ui/card'
+import { API_FUTEBOL_WIDGETS } from '@/constants'
 
 export function SoccerWidget() {
   return (
     <Card className="bg-secondary p-3">
       <iframe
-        src="https://api.api-futebol.com.br/v1/widgets/rodadas?client_id=LV2R34S6LAMK"
+        src={API_FUTEBOL_WIDGETS.Rounds}
         title="Rodadas do Campeonato Brasileiro"
         loading="lazy"
         width="100%"

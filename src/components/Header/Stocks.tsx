@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { TRADINGVIEW_TICKER_SRC } from '@/constants'
 
 export function Stocks() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -11,7 +12,7 @@ export function Stocks() {
     if (scriptRef.current) return
 
     const script = document.createElement('script')
-    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js'
+    script.src = TRADINGVIEW_TICKER_SRC
     script.type = 'text/javascript'
     script.async = true
     script.innerHTML = JSON.stringify({
