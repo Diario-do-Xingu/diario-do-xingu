@@ -65,12 +65,12 @@ later. `next.config.mjs` loads that file, which means even `pnpm build` needs th
 | `DATABASE_URI` | yes | MongoDB connection string |
 | `PAYLOAD_SECRET` | yes | Signs Payload's auth tokens |
 | `CRON_SECRET` | yes | `Bearer` token that lets an external caller run the job queue |
-| `NEXT_SERVER_ACTIONS_ENCRYPTION_KEY` | yes | `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"` |
+| `NEXT_SERVER_ACTIONS_ENCRYPTION_KEY` | yes | Exactly 32 bytes: `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"` |
 | `NEXT_PUBLIC_SERVER_URL` | yes | Public origin; canonical URLs, OG tags, the sitemap and the feed are built from it |
 | `NEXT_PUBLIC_IS_LIVE` | no | `'false'` (default) serves a `noindex` header on every response |
 | `NEXT_PUBLIC_USE_PAYLOAD_CLOUD` | no | Registers the Payload Cloud plugin; pair it with `PAYLOAD_CLOUD` |
 | `UMAMI_URI`, `UMAMI_WEBSITE_ID` | no | Analytics; both must be set or the script is not rendered |
-| `NEXT_PUBLIC_SENTRY_DSN` | no | Error reporting |
+| `NEXT_PUBLIC_SENTRY_DSN` | no | Error reporting. Only the live site reports; elsewhere the SDK is switched off, so a copied `.env` cannot file dev errors against production |
 | `SENTRY_AUTH_TOKEN` | no | Source-map upload at build time; only needed on Payload Cloud |
 | `PAYLOAD_CLOUD_*` | no | Set by Payload Cloud itself; leave empty locally |
 

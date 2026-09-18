@@ -2,17 +2,18 @@ import * as Sentry from '@sentry/nextjs'
 import { UPLOAD_LIMIT_BYTES, UPLOAD_LIMIT_MESSAGE } from '@/constants'
 import { env } from '@/env'
 import { SCHEDULED_PUBLISH_SPAN } from '@/payload/hooks/reportScheduledPublish'
-import { sentryEnvironment } from '@/utilities/sentryEnvironment'
+import { reportsToSentry, sentryEnvironment } from '@/utilities/sentryEnvironment'
 import {
   isAbortedOversizedUpload,
   isServerActionProbe,
   withoutCredentials,
 } from '@/utilities/sentryFilters'
 
-// Server-side error reporting. With no DSN configured (local dev) the SDK stays inert.
+// Server-side error reporting. Inert without a DSN, and off anywhere but the live site.
 Sentry.init({
   dsn: env.NEXT_PUBLIC_SENTRY_DSN,
   environment: sentryEnvironment(env.NEXT_PUBLIC_SERVER_URL),
+  enabled: reportsToSentry(env.NEXT_PUBLIC_SERVER_URL),
   // Errors are the point; traces are sampled lightly to stay well inside the free tier. The
   // exception is the scheduled-publish measurement: there are a handful a day, and at 10% most
   // of them would record nothing, which defeats the point of measuring the lag at all.
