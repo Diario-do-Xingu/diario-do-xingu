@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/nextjs'
 import { UPLOAD_LIMIT_BYTES, UPLOAD_LIMIT_MESSAGE } from '@/constants'
 import { env } from '@/env'
+import { SCHEDULED_PUBLISH_SPAN } from '@/payload/hooks/reportScheduledPublish'
 import { sentryEnvironment } from '@/utilities/sentryEnvironment'
 import {
   isAbortedOversizedUpload,
@@ -12,8 +13,11 @@ import {
 Sentry.init({
   dsn: env.NEXT_PUBLIC_SENTRY_DSN,
   environment: sentryEnvironment(env.NEXT_PUBLIC_SERVER_URL),
-  // Errors are the point; traces are sampled lightly to stay well inside the free tier.
-  tracesSampleRate: 0.1,
+  // Errors are the point; traces are sampled lightly to stay well inside the free tier. The
+  // exception is the scheduled-publish measurement: there are a handful a day, and at 10% most
+  // of them would record nothing, which defeats the point of measuring the lag at all.
+  tracesSampler: ({ name, inheritOrSampleWith }) =>
+    name === SCHEDULED_PUBLISH_SPAN ? 1 : inheritOrSampleWith(0.1),
   sendDefaultPii: false,
   // An oversized upload is expected behaviour, not an error.
   ignoreErrors: [UPLOAD_LIMIT_MESSAGE],

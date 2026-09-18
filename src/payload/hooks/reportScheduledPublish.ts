@@ -1,6 +1,9 @@
 import * as Sentry from '@sentry/nextjs'
 import type { TaskConfig } from 'payload'
 
+/** Named so the server's tracesSampler can keep every one of these rather than one in ten. */
+export const SCHEDULED_PUBLISH_SPAN = 'scheduled publish'
+
 /** A scheduled publish this far behind its slot is worth a look, not just a data point. */
 const LATE_AFTER_SECONDS = 5 * 60
 
@@ -22,7 +25,7 @@ export const reportScheduledPublish: NonNullable<TaskConfig['onSuccess']> = ({ j
   // group into one noisy issue instead of a series you can chart.
   Sentry.startSpan(
     {
-      name: 'scheduled publish',
+      name: SCHEDULED_PUBLISH_SPAN,
       op: 'queue.task.schedulePublish',
       attributes: { lag_seconds: lagSeconds, collection },
     },
