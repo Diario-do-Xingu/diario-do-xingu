@@ -1,10 +1,41 @@
+import { unstable_cache } from 'next/cache'
 import Link from 'next/link'
 import { Fragment } from 'react'
-import { COLLECTION_SLUGS, COLLECTION_URL_PATHS } from '@/constants'
+import { COLLECTION_SLUGS, COLLECTION_URL_PATHS, SIDEBAR_TAGS } from '@/constants'
 import { getPayload } from '@/lib/payload/getPayload'
 import { formatDateWithTime } from '@/utilities/formatDate'
 import { ImageMedia } from '../Media/ImageMedia'
 import { Card, CardContent, CardHeader } from '../ui/card'
+
+const RELATED_COUNT = 4
+
+/**
+ * The latest articles in a category, cached per category rather than per article.
+ *
+ * Excluding the current article in the query made every one of ~2000 article pages its own
+ * uncacheable read - and on Atlas each of these populates costs 30-100ms, which is what Sentry's
+ * N+1 detector kept flagging. Fetching one extra and dropping the current article in memory turns
+ * that into one entry per category, shared by every article in it.
+ */
+const loadCategoryArticles = (categoryId: string) =>
+  unstable_cache(
+    async () => {
+      const payload = await getPayload()
+      const { docs } = await payload.find({
+        collection: COLLECTION_SLUGS.News,
+        draft: false,
+        overrideAccess: false,
+        // one spare, so removing the current article still leaves a full row
+        limit: RELATED_COUNT + 1,
+        depth: 1,
+        sort: '-publishedAt',
+        where: { category: { equals: categoryId } },
+      })
+      return docs
+    },
+    ['related-articles', categoryId],
+    { tags: [SIDEBAR_TAGS.News], revalidate: 600 },
+  )()
 
 export async function ArticleRelatedSection(props: {
   categoryId: string
@@ -12,28 +43,10 @@ export async function ArticleRelatedSection(props: {
 }) {
   const { categoryId, currentArticleSlug } = props
 
-  const payload = await getPayload()
+  const inCategory = await loadCategoryArticles(categoryId)
+  const docs = inCategory.filter(({ slug }) => slug !== currentArticleSlug).slice(0, RELATED_COUNT)
 
-  const relatedArticles = await payload.find({
-    collection: COLLECTION_SLUGS.News,
-    draft: false,
-    overrideAccess: false,
-    limit: 4,
-    depth: 1,
-    sort: '-publishedAt',
-    where: {
-      slug: {
-        not_equals: currentArticleSlug,
-      },
-      category: {
-        equals: categoryId,
-      },
-    },
-  })
-
-  const { docs, totalDocs } = relatedArticles
-
-  if (totalDocs === 0) return null
+  if (docs.length === 0) return null
 
   return (
     <Card className="mt-10">

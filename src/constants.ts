@@ -73,8 +73,9 @@ export const FEED_TAG = 'feed-news'
 export const FEED_LIMIT = 20
 
 /**
- * Cache tags for the queries the sidebar repeats on every page. The collections' revalidate
- * hooks bust these, so an editor's publish still shows up immediately.
+ * Cache tags for the news queries repeated across pages - the sidebar cards and the related
+ * articles below an article. The collections' revalidate hooks bust these, so an editor's
+ * publish still shows up immediately.
  */
 export const SIDEBAR_TAGS = {
   News: 'sidebar-news',
