@@ -1,6 +1,5 @@
 import { revalidatePath, revalidateTag } from 'next/cache'
 import type { BasePayload } from 'payload'
-import { env } from '@/env'
 
 /**
  * Wrappers for Next's revalidation that also work outside a request.
@@ -69,6 +68,10 @@ async function flush(payload: BasePayload, paths: string[], tags: string[]) {
   const what = `${paths.length} path(s) and ${tags.length} tag(s)`
 
   try {
+    // Imported here rather than at module scope: `env` validates on import, and this module is
+    // pulled into unit tests that have no environment and never reach this path.
+    const { env } = await import('@/env')
+
     const response = await fetch(`${env.NEXT_PUBLIC_SERVER_URL}/api/revalidate`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', Authorization: `Bearer ${env.CRON_SECRET}` },
