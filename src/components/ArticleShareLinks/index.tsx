@@ -1,13 +1,7 @@
 'use client'
 
-import { faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons'
-import { faShareNodes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
-// This is the only client component that draws Font Awesome icons, so it is the only place
-// that puts the library in the browser bundle -- and the only place that can stop it from
-// injecting its unlayered stylesheet there. See the module for why that matters.
-import '@/lib/fontawesome'
+import { FacebookIcon, ShareNodesIcon, WhatsappIcon } from '@/components/icons'
 import { cn } from '@/utilities/ui'
 
 type ArticleShareLinksProps = {
@@ -35,10 +29,7 @@ export function ArticleShareLinks({ link, text, className }: ArticleShareLinksPr
         data-umami-event="Compartilhar artigo no facebook"
         data-umami-event-title={text}
       >
-        <FontAwesomeIcon
-          icon={faFacebook}
-          className="size-5 text-[#1877F2] group-hover:text-white"
-        />
+        <FacebookIcon className="size-5 text-[#1877F2] group-hover:text-white" />
       </a>
       <a
         className="group flex flex-1 items-center justify-center rounded-xl bg-card p-3 transition-colors hover:cursor-pointer hover:bg-[#25D366] hover:brightness-90"
@@ -49,10 +40,7 @@ export function ArticleShareLinks({ link, text, className }: ArticleShareLinksPr
         data-umami-event="Compartilhar artigo no whatsapp"
         data-umami-event-title={text}
       >
-        <FontAwesomeIcon
-          icon={faWhatsapp}
-          className="size-6 text-[#25D366] group-hover:text-white"
-        />
+        <WhatsappIcon className="size-6 text-[#25D366] group-hover:text-white" />
       </a>
       {isShareSupported && (
         <button
@@ -72,10 +60,7 @@ export function ArticleShareLinks({ link, text, className }: ArticleShareLinksPr
           }}
           className="group flex flex-1 items-center justify-center rounded-xl bg-card p-3 transition-colors hover:cursor-pointer hover:bg-[#4f5257] hover:brightness-90"
         >
-          <FontAwesomeIcon
-            icon={faShareNodes}
-            className="size-6 text-[#4f5257] group-hover:text-white"
-          />
+          <ShareNodesIcon className="size-6 text-[#4f5257] group-hover:text-white" />
         </button>
       )}
     </div>

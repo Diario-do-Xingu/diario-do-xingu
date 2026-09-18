@@ -1,7 +1,7 @@
 {
   "name": "diario-do-xingu",
   "version": "1.10.0",
-  "description": "News site of the Di\u00e1rio do Xingu, a newspaper in Altamira, Par\u00e1",
+  "description": "News site of the Diário do Xingu, a newspaper in Altamira, Pará",
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {
@@ -28,10 +28,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.7.2",
-    "@fortawesome/free-brands-svg-icons": "^6.7.2",
-    "@fortawesome/free-solid-svg-icons": "^6.7.2",
-    "@fortawesome/react-fontawesome": "^0.2.6",
     "@payloadcms/db-mongodb": "3.88.0",
     "@payloadcms/next": "3.88.0",
     "@payloadcms/payload-cloud": "3.88.0",
