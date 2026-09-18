@@ -12,6 +12,11 @@ import { Umami } from '@/lib/umami'
 import { cn } from '@/utilities/ui'
 
 // One file covers every weight the site uses; declaring it once per weight preloaded it five times.
+// The file is an instance of the original four-axis variable font: the site never uses the width
+// or italic axes, and next/font only asks for weights 400-800, so those were dropped - 186 KB to
+// 45 KB. Optical sizing stays, since browsers apply it automatically across heading sizes.
+// Reproduce with fonttools:
+//   instantiateVariableFont(font, {'wght': (400, 800), 'wdth': None, 'ital': None})
 const globoFont = localFont({
   src: '../../assets/fonts/globo.woff2',
   weight: '400 800',
