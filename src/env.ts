@@ -17,7 +17,7 @@ const isEncryptionKey = (value: string) => {
 
 export const env = createEnv({
   server: {
-    DATABASE_URI: z.string().url(),
+    DATABASE_URI: z.url(),
     PAYLOAD_SECRET: z.string().min(1),
     CRON_SECRET: z.string().min(1),
     NEXT_SERVER_ACTIONS_ENCRYPTION_KEY: z.string().refine(isEncryptionKey, {
@@ -37,23 +37,23 @@ export const env = createEnv({
       .optional()
       .transform((s) => s === 'true'),
     UMAMI_WEBSITE_ID: z.string().min(1).optional(),
-    UMAMI_URI: z.string().url().optional(),
+    UMAMI_URI: z.url().optional(),
   },
   client: {
-    NEXT_PUBLIC_SERVER_URL: z.string().url(),
-    NEXT_PUBLIC_SENTRY_DSN: z.string().url().optional(),
+    NEXT_PUBLIC_SERVER_URL: z.url(),
+    NEXT_PUBLIC_SENTRY_DSN: z.url().optional(),
 
     NEXT_PUBLIC_IS_LIVE: z
       .string()
       .refine((s) => s === 'true' || s === 'false')
       .transform((s) => s === 'true')
-      .default('false'),
+      .default(false),
 
     NEXT_PUBLIC_USE_PAYLOAD_CLOUD: z
       .string()
       .refine((s) => s === 'true' || s === 'false')
       .transform((s) => s === 'true')
-      .default('true'),
+      .default(true),
 
     // Set by next.config.mjs at build time (not by .env), so optional when the config itself loads this file
     NEXT_PUBLIC_APP_VERSION: z.string().min(1).optional(),
