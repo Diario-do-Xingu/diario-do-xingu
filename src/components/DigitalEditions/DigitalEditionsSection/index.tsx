@@ -48,6 +48,7 @@ export async function DigitalEditionsSection() {
                   {/* Digital-edition thumbnails have no generated variants; the original is 500px. */}
                   <ImageMedia
                     resource={item.thumb}
+                    alt={item.name}
                     imgClassName="h-full object-contain"
                     sizes="144px"
                   />
