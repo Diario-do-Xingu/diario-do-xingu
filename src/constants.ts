@@ -37,6 +37,8 @@ export const NOTARIAL_ACT_MIME_TYPES = [
 
 export const COLLECTION_SLUGS = {
   SiteInfo: 'site-info',
+  Media: 'media',
+  ArticleMedia: 'article-media',
   Advertisement: 'advertisement',
   NotarialActs: 'notarial-acts',
   SiteMetadata: 'site-metadata',

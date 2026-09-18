@@ -209,6 +209,10 @@ export interface News {
  */
 export interface ArticleMedia {
   id: string;
+  /**
+   * Descreve a imagem para leitores de tela e aparece se ela não carregar.
+   */
+  alt?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -321,6 +325,10 @@ export interface DigitalEdition {
  */
 export interface DigitalEditionThumb {
   id: string;
+  /**
+   * Descreve a imagem para leitores de tela e aparece se ela não carregar.
+   */
+  alt?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -349,6 +357,9 @@ export interface DigitalEditionThumb {
  */
 export interface Media {
   id: string;
+  /**
+   * Descreve a imagem para leitores de tela e aparece se ela não carregar.
+   */
   alt?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -652,6 +663,7 @@ export interface NewsCategoriesSelect<T extends boolean = true> {
  * via the `definition` "article-media_select".
  */
 export interface ArticleMediaSelect<T extends boolean = true> {
+  alt?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -748,6 +760,7 @@ export interface DigitalEditionsSelect<T extends boolean = true> {
  * via the `definition` "digital-edition-thumbs_select".
  */
 export interface DigitalEditionThumbsSelect<T extends boolean = true> {
+  alt?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

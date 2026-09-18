@@ -1,50 +1,23 @@
-import type { CollectionConfig } from 'payload'
-import { COLLECTION_GROUP, COLLECTION_SLUGS, IMAGE_UPLOAD_MIME_TYPES } from '@/constants'
-import { anyone } from '@/payload/access/anyone'
-import { authenticated } from '@/payload/access/authenticated'
-import { capPublicLimit } from '@/payload/hooks/capPublicLimit'
+import { COLLECTION_GROUP, COLLECTION_SLUGS } from '@/constants'
+import { imageUploadCollection, THUMBNAIL_SIZE } from '@/payload/collections/imageUploadCollection'
 
-export const DigitalEditionMedia: CollectionConfig = {
-  admin: {
-    group: COLLECTION_GROUP.DigitalEditions,
-  },
+export const DigitalEditionMedia = imageUploadCollection({
   slug: COLLECTION_SLUGS.DigitalEditionThumbs,
   labels: {
     plural: 'Thumbs das Edições Digitais',
     singular: 'Thumb da Edição Digital',
   },
-  access: {
-    read: anyone,
-    create: authenticated,
-    update: authenticated,
-    delete: authenticated,
-  },
-  fields: [],
+  group: COLLECTION_GROUP.DigitalEditions,
+  // A cover of the printed edition, shown at 144px in a square: one 500px original on white, and
+  // no crop to focus, so none of the larger sizes the other two generate are of any use.
   upload: {
-    pasteURL: false,
-    bulkUpload: false,
-    mimeTypes: IMAGE_UPLOAD_MIME_TYPES,
     focalPoint: false,
     resizeOptions: {
       fit: 'contain',
       height: 500,
       width: 500,
-      background: {
-        b: 255,
-        r: 255,
-        g: 255,
-      },
+      background: { r: 255, g: 255, b: 255 },
     },
-    imageSizes: [
-      {
-        name: 'thumbnail',
-        fit: 'contain',
-        height: 200,
-        width: 200,
-      },
-    ],
+    imageSizes: [THUMBNAIL_SIZE],
   },
-  hooks: {
-    beforeOperation: [capPublicLimit],
-  },
-}
+})
