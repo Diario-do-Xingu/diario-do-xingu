@@ -1,5 +1,7 @@
 # Diário do Xingu
 
+[![Production smoke check](https://github.com/Diario-do-Xingu/diario-do-xingu/actions/workflows/smoke.yml/badge.svg)](https://github.com/Diario-do-Xingu/diario-do-xingu/actions/workflows/smoke.yml)
+
 The news site of the *Diário do Xingu*, a newspaper in Altamira, Pará. It publishes news, the
 legal notices (*publicações legais*) that notaries are required to run, and the digital editions
 of the printed paper.

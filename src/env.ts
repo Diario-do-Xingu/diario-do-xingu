@@ -9,6 +9,16 @@ export const env = createEnv({
     NEXT_SERVER_ACTIONS_ENCRYPTION_KEY: z.string().min(1),
 
     // Optionals
+    /** Set by Payload Cloud itself; absent locally and in CI. */
+    PAYLOAD_CLOUD: z
+      .string()
+      .optional()
+      .transform((s) => s === 'true'),
+    /** Bucket names, S3 keys and Cognito details in the log. Off unless asked for. */
+    PAYLOAD_CLOUD_DEBUG: z
+      .string()
+      .optional()
+      .transform((s) => s === 'true'),
     UMAMI_WEBSITE_ID: z.string().min(1).optional(),
     UMAMI_URI: z.string().url().optional(),
   },
