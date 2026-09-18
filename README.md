@@ -91,11 +91,17 @@ slug, and their uploaded file is renamed after it.
 
 ### Publishing and caching
 
-Pages are cached and refreshed two ways. Collection hooks revalidate the affected paths and cache
-tags the moment an editor saves — the article's own URL, the list routes, the sitemap, and for
-news the RSS feed. Scheduled publishes run in Payload's job queue (`autoRun` every minute), which
-executes outside a request where revalidation is unavailable, so every public route also carries
-a 600-second window to bring those in.
+Pages are cached and refreshed three ways. Collection hooks revalidate the affected paths and
+cache tags the moment an editor saves — the article's own URL, the list routes, the sitemap, and
+for news the RSS feed.
+
+Scheduled publishes run in Payload's job queue (`autoRun` every minute), which executes outside a
+request, where `revalidatePath` throws. Those hooks post the work to `/api/revalidate` instead,
+guarded by `CRON_SECRET`, so a scheduled article appears as quickly as a manual one. Without it a
+scheduled publish reaches the database but stays invisible until each page's own window expires.
+
+That window is the backstop: every public route carries `revalidate = 600`, so anything the first
+two miss still heals within ten minutes.
 
 ## Scripts
 
