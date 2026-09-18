@@ -8,7 +8,8 @@ runs:
 
     - uses: actions/setup-node@v7
       with:
-        node-version: 24
+        # .nvmrc is the single source; engines.node and local shells read the same file.
+        node-version-file: .nvmrc
         cache: pnpm
 
     - name: Install (lockfile must be up to date)

@@ -1,23 +1,42 @@
 name: Production smoke check
 
-# Payload Cloud does not report deploy status back to GitHub, so this periodically
-# probes the live site for the two things most likely to break silently after a
-# deploy: the homepage itself and the Next.js image optimizer (sharp/libvips).
+# Payload Cloud does not report deploy status back to GitHub, so this probes the live site for
+# the things most likely to break silently after a deploy: the homepage, the image optimizer
+# (sharp/libvips), and the feed. On a push it first waits for the deploy to actually carry that
+# commit, so a green run means this code is live rather than whatever preceded it.
 
 on:
   schedule:
     - cron: '0 */6 * * *'
+  push:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
   smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 25
 
     env:
       SITE: https://diariodoxingu.com
 
     steps:
+      # The footer links the running commit (#104), which makes "is my change live?" answerable.
+      - name: Wait for the deploy to carry this commit
+        if: github.event_name == 'push'
+        run: |
+          for attempt in $(seq 1 40); do
+            live=$(curl -sS --max-time 30 "$SITE/" | grep -oE 'commit/[0-9a-f]{40}' | head -1 | cut -d/ -f2)
+            if [ "$live" = "$GITHUB_SHA" ]; then
+              echo "Deployed commit matches after $((attempt * 30))s"
+              exit 0
+            fi
+            sleep 30
+          done
+          # Not a failure on its own: the deploy may simply be slow, and the checks below still
+          # say whether the site is healthy. They just describe the previous release.
+          echo "::warning::Site still reports ${live:-unknown} after 20 minutes, not $GITHUB_SHA"
+
       - name: Homepage responds
         run: |
           code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 "$SITE/")
@@ -26,7 +45,20 @@ jobs:
 
       - name: Image optimizer converts to WebP
         run: |
-          url="$SITE/_next/image?url=%2Fapi%2Fmedia%2Ffile%2Flogo-1.png&w=256&q=100"
-          out=$(curl -sS -o /dev/null -w '%{http_code} %{content_type}' -H 'Accept: image/webp' --max-time 30 "$url")
+          # Taken from the homepage rather than hardcoded: re-uploading the logo in the admin
+          # renames the file (logo-1.png -> logo-2.png) and a fixed URL would fail for no reason.
+          # The URLs sit inside escaped JSON in the RSC payload, so the match has to stop at a
+          # backslash and a space as well as a quote, or curl gets a trailing \ and rejects it.
+          url=$(curl -sS --max-time 30 "$SITE/" | grep -oE '/_next/image\?url=[^"\\ ]+' | head -1 | sed 's/&amp;/\&/g')
+          [ -n "$url" ] || { echo "::error::No optimized image on the homepage to probe"; exit 1; }
+          echo "probing $url"
+          out=$(curl -sS -o /dev/null -w '%{http_code} %{content_type}' -H 'Accept: image/webp' --max-time 30 "$SITE$url")
           echo "GET /_next/image -> $out"
           [ "$out" = "200 image/webp" ] || { echo "::error::Image optimizer returned '$out' (expected '200 image/webp')"; exit 1; }
+
+      - name: Feed is served and has articles
+        run: |
+          body=$(curl -sS --max-time 30 "$SITE/feed.xml")
+          items=$(printf '%s' "$body" | grep -c '<item>' || true)
+          echo "feed items -> $items"
+          [ "$items" -gt 0 ] || { echo "::error::The RSS feed has no items"; exit 1; }

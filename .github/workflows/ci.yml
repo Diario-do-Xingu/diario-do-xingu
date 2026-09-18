@@ -136,6 +136,17 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
+
+      # Turbopack's compiler cache lives here. Restoring it is most of the build time; the key
+      # falls back to the lockfile alone so a source change still starts from the last build.
+      - uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: next-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('src/**') }}
+          restore-keys: |
+            next-${{ hashFiles('pnpm-lock.yaml') }}-
+            next-
+
       - run: pnpm build
 
       # The integration suite needs a real build, and this job already has one plus a database,
