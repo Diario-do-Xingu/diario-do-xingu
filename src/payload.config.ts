@@ -104,11 +104,15 @@ const config = buildConfig({
     afterError: [reportPayloadError],
   },
   plugins: [
-    ...(env.NEXT_PUBLIC_USE_PAYLOAD_CLOUD
+    // Both have to be true. NEXT_PUBLIC_USE_PAYLOAD_CLOUD is ours to switch off; PAYLOAD_CLOUD is
+    // set by the platform itself, so a local or CI run never registers a plugin that would only
+    // no-op - and never risks it reaching for S3 with no credentials.
+    ...(env.NEXT_PUBLIC_USE_PAYLOAD_CLOUD && env.PAYLOAD_CLOUD
       ? [
-          payloadCloudPlugin({
-            debug: !env.NEXT_PUBLIC_IS_LIVE,
-          }),
+          // Logs bucket names, S3 keys and Cognito details. Opt in deliberately rather than
+          // inferring it from NEXT_PUBLIC_IS_LIVE, which turned it on in every non-live
+          // environment including anyone's laptop.
+          payloadCloudPlugin({ debug: env.PAYLOAD_CLOUD_DEBUG }),
         ]
       : []),
   ],
