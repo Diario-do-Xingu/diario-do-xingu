@@ -103,6 +103,7 @@ export const SiteInfo: GlobalConfig = {
         },
         {
           name: 'link',
+          label: 'Endereço',
           type: 'text',
           required: true,
           validate: validateUrl,

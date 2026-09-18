@@ -56,6 +56,7 @@ export const COLLECTION_GROUP = {
   Configuration: 'Configuração',
   Articles: 'Notícias',
   NotarialActs: 'Atos Notariais',
+  DigitalEditions: 'Edições Digitais',
 } as const
 
 export const PAGINATED_LIMIT = {

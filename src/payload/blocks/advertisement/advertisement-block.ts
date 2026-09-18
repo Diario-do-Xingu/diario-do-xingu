@@ -5,8 +5,8 @@ export const AdvertisementBlock: Block = {
   slug: 'advertisementBlock',
   interfaceName: 'AdvertisementBlock',
   labels: {
-    plural: 'Publicidade',
-    singular: 'Publicidades',
+    plural: 'Publicidades',
+    singular: 'Publicidade',
   },
   fields: [
     {
