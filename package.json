@@ -1,7 +1,7 @@
 {
   "name": "diario-do-xingu",
-  "version": "1.10.0",
-  "description": "News site of the Diário do Xingu, a newspaper in Altamira, Pará",
+  "version": "1.10.1",
+  "description": "News site of the Di\u00e1rio do Xingu, a newspaper in Altamira, Par\u00e1",
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {
