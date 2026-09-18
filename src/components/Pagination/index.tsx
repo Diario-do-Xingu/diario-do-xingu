@@ -1,4 +1,3 @@
-import type React from 'react'
 import {
   Pagination as PaginationComponent,
   PaginationContent,
@@ -15,14 +14,15 @@ import { cn } from '@/utilities/ui'
  * `/${path}/page/N`, unless `query` (a serialized filter, without `page`) is set: then they go
  * to `/${path}?${query}&page=N`.
  */
-export const Pagination: React.FC<{
+type PaginationProps = {
   className?: string
   page: number
   totalPages: number
   path: string
   query?: string
-}> = (props) => {
-  const { className, page, totalPages, path, query } = props
+}
+
+export function Pagination({ className, page, totalPages, path, query }: PaginationProps) {
   const hasNextPage = page < totalPages
   const hasPrevPage = page > 1
 
