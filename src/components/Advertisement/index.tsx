@@ -19,7 +19,7 @@ type AdvertisementProps = {
 export async function Advertisement(props: AdvertisementProps) {
   const { adType, containerClassName, imgClassName } = props
 
-  const advertisementGlobal = await getCachedGlobal(COLLECTION_SLUGS.Advertisement, 2)()
+  const advertisementGlobal = await getCachedGlobal(COLLECTION_SLUGS.Advertisement, 2)
 
   const advertisement = advertisementGlobal[adType]?.[0]
   const image = advertisement?.image

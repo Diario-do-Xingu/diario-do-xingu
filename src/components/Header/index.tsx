@@ -34,7 +34,7 @@ const links: { label: string; link: string; color?: string }[] = [
 ]
 
 export async function Header() {
-  const siteInfo = await getCachedGlobal(COLLECTION_SLUGS.SiteInfo, 1)()
+  const siteInfo = await getCachedGlobal(COLLECTION_SLUGS.SiteInfo, 1)
 
   const hasLogo = 'logo' in siteInfo
   // An unpopulated logo (a bare ID) falls back to the default logo

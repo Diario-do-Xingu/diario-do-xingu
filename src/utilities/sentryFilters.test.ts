@@ -1,6 +1,11 @@
 import type { ErrorEvent } from '@sentry/nextjs'
 import { describe, expect, it } from 'vitest'
-import { isAbortedOversizedUpload, isServerActionProbe, withoutCredentials } from './sentryFilters'
+import {
+  isAbortedOversizedUpload,
+  isClientDisconnect,
+  isServerActionProbe,
+  withoutCredentials,
+} from './sentryFilters'
 
 const LIMIT = 64 * 1024 * 1024
 
@@ -53,6 +58,20 @@ describe('isAbortedOversizedUpload', () => {
 
   it('keeps an unfinished form with no declared length', () => {
     expect(isAbortedOversizedUpload(event('Unexpected end of form'), LIMIT)).toBe(false)
+  })
+})
+
+describe('isClientDisconnect', () => {
+  it('matches a response stream the client closed early', () => {
+    expect(isClientDisconnect(event('The destination stream closed early.'))).toBe(true)
+  })
+
+  it('matches a request body the client cut off', () => {
+    expect(isClientDisconnect(event('aborted'))).toBe(true)
+  })
+
+  it('keeps an error that merely mentions aborting', () => {
+    expect(isClientDisconnect(event('Upload aborted by the storage adapter'))).toBe(false)
   })
 })
 
