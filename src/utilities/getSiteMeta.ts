@@ -10,8 +10,8 @@ import { getCachedGlobal } from './getGlobals'
  */
 export const getSiteMeta = cache(async () => {
   const [siteMetadata, siteInfo] = await Promise.all([
-    getCachedGlobal(COLLECTION_SLUGS.SiteMetadata, 2)(),
-    getCachedGlobal(COLLECTION_SLUGS.SiteInfo, 1)(),
+    getCachedGlobal(COLLECTION_SLUGS.SiteMetadata, 2),
+    getCachedGlobal(COLLECTION_SLUGS.SiteInfo, 1),
   ])
   const shareImage =
     typeof siteMetadata.cardShareImage === 'object' ? siteMetadata.cardShareImage : undefined

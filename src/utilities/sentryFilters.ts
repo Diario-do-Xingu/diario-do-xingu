@@ -26,6 +26,17 @@ export const isServerActionProbe = (event: ErrorEvent) =>
   matches(event, 'Failed to find Server Action') && !header(event, 'next-action')
 
 /**
+ * A client that hangs up before the response finishes: React's Flight streamer reports "The
+ * destination stream closed early" on an abandoned RSC or server-action response, and Node
+ * reports a bare "aborted" when the request body is cut off. Both reach `onRequestError` as
+ * unhandled, but nothing on the server failed, and a bot that runs the page's JavaScript and
+ * drops the read-count action re-opens the issue after every deploy.
+ */
+export const isClientDisconnect = (event: ErrorEvent) =>
+  matches(event, 'The destination stream closed early') ||
+  (event.exception?.values?.some(({ value }) => value === 'aborted') ?? false)
+
+/**
  * `sendDefaultPii: false` does not strip request headers or cookies from captured request
  * errors, and those can carry the admin session token or the cron secret.
  */

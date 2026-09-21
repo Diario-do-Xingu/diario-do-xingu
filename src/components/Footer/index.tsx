@@ -8,7 +8,7 @@ import { getCachedGlobal } from '@/utilities/getGlobals'
 import { getSocialIcon } from '@/utilities/getSocialIcon'
 
 export async function Footer() {
-  const siteInfo = await getCachedGlobal(COLLECTION_SLUGS.SiteInfo, 1)()
+  const siteInfo = await getCachedGlobal(COLLECTION_SLUGS.SiteInfo, 1)
 
   const hasLogo = 'logo' in siteInfo
   // An unpopulated logo (a bare ID) falls back to the default logo

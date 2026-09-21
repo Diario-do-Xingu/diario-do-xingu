@@ -6,6 +6,7 @@ import { SCHEDULED_PUBLISH_SPAN } from '@/payload/hooks/reportScheduledPublish'
 import { reportsToSentry, sentryEnvironment } from '@/utilities/sentryEnvironment'
 import {
   isAbortedOversizedUpload,
+  isClientDisconnect,
   isServerActionProbe,
   withoutCredentials,
 } from '@/utilities/sentryFilters'
@@ -27,6 +28,7 @@ Sentry.init({
   beforeSend(event) {
     if (isAbortedOversizedUpload(event, UPLOAD_LIMIT_BYTES)) return null
     if (isServerActionProbe(event)) return null
+    if (isClientDisconnect(event)) return null
 
     return withoutCredentials(event)
   },
