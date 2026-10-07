@@ -139,7 +139,7 @@ jobs:
 
       # Turbopack's compiler cache lives here. Restoring it is most of the build time; the key
       # falls back to the lockfile alone so a source change still starts from the last build.
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: .next/cache
           key: next-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('src/**') }}
