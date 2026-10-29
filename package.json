@@ -1,6 +1,6 @@
 {
   "name": "diario-do-xingu",
-  "version": "1.14.8",
+  "version": "1.14.9",
   "description": "News site of the Diário do Xingu, a newspaper in Altamira, Pará",
   "license": "UNLICENSED",
   "type": "module",
@@ -37,13 +37,13 @@
     "@radix-ui/react-popover": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.4",
     "@radix-ui/react-tabs": "^1.1.13",
-    "@sentry/nextjs": "10.73.0",
+    "@sentry/nextjs": "10.75.2",
     "@t3-oss/env-nextjs": "^0.13.11",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "graphql": "^16.12.0",
     "lucide-react": "^1.47.0",
-    "next": "16.3.6",
+    "next": "16.4.1",
     "payload": "3.90.2",
     "react": "^19.2.3",
     "react-day-picker": "^10.0.1",
@@ -51,7 +51,7 @@
     "sharp": "^0.35.5",
     "tailwind-merge": "^3.4.0",
     "tw-animate-css": "^1.4.0",
-    "zod": "^4.6.5"
+    "zod": "^4.6.6"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.10",
@@ -65,7 +65,8 @@
     "jsdom": "^30.1.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
-    "vitest": "^5.0.1"
+    "vite": "8.3.3",
+    "vitest": "^5.0.3"
   },
   "engines": {
     "node": "24"
@@ -74,7 +75,8 @@
     "onlyBuiltDependencies": ["core-js", "esbuild", "fsevents", "sharp", "unrs-resolver"],
     "overrides": {
       "fast-xml-parser": ">=5.11.1",
-      "dompurify": "^3.4.14",
+      "dompurify": "^3.4.17",
+      "graphql-scalars": "2.0.1",
       "postcss": "^8.5.28",
       "postcss-selector-parser": "^7.1.6",
       "source-map-js": "^1.2.2",
@@ -83,15 +85,18 @@
       "picomatch@>=4": "^4.0.4",
       "immutable": "^4.3.9",
       "yaml@1": "^1.10.3",
+      "fast-uri": "^3.1.9",
       "esbuild": "^0.28.2",
       "lodash": "^4.18.1",
       "js-yaml": "^4.3.1",
-      "undici@7": "^7.29.1",
-      "nodemailer": "^10.0.9",
+      "happy-dom": "^21.0.4",
+      "undici@7": "^7.30.1",
+      "undici@8": "^8.12.2",
+      "nodemailer": "^10.0.13",
       "brace-expansion@5": "^5.0.12"
     },
     "auditConfig": {
-      "ignoreCves": ["CVE-2026-11779"]
+      "ignoreCves": ["CVE-2026-11779", "CVE-2026-93753"]
     }
   },
   "packageManager": "pnpm@10.27.0+sha512.72d699da16b1179c14ba9e64dc71c9a40988cbdc65c264cb0e489db7de917f20dcf4d64d8723625f2969ba52d4b7e2a1170682d9ac2a5dcaeaab732b7e16f04a"
