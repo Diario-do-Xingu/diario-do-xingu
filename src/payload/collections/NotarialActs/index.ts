@@ -13,6 +13,7 @@ import { slugField } from '@/payload/fields/slug'
 import { capPublicLimit } from '@/payload/hooks/capPublicLimit'
 import { createRevalidateHooks } from '@/payload/hooks/createRevalidateHooks'
 import { populatePublishedAt } from '@/payload/hooks/populatePublishedAt'
+import { reportContentChange } from '@/payload/hooks/reportContentChange'
 import type { NotarialAct } from '@/payload-types'
 import { assignKeyAndFilename } from './hooks/assignKeyAndFilename'
 
@@ -104,7 +105,10 @@ export const NotarialActs: CollectionConfig = {
   ],
   hooks: {
     beforeOperation: [capPublicLimit, assignKeyAndFilename],
-    afterChange: [revalidateNotarialActs.afterChange],
+    afterChange: [
+      revalidateNotarialActs.afterChange,
+      reportContentChange(COLLECTION_SLUGS.NotarialActs),
+    ],
     afterDelete: [revalidateNotarialActs.afterDelete],
   },
   versions: {
