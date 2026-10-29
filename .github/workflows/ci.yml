@@ -96,7 +96,7 @@ jobs:
           fi
 
   # Fails only on findings someone here can act on, so a red audit always means work to do.
-  # Two advisories are open today and neither can be fixed from this repo:
+  # Three advisories are open today and none can be fixed from this repo:
   #   - GHSA-jg8r-5jh2-v2xj (Payload's default account unlock) has no patched release at all, so
   #     it is baselined in package.json's pnpm.auditConfig.ignoreCves and mitigated in the Users
   #     collection (#97). Drop that entry when Payload ships a fix.
@@ -104,6 +104,8 @@ jobs:
   #     written against js-cookie 2.x. The fix exists only in 3.0.7+, and forcing it with an
   #     override breaks the build: cognito's CookieStorage imports names 3.x does not export.
   #     --ignore-unfixable is what skips it: the patched version is outside the allowed range.
+  #   - CVE-2026-93753 (deepmerge) has no patched release. It is baselined in
+  #     package.json's pnpm.auditConfig.ignoreCves. Drop that entry when a fix ships.
   audit:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -120,7 +122,7 @@ jobs:
         run: pnpm dedupe --check
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 20
     # Static generation queries Payload at build time, so it needs a reachable (empty) MongoDB
     services:
