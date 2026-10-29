@@ -2,6 +2,7 @@ import * as Sentry from '@sentry/nextjs'
 import { UPLOAD_LIMIT_BYTES, UPLOAD_LIMIT_MESSAGE } from '@/constants'
 import { env } from '@/env'
 import { QUEUE_DEPTH_SPAN } from '@/payload/hooks/checkInQueueTick'
+import { CONTENT_CHANGE_SPAN_PREFIX } from '@/payload/hooks/reportContentChange'
 import { SCHEDULED_PUBLISH_SPAN } from '@/payload/hooks/reportScheduledPublish'
 import { reportsToSentry, sentryEnvironment } from '@/utilities/sentryEnvironment'
 import {
@@ -21,7 +22,11 @@ Sentry.init({
   // depth is one reading every five minutes; at 10% most would record nothing, which defeats
   // the point of measuring at all.
   tracesSampler: ({ name, inheritOrSampleWith }) =>
-    name === SCHEDULED_PUBLISH_SPAN || name === QUEUE_DEPTH_SPAN ? 1 : inheritOrSampleWith(0.1),
+    name === SCHEDULED_PUBLISH_SPAN ||
+    name === QUEUE_DEPTH_SPAN ||
+    name.startsWith(CONTENT_CHANGE_SPAN_PREFIX)
+      ? 1
+      : inheritOrSampleWith(0.1),
   sendDefaultPii: false,
   // An oversized upload is expected behaviour, not an error.
   ignoreErrors: [UPLOAD_LIMIT_MESSAGE],

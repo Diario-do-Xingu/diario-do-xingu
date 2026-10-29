@@ -23,6 +23,7 @@ import { slugField } from '@/payload/fields/slug'
 import { capPublicLimit } from '@/payload/hooks/capPublicLimit'
 import { createRevalidateHooks } from '@/payload/hooks/createRevalidateHooks'
 import { populatePublishedAt } from '@/payload/hooks/populatePublishedAt'
+import { reportContentChange } from '@/payload/hooks/reportContentChange'
 import type { News as NewsDoc } from '@/payload-types'
 
 const revalidateNews = createRevalidateHooks<NewsDoc>({
@@ -201,7 +202,7 @@ export const News: CollectionConfig = {
   ],
   hooks: {
     beforeOperation: [capPublicLimit],
-    afterChange: [revalidateNews.afterChange],
+    afterChange: [revalidateNews.afterChange, reportContentChange(COLLECTION_SLUGS.News)],
     afterDelete: [revalidateNews.afterDelete],
   },
   versions: {
